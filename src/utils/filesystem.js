@@ -33,7 +33,7 @@ const initialFilesystem = [
             name: 'Projects!',
             type: 'folder',
             contents: [
-              { id: 6, name: 'github.repo.link', type: 'file' },
+              { id: 6, name: 'shinyPy', type: 'link', url: 'https://github.com/shinyPy/' },
               { id: 11, name: 'rawr.mp4', type: 'file', src: rawrVideo},
 
             ],

@@ -21,6 +21,12 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
     setCurrentPath(currentPath.slice(0, currentPath.indexOf(id) + 1));
   };
 
+  const goBack = () => {
+    if (currentPath.length > 1) {
+      setCurrentPath(currentPath.slice(0, currentPath.length - 1));
+    }
+  };
+
   const closeViewer = () => {
     setViewingFile(null);
   };
@@ -40,7 +46,7 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
         <div className="p-2 h-full bg-[#f3f3f3] overflow-auto font-sans">
           {viewingFile ? (
             <div className="fileViewer flex justify-center items-center w-full h-full bg-black text-white relative">
-              <button onClick={closeViewer} className="absolute top-2 right-2 bg-white border-none p-1 cursor-pointer">Close</button>
+              <button onClick={closeViewer} className="absolute top-2 right-2 bg-[#0078d4] fontborder-none p-1 cursor-pointer">Close</button>
               {viewingFile.name.endsWith('.png') || viewingFile.name.endsWith('.jpg') ? (
                 <img src={viewingFile.src} alt={viewingFile.name} className="max-w-[90%] max-h-[90%]" />
               ) : viewingFile.name.endsWith('.mp4') ? (
@@ -54,7 +60,12 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
             </div>
           ) : (
             <>
-              <div className="breadcrumbs mb-2 text-sm text-gray-600">
+              <div className="breadcrumbs mb-2 text-sm text-gray-600 flex items-center">
+                {currentPath.length > 1 && (
+                  <button onClick={goBack} className="text-blue-500 underline hover:no-underline mr-2">
+                    Back
+                  </button>
+                )}
                 {currentPath.map((id, index) => {
                   const folder = findItemById(filesystem, id);
                   return (

@@ -60,9 +60,12 @@ function App() {
         } else {
           alert(`Opened file: ${clickedItem.name}`); // Replace with actual file handling
         }
+      } else if (clickedItem.type === 'link') {
+        window.open(clickedItem.url, '_blank');
       }
     }
   };
+  
 
   const closeWindow = (id) => {
     setWindows(windows.filter(win => win.id !== id));
