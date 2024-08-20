@@ -28,7 +28,7 @@ const AppContainer = styled.div`
 
 const DesktopContainer = styled.div`
   flex-wrap: wrap;
-  padding: 20px;
+  padding: 25px;
   .desktop-icon {
     margin: 10px;
   }

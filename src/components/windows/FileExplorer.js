@@ -32,7 +32,7 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
 
   return (
     <Draggable handle=".fileExplorer-header">
-      <div className="w-[600px] h-[400px] bg-white border border-gray-300 shadow-lg absolute flex flex-col overflow-hidden">
+      <div className="w-[600px] h-[400px] bg-white border border-gray-300 shadow-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col overflow-hidden">
         <div className="fileExplorer-header bg-[#0078d4] text-white p-2 flex justify-between items-center cursor-move">
           <div className="flex items-center">
             <img src={iconSrc} alt={`${title} icon`} className="w-4 h-4 mr-2" />
@@ -77,22 +77,15 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
                   {currentPath.map((id, index) => {
                     const folder = findItemById(filesystem, id);
                     return (
-                      <li key={id} className={`inline-flex items-center ${index > 0 ? 'mx-2 text-gray-700 hover:text-blue-600' : ''}`}>
+                      <li key={id} className={`inline-flex items-center ${index > 0 ? 'mx-2 text-gray-700' : ''}`}>
                         {index > 0 && (
                           <svg className="w-3 h-3 mx-1 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 9 4-4-4-4"/>
                           </svg>
                         )}
-                        {currentPath.length === 1 && index === 0 ? (
-                          <span className="text-sm font-medium text-gray-500 dark:text-gray-400">Root</span>
-                        ) : (
-                          <button 
-                            onClick={() => goToFolder(id)} 
-                            className="text-sm font-medium text-gray-700 hover:text-blue-600"
-                          >
-                            {folder.name === '/' ? 'Root' : folder.name}
-                          </button>
-                        )}
+                        <span className="text-sm font-medium text-gray-700">
+                          {folder.name === '/' ? 'root' : folder.name}
+                        </span>
                       </li>
                     );
                   })}
