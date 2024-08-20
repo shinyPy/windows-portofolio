@@ -8,12 +8,13 @@ import initialFilesystem, { useFilesystem } from './utils/filesystem';
 
 import backgroundImage from './assets/images/windows.jpg';
 import folderIconSrc from './assets/icons/folder.png';
-import Documents from './components/windows/Documents';
 import FileExplorerIcon from './assets/icons/file-explorer.png';
-import PictureViewer from './utils/PictureViewer';
-import VideoViewer from './utils/VideoViewer';
 import fileIconSrc from './assets/icons/file.png';
+import exeIconSrc from './assets/icons/exeIcon.png';
+
 import GlobalStyle from './globalStyle';
+import PictureViewer from './components/windows/PictureViewer';
+import VideoViewer from './components/windows/VideoViewer';
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -79,13 +80,19 @@ function App() {
             onDoubleClick={() => openWindow('File Explorer', folderIconSrc, FileExplorer, 1)}
           />
           {initialFilesystem[0].contents[0].contents.map(item => (
-            <DesktopIcon
-              key={item.id}
-              className="desktop-icon"
-              name={item.name}
-              iconSrc={item.type === 'folder' ? folderIconSrc : fileIconSrc}
-              onDoubleClick={() => onFileClick(item.id) }
-            />
+          <DesktopIcon
+          key={item.id}
+          className="desktop-icon"
+          name={item.name}
+          iconSrc={
+            item.type === 'folder'
+              ? folderIconSrc
+              : item.name.endsWith('.exe')
+              ? exeIconSrc 
+              : fileIconSrc
+          }
+          onDoubleClick={() => onFileClick(item.id)}
+        />
           ))}
         </DesktopContainer>
         {windows.map((win) => (

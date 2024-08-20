@@ -20,9 +20,9 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
 
   const currentFolder = findItemById(filesystem, currentPath[currentPath.length - 1]);
 
-  const getFullPath = () => {
-    return currentPath.map((id) => findItemById(filesystem, id).name).join(' > ');
-  };
+  // const getFullPath = () => {
+  //   return currentPath.map((id) => findItemById(filesystem, id).name).join(' > ');
+  // };
 
   const updatePath = (id) => {
     const clickedItem = findItemById(filesystem, id);
@@ -84,7 +84,7 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
               {currentFolder && currentFolder.contents ? (
                 currentFolder.contents.map(item => (
                   <FileExplorerItem key={item.id} onDoubleClick={() => updatePath(item.id)}>
-                    {item.type === 'folder' ? '📁' : '📄'} {item.name}
+                    {item.type === 'folder' ? '📁' : item.name.endsWith('.exe') ? '💻' : '📄'} {item.name} 
                   </FileExplorerItem>
                 ))
               ) : (
