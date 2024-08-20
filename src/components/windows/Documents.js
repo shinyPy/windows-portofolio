@@ -10,7 +10,7 @@ import {
   CloseButton, 
   ExplorerItem,
   BreadcrumbLink,
-  FileViewer, 
+  // FileViewer, 
 } from '../style/DocumentsStyle';
 
 
