@@ -1,12 +1,9 @@
-// src/App.js
-import React, { useState } from 'react';
-import styled from 'styled-components';
 import DesktopIcon from './components/icon/DesktopIcon';
 import Taskbar from './components/Taskbar';
 import FileExplorer from './components/windows/FileExplorer';
 import initialFilesystem, { useFilesystem } from './utils/filesystem';
+import React from 'react';
 
-import backgroundImage from './assets/images/windows.jpg';
 import folderIconSrc from './assets/icons/folder.png';
 import FileExplorerIcon from './assets/icons/file-explorer.png';
 import fileIconSrc from './assets/icons/file.png';
@@ -15,28 +12,12 @@ import exeIconSrc from './assets/icons/exeIcon.png';
 import GlobalStyle from './globalStyle';
 import PictureViewer from './components/windows/PictureViewer';
 import VideoViewer from './components/windows/VideoViewer';
+import { AppContainer, ContentWrapper, DesktopContainer, WarningContainer } from './components/style/ContainerStyle';
+import { useAppHooks } from './hooks/appHooks';
 
-const AppContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: url(${backgroundImage}) no-repeat center center;
-  background-size: cover;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-const DesktopContainer = styled.div`
-  flex-wrap: wrap;
-  padding: 25px;
-  .desktop-icon {
-    margin: 10px;
-  }
-`;
 
 function App() {
-  const { filesystem, findItemById } = useFilesystem(initialFilesystem);
-  const [windows, setWindows] = useState([]);
+  const { filesystem, windows, setWindows, isMobile, findItemById } = useAppHooks(initialFilesystem);
 
   const openWindow = (title, iconSrc, Component, id, src = null) => {
     setWindows([...windows, { title, iconSrc, Component, id: Date.now(), windowId: id, src }]);
@@ -65,7 +46,6 @@ function App() {
       }
     }
   };
-  
 
   const closeWindow = (id) => {
     setWindows(windows.filter(win => win.id !== id));
@@ -75,43 +55,48 @@ function App() {
     <>
       <GlobalStyle /> {/* Apply global styles */}
       <AppContainer>
-        <DesktopContainer className="desktop">
-          <DesktopIcon
-            className="desktop-icon"
-            name="File Explorer"
-            iconSrc={FileExplorerIcon}
-            onDoubleClick={() => openWindow('File Explorer', folderIconSrc, FileExplorer, 1)}
-          />
-          {initialFilesystem[0].contents[0].contents.map(item => (
-          <DesktopIcon
-          key={item.id}
-          className="desktop-icon"
-          name={item.name}
-          iconSrc={
-            item.type === 'folder'
-              ? folderIconSrc
-              : item.name.endsWith('.exe')
-              ? exeIconSrc 
-              : fileIconSrc
-          }
-          onDoubleClick={() => onFileClick(item.id)}
-        />
+        <ContentWrapper isMobile={isMobile}>
+          <DesktopContainer className="desktop">
+            <DesktopIcon
+              className="desktop-icon"
+              name="File Explorer"
+              iconSrc={FileExplorerIcon}
+              onDoubleClick={() => openWindow('File Explorer', folderIconSrc, FileExplorer, 1)}
+            />
+            {initialFilesystem[0].contents[0].contents.map(item => (
+              <DesktopIcon
+                key={item.id}
+                className="desktop-icon"
+                name={item.name}
+                iconSrc={
+                  item.type === 'folder'
+                    ? folderIconSrc
+                    : item.name.endsWith('.exe')
+                    ? exeIconSrc 
+                    : fileIconSrc
+                }
+                onDoubleClick={() => onFileClick(item.id)}
+              />
+            ))}
+          </DesktopContainer>
+          {windows.map((win) => (
+            <win.Component
+              key={win.id}
+              title={win.title}
+              iconSrc={win.iconSrc}
+              onClose={() => closeWindow(win.id)}
+              filesystem={filesystem}
+              windowId={win.windowId}
+              findItemById={findItemById}
+              onFileClick={onFileClick}
+              src={win.src} // Pass the src to the component
+            />
           ))}
-        </DesktopContainer>
-        {windows.map((win) => (
-          <win.Component
-            key={win.id}
-            title={win.title}
-            iconSrc={win.iconSrc}
-            onClose={() => closeWindow(win.id)}
-            filesystem={filesystem}
-            windowId={win.windowId}
-            findItemById={findItemById}
-            onFileClick={onFileClick}
-            src={win.src} // Pass the src to the component
-          />
-        ))}
+        </ContentWrapper>
         <Taskbar windows={windows} />
+        <WarningContainer isMobile={isMobile}>
+          <div className="warning-message">Message from Shiniya: pake pc woi</div>
+        </WarningContainer>
       </AppContainer>
     </>
   );

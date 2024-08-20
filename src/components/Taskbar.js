@@ -3,7 +3,7 @@ import terminalIcon from '../assets/icons/exeIcon.png';
 
 function Taskbar({ windows }) {
   return (
-    <div className="h-10 bg-[#1c1c1c] flex items-center px-2.5 justify-between shadow-md absolute bottom-0 w-full">
+    <div className="h-10 bg-[#1c1c1c] flex items-center px-2.5 justify-between shadow-md fixed bottom-0 w-full z-50">
       <div className="flex items-center flex-grow justify-center">
         <div className="bg-[#2d2d2d] px-2 py-1 rounded flex items-center cursor-pointer mr-2.5 shadow-inner hover:bg-[#444444]">
           <img src={terminalIcon} alt="Terminal" className="w-5 h-5 mr-2" />
@@ -19,17 +19,6 @@ function Taskbar({ windows }) {
           </div>
         ))}
       </div>
-      {/* <div className="flex items-center">
-        {windows.map((win) => (
-          <div
-            key={win.id}
-            className="text-white px-2.5 py-1 flex items-center bg-[#2d2d2d] rounded mr-1.25 shadow-inner cursor-pointer hover:bg-[#444444]"
-          >
-            <img src={win.iconSrc} alt={`${win.title} icon`} className="w-4 h-4 mr-2" />
-            {win.title}
-          </div>
-        ))}
-      </div> */}
     </div>
   );
 }

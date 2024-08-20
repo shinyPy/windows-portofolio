@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const IconContainer = styled.div`
-  width: 60px;
+  width: 90px;
   text-align: center;
   cursor: pointer;
   display: flex;
@@ -12,8 +12,8 @@ const IconContainer = styled.div`
 `;
 
 const IconImage = styled.img`
-  width: 37px;
-  height: 37px;
+  width: 48px;
+  height: 48px;
 `;
 
 const IconLabel = styled.div`
