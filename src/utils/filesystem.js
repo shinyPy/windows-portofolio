@@ -1,52 +1,96 @@
+// src/utils/filesystem.js
+
+import { useState } from 'react';
+
+// Import your assets
 // import Resume from '../../assets/documents/Resume.docx';
 // import CoverLetter from '../assets/documents/CoverLetter.docx';
 import Saber from '../assets/images/saber.jpg';
 import Intro from '../assets/videos/rawr.mp4';
-import { useState } from 'react';
 
-
+// Initial filesystem structure
 const initialFilesystem = [
-  
   {
     id: 1,
-    name: 'root',
+    name: 'C:',
     type: 'folder',
     contents: [
-      { id: 2, name: 'Documents', type: 'folder'},
-      { id: 4, name: 'Pictures', type: 'folder'},
-      { id: 6, name: 'Videos', type: 'folder'},
-    ]
+      {
+        id: 2,
+        name: 'Program Files',
+        type: 'folder',
+        contents: [
+          {
+            id: 3,
+            name: 'App1',
+            type: 'folder',
+            contents: [
+              { id: 4, name: 'app1.exe', type: 'file' },
+            ],
+          },
+        ],
+      },
+      {
+        id: 5,
+        name: 'Users',
+        type: 'folder',
+        contents: [
+          {
+            id: 6,
+            name: 'User',
+            type: 'folder',
+            contents: [
+              {
+                id: 7,
+                name: 'Documents',
+                type: 'folder',
+                contents: [
+                  { id: 8, name: 'Resume.docx', type: 'file' },
+                ],
+              },
+              {
+                id: 9,
+                name: 'Pictures',
+                type: 'folder',
+                contents: [
+                  { id: 10, name: 'Vacation.png', type: 'file' },
+                ],
+              },
+              {
+                id: 11,
+                name: 'Videos',
+                type: 'folder',
+                contents: [
+                  { id: 12, name: 'Birthday.mp4', type: 'file' },
+                ],
+              },
+              {
+                id: 13,
+                name: 'Desktop',
+                type: 'folder',
+                contents: [
+                  { id: 14, name: 'shortcut.lnk', type: 'file' },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 15,
+        name: 'Windows',
+        type: 'folder',
+        contents: [
+          { id: 16, name: 'explorer.exe', type: 'file' },
+          { id: 17, name: 'notepad.exe', type: 'file' },
+        ],
+      },
+    ],
   },
-  {
-    id: 2,
-    name: 'Documents',
-    type: 'folder',
-    contents: [
-      { id: 3, name: 'CoverLetter.docx', type: 'file'},
-    ]
-  },
-  {
-    id: 4,
-    name: 'Pictures',
-    type: 'folder',
-    contents: [
-      { id: 5, name: 'Saber.png', type: 'file', src: Saber }
-    ]
-  },
-  {
-    id: 6,
-    name: 'Videos',
-    type: 'folder',
-    contents: [
-      { id: 7, name: 'Intro.mp4', type: 'file', src: Intro }
-    ]
-  }
 ];
-
 
 export const useFilesystem = () => {
   const [filesystem, setFilesystem] = useState(initialFilesystem);
-  const [path, setPath] = useState([1]); // Start with root folder id
 
   const addFileOrFolder = (parentId, item) => {
     const newFilesystem = [...filesystem];
@@ -63,15 +107,15 @@ export const useFilesystem = () => {
   };
 
   const findItemById = (fs, id) => {
-    for (const item of fs) {
-      if (item.id === id) return item;
-      if (item.type === 'folder') {
-        const found = findItemById(item.contents, id);
-        if (found) return found;
-      }
+  for (const item of fs) {
+    if (item.id === id) return item;
+    if (item.contents) {
+      const found = findItemById(item.contents, id);
+      if (found) return found;
     }
-    return null;
-  };
+  }
+  return null; // Return null if item is not found
+};
 
   return {
     filesystem,

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
 import DesktopIcon from './components/icon/DesktopIcon';
 import Taskbar from './components/Taskbar';
-import MyPC from './components/windows/MyPC';
+// import MyPC from './components/windows/MyPC';
 import FileExplorer from './components/windows/FileExplorer';
-import { useFilesystem } from './utils/filesystem'; // Import the filesystem hook
-
-import backgroundImage from './assets/images/rawr.jpg';
-import mypcIcon from './assets/icons/mypc.png';
+import { useFilesystem } from './utils/filesystem';
+import backgroundImage from './assets/images/windows.jpg';
+// import mypcIcon from './assets/icons/mypc.png';
 import folderIconSrc from './assets/icons/folder.png';
+import Documents from './components/windows/Documents';
+import FileExplorerIcon from './assets/icons/file-explorer.png';
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -25,14 +25,20 @@ function App() {
   const { filesystem, addFileOrFolder, deleteItem, findItemById } = useFilesystem();
   const [windows, setWindows] = useState([]);
 
-  const openWindow = (title, iconSrc, id) => {
-    setWindows([...windows, { title, iconSrc, id: Date.now(), windowId: id }]);
+  const openWindow = (title, iconSrc, Component, id) => {
+    setWindows([...windows, { title, iconSrc, Component, id: Date.now(), windowId: id }]);
   };
 
   const onFileClick = (id) => {
     const clickedItem = findItemById(filesystem, id);
     if (clickedItem && clickedItem.type === 'folder') {
-      openWindow(clickedItem.name, folderIconSrc, id);
+      const existingWindow = windows.find(win => win.windowId === id);
+      if (existingWindow) {
+        // Bring the existing window to the front
+        setWindows([...windows.filter(win => win.windowId !== id), existingWindow]);
+      } else {
+        openWindow(clickedItem.name, folderIconSrc, FileExplorer, id);
+      }
     }
   };
 
@@ -43,40 +49,33 @@ function App() {
   return (
     <AppContainer>
       <div className="desktop">
-        <DesktopIcon
+      {/* <DesktopIcon
           name="My Computer"
           iconSrc={mypcIcon}
-          onDoubleClick={() => openWindow('My Computer', mypcIcon)}
+          onDoubleClick={() => openWindow('My Computer', mypcIcon, MyPC, 11)}
+        /> */}
+          <DesktopIcon
+          name="File Explorer"
+          iconSrc={FileExplorerIcon}
+          onDoubleClick={() => openWindow('File Explorer', folderIconSrc, FileExplorer, 1)}
         />
         <DesktopIcon
-          name="File Explorer"
+          name="Documents"
           iconSrc={folderIconSrc}
-          onDoubleClick={() => onFileClick(1)} // 'Documents' folder id
+          onDoubleClick={() => openWindow('Documents', folderIconSrc, Documents, 7)}
         />
         {/* Additional desktop icons */}
       </div>
       {windows.map((win) => (
-        win.title === 'My Computer' ? (
-          <MyPC
-            key={win.id}
-            title={win.title}
-            iconSrc={win.iconSrc}
-            onClose={() => closeWindow(win.id)}
-            filesystem={filesystem} // Pass filesystem to MyPC
-            onFileClick={onFileClick} // Pass onFileClick if necessary
-          />
-        ) : (
-          <FileExplorer
-            key={win.id}
-            title={win.title}
-            filesystem={filesystem}
-            windowId={win.windowId}
-            onClose={() => closeWindow(win.id)}
-            onFileClick={onFileClick}
-            addFileOrFolder={addFileOrFolder}
-            deleteItem={deleteItem}
-          />
-        )
+        <win.Component
+          key={win.id}
+          title={win.title}
+          iconSrc={win.iconSrc}
+          onClose={() => closeWindow(win.id)}
+          filesystem={filesystem}
+          windowId={win.windowId}
+          findItemById={findItemById}
+        />
       ))}
       <Taskbar windows={windows} />
     </AppContainer>

@@ -1,18 +1,18 @@
+// src/components/windows/Documents.js
 import React, { useState } from 'react';
 import Draggable from 'react-draggable';
 import { 
-  MypcContainer, 
-  MypcTitle, 
-  CloseButton, 
-  MypcBody, 
-  MypcHeader, 
+  ExplorerContainer, 
+  ExplorerHeader, 
+  ExplorerBody, 
+  ExplorerTitle, 
   Breadcrumbs, 
-  Icon, 
-  FileExplorerItem 
-} from '../style/MyPC';
+  CloseButton, 
+  ExplorerItem 
+} from '../style/DocumentsStyle';
 
-function Mypc({ title, iconSrc, onClose, filesystem, findItemById, onFileClick }) {
-  const [currentPath, setCurrentPath] = useState([1]); // Start with root folder id
+function Documents({ title, filesystem, windowId, onClose, findItemById }) {
+  const [currentPath, setCurrentPath] = useState([windowId]);
 
   const currentFolder = findItemById(filesystem, currentPath[currentPath.length - 1]);
 
@@ -25,16 +25,13 @@ function Mypc({ title, iconSrc, onClose, filesystem, findItemById, onFileClick }
   };
 
   return (
-    <Draggable handle=".mypc-header">
-      <MypcContainer>
-        <MypcHeader className="mypc-header">
-          <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Icon src={iconSrc} alt={`${title} icon`} />
-            <MypcTitle>{title}</MypcTitle>
-          </div>
+    <Draggable handle=".explorer-header">
+      <ExplorerContainer>
+        <ExplorerHeader className="explorer-header">
+          <ExplorerTitle>{title}</ExplorerTitle>
           <CloseButton onClick={onClose}>×</CloseButton>
-        </MypcHeader>
-        <MypcBody>
+        </ExplorerHeader>
+        <ExplorerBody>
           <Breadcrumbs>
             {currentPath.map((id, index) => {
               const folder = findItemById(filesystem, id);
@@ -48,17 +45,17 @@ function Mypc({ title, iconSrc, onClose, filesystem, findItemById, onFileClick }
           </Breadcrumbs>
           {currentFolder && currentFolder.contents ? (
             currentFolder.contents.map(item => (
-              <FileExplorerItem key={item.id} onDoubleClick={() => updatePath(item.id)}>
+              <ExplorerItem key={item.id} onDoubleClick={() => updatePath(item.id)}>
                 {item.type === 'folder' ? '📁' : '📄'} {item.name}
-              </FileExplorerItem>
+              </ExplorerItem>
             ))
           ) : (
             <div>No items</div>
           )}
-        </MypcBody>
-      </MypcContainer>
+        </ExplorerBody>
+      </ExplorerContainer>
     </Draggable>
   );
 }
 
-export default Mypc;
+export default Documents;
