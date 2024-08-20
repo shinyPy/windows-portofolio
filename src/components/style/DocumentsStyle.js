@@ -74,3 +74,43 @@ export const ExplorerItem = styled.div`
     background: #f0f0f0;
   }
 `;
+
+export const FileViewer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  color: #fff;
+  position: relative;
+
+  img, video {
+    max-width: 90%;
+    max-height: 90%;
+  }
+
+  button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+`;
+
+export const BreadcrumbLink = styled.button`
+  background: none;
+  border: none;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 0;
+  font-size: inherit;
+
+  &:hover {
+    text-decoration: none;
+  }
+`;

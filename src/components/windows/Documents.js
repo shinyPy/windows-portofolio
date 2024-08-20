@@ -8,8 +8,12 @@ import {
   ExplorerTitle, 
   Breadcrumbs, 
   CloseButton, 
-  ExplorerItem 
+  ExplorerItem,
+  BreadcrumbLink,
+  FileViewer, 
 } from '../style/DocumentsStyle';
+
+
 
 function Documents({ title, filesystem, windowId, onClose, findItemById }) {
   const [currentPath, setCurrentPath] = useState([windowId]);
@@ -32,17 +36,16 @@ function Documents({ title, filesystem, windowId, onClose, findItemById }) {
           <CloseButton onClick={onClose}>×</CloseButton>
         </ExplorerHeader>
         <ExplorerBody>
-          <Breadcrumbs>
-            {currentPath.map((id, index) => {
-              const folder = findItemById(filesystem, id);
-              return (
-                <span key={id}>
-                  {index > 0 && ' > '}
-                  <a onClick={() => goToFolder(id)}>{folder.name}</a>
-                </span>
-              );
-            })}
-          </Breadcrumbs>
+        <Breadcrumbs>
+          {currentPath.map((id, index) => (
+            <span key={id}>
+              {index > 0 && ' > '}
+              <BreadcrumbLink onClick={() => goToFolder(id)}>
+                {findItemById(filesystem, id).name}
+              </BreadcrumbLink>
+            </span>
+          ))}
+        </Breadcrumbs>
           {currentFolder && currentFolder.contents ? (
             currentFolder.contents.map(item => (
               <ExplorerItem key={item.id} onDoubleClick={() => updatePath(item.id)}>

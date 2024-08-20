@@ -5,89 +5,50 @@ import { useState } from 'react';
 // Import your assets
 // import Resume from '../../assets/documents/Resume.docx';
 // import CoverLetter from '../assets/documents/CoverLetter.docx';
-import Saber from '../assets/images/saber.jpg';
-import Intro from '../assets/videos/rawr.mp4';
-
+import saberImage from '../assets/images/saber.jpg';
+import rawrVideo from '../assets/videos/rawr.mp4';
 // Initial filesystem structure
+// src/utils/filesystem.js
 const initialFilesystem = [
   {
     id: 1,
-    name: 'C:',
+    name: '/',
     type: 'folder',
     contents: [
       {
         id: 2,
-        name: 'Program Files',
+        name: 'desktop',
         type: 'folder',
         contents: [
           {
             id: 3,
-            name: 'App1',
+            name: 'Achievements',
             type: 'folder',
             contents: [
-              { id: 4, name: 'app1.exe', type: 'file' },
+              { id: 4, name: 'picture.jpg', type: 'file', src: saberImage },
             ],
           },
-        ],
-      },
-      {
-        id: 5,
-        name: 'Users',
-        type: 'folder',
-        contents: [
           {
-            id: 6,
-            name: 'User',
+            id: 5,
+            name: 'Projects!',
             type: 'folder',
             contents: [
-              {
-                id: 7,
-                name: 'Documents',
-                type: 'folder',
-                contents: [
-                  { id: 8, name: 'Resume.docx', type: 'file' },
-                ],
-              },
-              {
-                id: 9,
-                name: 'Pictures',
-                type: 'folder',
-                contents: [
-                  { id: 10, name: 'Vacation.png', type: 'file' },
-                ],
-              },
-              {
-                id: 11,
-                name: 'Videos',
-                type: 'folder',
-                contents: [
-                  { id: 12, name: 'Birthday.mp4', type: 'file' },
-                ],
-              },
-              {
-                id: 13,
-                name: 'Desktop',
-                type: 'folder',
-                contents: [
-                  { id: 14, name: 'shortcut.lnk', type: 'file' },
-                ],
-              },
+              { id: 6, name: 'github.repo.link', type: 'file' },
+              { id: 11, name: 'rawr.mp4', type: 'file', src: rawrVideo},
+
             ],
           },
-        ],
-      },
-      {
-        id: 15,
-        name: 'Windows',
-        type: 'folder',
-        contents: [
-          { id: 16, name: 'explorer.exe', type: 'file' },
-          { id: 17, name: 'notepad.exe', type: 'file' },
+          { id: 7, name: 'terminal.exe', type: 'file' },
+          { id: 8, name: 'skills.txt', type: 'file' },
+          { id: 9, name: 'welcome.txt', type: 'file' },
+          { id: 10, name: 'introduction.txt', type: 'file' },
         ],
       },
     ],
   },
 ];
+
+export default initialFilesystem;
 
 export const useFilesystem = () => {
   const [filesystem, setFilesystem] = useState(initialFilesystem);
