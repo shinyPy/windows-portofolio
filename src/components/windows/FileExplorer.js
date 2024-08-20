@@ -14,12 +14,15 @@ import {
   FileViewer,
 } from '../style/FileExplorerStyle';
 
-
 function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemById }) {
   const [currentPath, setCurrentPath] = useState([windowId]);
   const [viewingFile, setViewingFile] = useState(null);
 
   const currentFolder = findItemById(filesystem, currentPath[currentPath.length - 1]);
+
+  const getFullPath = () => {
+    return currentPath.map((id) => findItemById(filesystem, id).name).join(' > ');
+  };
 
   const updatePath = (id) => {
     const clickedItem = findItemById(filesystem, id);
@@ -71,7 +74,9 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
                   return (
                     <span key={id}>
                       {index > 0 && ' > '}
-                      <BreadcrumbLink onClick={() => goToFolder(id)}>{folder.name}</BreadcrumbLink>
+                      <BreadcrumbLink onClick={() => goToFolder(id)}>
+                        {folder.name === '/' ? 'Root' : folder.name}
+                      </BreadcrumbLink>
                     </span>
                   );
                 })}

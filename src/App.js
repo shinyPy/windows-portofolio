@@ -10,6 +10,10 @@ import backgroundImage from './assets/images/windows.jpg';
 import folderIconSrc from './assets/icons/folder.png';
 import Documents from './components/windows/Documents';
 import FileExplorerIcon from './assets/icons/file-explorer.png';
+import PictureViewer from './utils/PictureViewer';
+import VideoViewer from './utils/VideoViewer';
+import fileIconSrc from './assets/icons/file.png';
+import GlobalStyle from './globalStyle';
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -22,7 +26,6 @@ const AppContainer = styled.div`
 `;
 
 const DesktopContainer = styled.div`
-  display: flex;
   flex-wrap: wrap;
   padding: 20px;
   .desktop-icon {
@@ -44,10 +47,17 @@ function App() {
       if (clickedItem.type === 'folder') {
         const existingWindow = windows.find(win => win.windowId === id);
         if (existingWindow) {
-          // Bring the existing window to the front
           setWindows([...windows.filter(win => win.windowId !== id), existingWindow]);
         } else {
           openWindow(clickedItem.name, folderIconSrc, FileExplorer, id);
+        }
+      } else if (clickedItem.type === 'file') {
+        if (clickedItem.name.endsWith('.png') || clickedItem.name.endsWith('.jpg')) {
+          openWindow(clickedItem.name, fileIconSrc, PictureViewer, id, clickedItem.src);
+        } else if (clickedItem.name.endsWith('.mp4')) {
+          openWindow(clickedItem.name, fileIconSrc, VideoViewer, id, clickedItem.src);
+        } else {
+          alert(`Opened file: ${clickedItem.name}`); // Replace with actual file handling
         }
       }
     }
@@ -58,37 +68,42 @@ function App() {
   };
 
   return (
-    <AppContainer>
-      <DesktopContainer className="desktop">
-        <DesktopIcon
-          className="desktop-icon"
-          name="File Explorer"
-          iconSrc={FileExplorerIcon}
-          onDoubleClick={() => openWindow('File Explorer', folderIconSrc, FileExplorer, 1)}
-        />
-        <DesktopIcon
-          className="desktop-icon"
-          name="Documents"
-          iconSrc={folderIconSrc}
-          onDoubleClick={() => openWindow('Documents', folderIconSrc, Documents, 7)}
-        />
-        {/* Additional desktop icons */}
-      </DesktopContainer>
-      {windows.map((win) => (
-        <win.Component
-          key={win.id}
-          title={win.title}
-          iconSrc={win.iconSrc}
-          onClose={() => closeWindow(win.id)}
-          filesystem={filesystem}
-          windowId={win.windowId}
-          findItemById={findItemById}
-          onFileClick={onFileClick}
-          src={win.src} // Pass the src to the component
-        />
-      ))}
-      <Taskbar windows={windows} />
-    </AppContainer>
+    <>
+      <GlobalStyle /> {/* Apply global styles */}
+      <AppContainer>
+        <DesktopContainer className="desktop">
+          <DesktopIcon
+            className="desktop-icon"
+            name="File Explorer"
+            iconSrc={FileExplorerIcon}
+            onDoubleClick={() => openWindow('File Explorer', folderIconSrc, FileExplorer, 1)}
+          />
+          {initialFilesystem[0].contents[0].contents.map(item => (
+            <DesktopIcon
+              key={item.id}
+              className="desktop-icon"
+              name={item.name}
+              iconSrc={item.type === 'folder' ? folderIconSrc : fileIconSrc}
+              onDoubleClick={() => onFileClick(item.id) }
+            />
+          ))}
+        </DesktopContainer>
+        {windows.map((win) => (
+          <win.Component
+            key={win.id}
+            title={win.title}
+            iconSrc={win.iconSrc}
+            onClose={() => closeWindow(win.id)}
+            filesystem={filesystem}
+            windowId={win.windowId}
+            findItemById={findItemById}
+            onFileClick={onFileClick}
+            src={win.src} // Pass the src to the component
+          />
+        ))}
+        <Taskbar windows={windows} />
+      </AppContainer>
+    </>
   );
 }
 

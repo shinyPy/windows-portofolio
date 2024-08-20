@@ -2,16 +2,16 @@
 import React, { useState } from 'react';
 import Draggable from 'react-draggable';
 import { 
-  ExplorerContainer, 
-  ExplorerHeader, 
-  ExplorerBody, 
-  ExplorerTitle, 
+  WindowContainer, 
+  WindowHeader, 
+  WindowBody, 
+  WindowTitle, 
   Breadcrumbs, 
   CloseButton, 
-  ExplorerItem,
+  WindowItem,
   BreadcrumbLink,
   // FileViewer, 
-} from '../style/DocumentsStyle';
+} from '../style/WindowStyle';
 
 
 
@@ -29,13 +29,13 @@ function Documents({ title, filesystem, windowId, onClose, findItemById }) {
   };
 
   return (
-    <Draggable handle=".explorer-header">
-      <ExplorerContainer>
-        <ExplorerHeader className="explorer-header">
-          <ExplorerTitle>{title}</ExplorerTitle>
+    <Draggable handle=".window-header">
+      <WindowContainer>
+        <WindowHeader className="window-header">
+          <WindowTitle>{title}</WindowTitle>
           <CloseButton onClick={onClose}>×</CloseButton>
-        </ExplorerHeader>
-        <ExplorerBody>
+        </WindowHeader>
+        <WindowBody>
         <Breadcrumbs>
           {currentPath.map((id, index) => (
             <span key={id}>
@@ -48,15 +48,15 @@ function Documents({ title, filesystem, windowId, onClose, findItemById }) {
         </Breadcrumbs>
           {currentFolder && currentFolder.contents ? (
             currentFolder.contents.map(item => (
-              <ExplorerItem key={item.id} onDoubleClick={() => updatePath(item.id)}>
+              <WindowItem key={item.id} onDoubleClick={() => updatePath(item.id)}>
                 {item.type === 'folder' ? '📁' : '📄'} {item.name}
-              </ExplorerItem>
+              </WindowItem>
             ))
           ) : (
             <div>No items</div>
           )}
-        </ExplorerBody>
-      </ExplorerContainer>
+        </WindowBody>
+      </WindowContainer>
     </Draggable>
   );
 }

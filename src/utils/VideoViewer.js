@@ -1,3 +1,4 @@
+// src/components/windows/VideoViewer.js
 import React from 'react';
 import styled from 'styled-components';
 
@@ -10,10 +11,21 @@ const VideoContainer = styled.div`
   height: 100%;
   background-color: #000;
   color: #fff;
+  position: relative;
 
   video {
     max-width: 90%;
     max-height: 90%;
+  }
+
+  button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
   }
 `;
 

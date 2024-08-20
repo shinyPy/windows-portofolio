@@ -8,8 +8,8 @@ const IconContainer = styled.div`
 `;
 
 const IconImage = styled.img`
-  width: 48px;
-  height: 48px;
+  width: 37px;
+  height: 37px;
 `;
 
 const IconLabel = styled.div`
