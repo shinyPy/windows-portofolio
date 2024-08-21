@@ -14,12 +14,14 @@ const WindowContainer = ({ windows, closeWindow, filesystem, findItemById }) => 
           filesystem={filesystem}
           windowId={win.windowId}
           findItemById={findItemById}
-          viewingFile={win.viewingFile}  // Pass the viewingFile prop
-          fullPath={win.fullPath}  // Pass the fullPath prop
+          viewingFile={win.viewingFile}
+          fullPath={win.fullPath}
+          showCloseButton={win.showCloseButton} // Pass the showCloseButton prop
         />
       ))}
     </>
   );
 };
+
 
 export default WindowContainer;

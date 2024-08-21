@@ -3,7 +3,7 @@ import FileExplorer from './components/windows/FileExplorer';
 import GlobalStyle from './globalStyle';
 import { AppContainer, ContentWrapper, WarningContainer } from './components/style/ContainerStyle';
 import { useAppHooks, getFullPath } from './hooks/appHooks';
-import folderIconSrc from './assets/icons/folder.png';
+import folderIconSrc from './assets/icons/file-explorer.png';
 import fileIconSrc from './assets/icons/file.png';
 import initialFilesystem from './utils/filesystem/initialFilesystem';
 import DesktopIconContainer from './components/container/DesktopIconContainer';
@@ -13,7 +13,7 @@ import Taskbar from './components/Taskbar';
 function App() {
   const { filesystem, windows, setWindows, isMobile, findItemById } = useAppHooks(initialFilesystem);
 
-  const openWindow = (title, id, viewingFile = null, fullPath) => {
+  const openWindow = (title, id, viewingFile = null, fullPath, showCloseButton = true) => {
     const existingWindow = windows.find(win => win.windowId === id && win.viewingFile === viewingFile);
     if (existingWindow) {
       setWindows([...windows.filter(win => win.windowId !== id || win.viewingFile !== viewingFile), existingWindow]);
@@ -26,24 +26,26 @@ function App() {
         windowId: id,
         viewingFile,
         fullPath,
+        showCloseButton, // Pass the showCloseButton prop
       }]);
     }
   };
-
+  
   const onFileClick = (id) => {
     const clickedItem = findItemById(filesystem, id);
     const fullPath = getFullPath(id, filesystem);
-
+  
     if (clickedItem) {
       if (clickedItem.type === 'folder') {
-        openWindow(clickedItem.name, id, null, fullPath);
+        openWindow('File Explorer', id, null, fullPath);
       } else if (clickedItem.type === 'file') {
-        openWindow(clickedItem.name, id, clickedItem, fullPath);
+        openWindow(clickedItem.name, id, clickedItem, fullPath, false); // Set showCloseButton to false
       } else if (clickedItem.type === 'link') {
         window.open(clickedItem.url, '_blank');
       }
     }
   };
+  
 
   const closeWindow = (id) => {
     setWindows(windows.filter(win => win.id !== id));

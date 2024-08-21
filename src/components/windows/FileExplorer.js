@@ -1,11 +1,10 @@
-// FileExplorer.js
 import React, { useState, useEffect } from 'react';
-import Draggable from 'react-draggable';
+import { Rnd } from 'react-rnd';
 import Breadcrumb from '../../utils/breadcrumb';
 import FileItem from '../../utils/fileitem';
 import FileUtils from '../../utils/fileutils';
 
-function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemById, viewingFile: externalViewingFile, fullPath = [] }) {
+function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemById, viewingFile: externalViewingFile, fullPath = [], showCloseButton = true }) {
   const [currentPath, setCurrentPath] = useState(fullPath.length ? fullPath : [windowId]);
   const [viewingFile, setViewingFile] = useState(externalViewingFile || null);
 
@@ -41,13 +40,23 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
   };
 
   const closeViewer = () => {
-    setViewingFile(null);
-    setCurrentPath(currentPath.slice(0, -1)); // Go back to the parent folder
+    setViewingFile(null); // Reset viewing file without changing the path
   };
+  
 
   return (
-    <Draggable handle=".fileExplorer-header">
-      <div className="w-[600px] h-[400px] bg-white border border-gray-300 rounded-xl shadow-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col overflow-hidden font-mono">
+    <Rnd
+      default={{
+        x: window.innerWidth / 2 - 500,
+        y: window.innerHeight / 2 - 400,
+        width: 600,
+        height: 400,
+      }}
+      minWidth={500}
+      minHeight={400}
+      bounds="window"
+    >
+      <div className="w-full h-full bg-white border border-gray-300 rounded-xl shadow-2xl flex flex-col overflow-hidden font-mono">
         <div className="fileExplorer-header bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-3 flex justify-between items-center rounded-t-xl cursor-move">
           <div className="flex items-center space-x-2">
             <img src={iconSrc} alt={`${title} icon`} className="w-5 h-5" />
@@ -62,7 +71,7 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
         </div>
         <div className="p-3 h-full bg-gray-50 overflow-auto">
           {viewingFile ? (
-            <FileUtils viewingFile={viewingFile} closeViewer={closeViewer} />
+            <FileUtils viewingFile={viewingFile} closeViewer={closeViewer} showCloseButton={showCloseButton} />
           ) : (
             <>
               <Breadcrumb
@@ -85,7 +94,7 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
           )}
         </div>
       </div>
-    </Draggable>
+    </Rnd>
   );
 }
 

@@ -1,15 +1,16 @@
-// FileUtils.js
 import React from 'react';
 
-function FileUtils({ viewingFile, closeViewer }) {
+function FileUtils({ viewingFile, closeViewer, showCloseButton }) {
   return (
-    <div className="fileUtils flex justify-center items-center w-full h-full bg-gray-900 text-white relative rounded-lg">
-      <button
-        onClick={closeViewer}
-        className="absolute top-2 right-2 bg-blue-600 text-white font-semibold px-3 py-1 rounded-full hover:bg-blue-700 transition-colors"
-      >
-        Close
-      </button>
+    <div className="fileUtils flex justify-center items-center w-full h-full bg-white text-black relative rounded-lg p-4 overflow-auto">
+      {showCloseButton && (
+        <button
+          onClick={closeViewer}
+          className="absolute top-5 right-5 bg-black bg-opacity-10 text-black border border-black border-opacity-20 px-4 py-2 rounded-full text-sm backdrop-blur-md transition-transform duration-300 hover:bg-opacity-20 hover:scale-110 focus:outline-none"
+        >
+          Close
+        </button>
+      )}
       {viewingFile?.name?.endsWith('.png') || viewingFile?.name?.endsWith('.jpg') ? (
         <img
           src={viewingFile.src}
@@ -22,8 +23,10 @@ function FileUtils({ viewingFile, closeViewer }) {
           Your browser does not support the video tag.
         </video>
       ) : viewingFile?.name?.endsWith('.txt') ? (
-        <div>
-          <pre>{viewingFile.src}</pre>
+        <div className="w-full h-full bg-white p-4 rounded-lg shadow-lg whitespace-pre-wrap overflow-auto text-balance text-black">
+          <pre className="font-mono text-sm leading-relaxed w-full h-full overflow-x text-balance">
+            {viewingFile.src}
+          </pre>
         </div>
       ) : (
         <div>Unsupported file format</div>
