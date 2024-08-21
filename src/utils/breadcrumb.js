@@ -51,7 +51,7 @@ function Breadcrumb({ currentPath, goToFolder, goBack, findItemById, filesystem 
                     : 'text-gray-600 hover:text-blue-500 transition-colors'
                 }`}
               >
-                {folder.name === '/' ? 'root' : folder.name}
+                {folder.name === '/' ? '/' : folder.name}
               </button>
             </li>
           );

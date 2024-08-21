@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import FileExplorer from './components/windows/FileExplorer';
-import GlobalStyle from './globalStyle';
 import { AppContainer, ContentWrapper, WarningContainer } from './components/style/ContainerStyle';
-import { useAppHooks, getFullPath } from './hooks/appHooks';
 import folderIconSrc from './assets/icons/file-explorer.png';
 import fileIconSrc from './assets/icons/file.png';
 import initialFilesystem from './utils/filesystem/initialFilesystem';
 import DesktopIconContainer from './components/container/DesktopIconContainer';
 import WindowContainer from './components/container/WindowContainer';
 import Taskbar from './components/Taskbar';
+import { useAppHooks, getFullPath } from './hooks/appHooks';
 
 function App() {
   const { filesystem, windows, setWindows, isMobile, findItemById } = useAppHooks(initialFilesystem);
@@ -30,11 +29,11 @@ function App() {
       }]);
     }
   };
-  
+
   const onFileClick = (id) => {
     const clickedItem = findItemById(filesystem, id);
     const fullPath = getFullPath(id, filesystem);
-  
+
     if (clickedItem) {
       if (clickedItem.type === 'folder') {
         openWindow('File Explorer', id, null, fullPath);
@@ -45,15 +44,20 @@ function App() {
       }
     }
   };
-  
 
   const closeWindow = (id) => {
     setWindows(windows.filter(win => win.id !== id));
   };
 
+  useEffect(() => {
+    const welcomeFile = filesystem[0].contents[0].contents.find(item => item.name === 'welcome.txt');
+    if (welcomeFile) {
+      openWindow(welcomeFile.name, welcomeFile.id, welcomeFile, getFullPath(welcomeFile.id, filesystem), false);
+    }// eslint-disable-next-line
+  }, []);
+
   return (
     <>
-      <GlobalStyle />
       <AppContainer>
         <ContentWrapper isMobile={isMobile}>
           <DesktopIconContainer
@@ -65,7 +69,7 @@ function App() {
         </ContentWrapper>
         <Taskbar windows={windows} />
         <WarningContainer isMobile={isMobile}>
-          <div className="warning-message">Message from Shiniya: pake pc woi</div>
+          <div className="warning-message font-mono text-lg">Bad experience for mobile users, use pc for better experience.</div>
         </WarningContainer>
       </AppContainer>
     </>

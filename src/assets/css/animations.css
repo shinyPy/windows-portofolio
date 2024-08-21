@@ -1,0 +1,56 @@
+@keyframes desktop-icon-appear {
+  0% {
+    transform: rotateX(90deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+.desktop-icon-appear {
+  animation: desktop-icon-appear 0.5s;
+}
+
+.transition05 {
+  transition:all 0.5s;
+}
+
+/* Animation for opening the window */
+@keyframes openWindow {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animation for closing the window */
+@keyframes closeWindow {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+.window-container {
+  animation: openWindow 0.5s forwards;
+}
+
+.window-container.closing {
+  animation: closeWindow 0.5s forwards;
+}

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Rnd } from 'react-rnd';
 import Breadcrumb from '../../utils/breadcrumb';
-import FileItem from '../../utils/fileitem';
-import FileUtils from '../../utils/fileutils';
+import FileItem from '../../utils/filesystem/fileitem';
+import FileUtils from '../../utils/filesystem/fileutils';
 
 function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemById, viewingFile: externalViewingFile, fullPath = [], showCloseButton = true }) {
   const [currentPath, setCurrentPath] = useState(fullPath.length ? fullPath : [windowId]);
   const [viewingFile, setViewingFile] = useState(externalViewingFile || null);
+  const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
     if (fullPath.length) {
@@ -40,15 +41,20 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
   };
 
   const closeViewer = () => {
-    setViewingFile(null); // Reset viewing file without changing the path
+    setIsClosing(true); // Trigger closing animation
+    setTimeout(() => {
+      onClose(); // Call the close function after animation
+    }, 100); // Match the duration of the closing animation
   };
-  
+
+  const initialX = window.innerWidth / 2 - 350; // Horizontal center
+  const initialY = window.innerHeight / 2 - 750; // Vertical center
 
   return (
     <Rnd
       default={{
-        x: window.innerWidth / 2 - 500,
-        y: window.innerHeight / 2 - 400,
+        x: initialX,
+        y: initialY,
         width: 600,
         height: 400,
       }}
@@ -56,14 +62,14 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
       minHeight={400}
       bounds="window"
     >
-      <div className="w-full h-full bg-white border border-gray-300 rounded-xl shadow-2xl flex flex-col overflow-hidden font-mono">
+      <div className={`w-full h-full bg-white border border-gray-300 rounded-xl shadow-2xl flex flex-col overflow-hidden font-mono window-container ${isClosing ? 'closing' : ''}`}>
         <div className="fileExplorer-header bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-3 flex justify-between items-center rounded-t-xl cursor-move">
           <div className="flex items-center space-x-2">
             <img src={iconSrc} alt={`${title} icon`} className="w-5 h-5" />
             <div className="text-base font-semibold">{title}</div>
           </div>
           <button
-            onClick={onClose}
+            onClick={closeViewer}
             className="text-2xl p-1 transition-colors"
           >
             ×
