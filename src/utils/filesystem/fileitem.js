@@ -1,16 +1,24 @@
-// FileItem.js
 import React from 'react';
 
 function FileItem({ item, updatePath }) {
   const getIcon = () => {
     if (item.type === 'folder') return '📁';
+    if (item.type === 'link') return '🔗'; // Icon for link type
     if (item.name.endsWith('.exe')) return '💻';
     return '📄';
   };
 
+  const handleDoubleClick = () => {
+    if (item.type === 'link') {
+      window.open(item.url, '_blank'); // Open link in a new tab
+    } else {
+      updatePath(item.id);
+    }
+  };
+
   return (
     <div
-      onDoubleClick={() => updatePath(item.id)}
+      onDoubleClick={handleDoubleClick}
       className="fileExplorerItem flex items-center p-3 cursor-pointer bg-white rounded-lg shadow-sm border border-gray-200 hover:bg-gray-100 transition-all"
     >
       <span className="mr-3 text-lg">{getIcon()}</span>

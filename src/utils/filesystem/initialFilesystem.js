@@ -20,6 +20,7 @@ const initialFilesystem = [
             type: 'folder',
             contents: [
               { id: 4, name: 'picture.jpg', type: 'file', src: saberImage },
+              
             ],
           },
           {
@@ -27,7 +28,7 @@ const initialFilesystem = [
             name: 'Projects!',
             type: 'folder',
             contents: [
-              // { id: 6, name: 'shinyPy', type: 'link', url: 'https://github.com/shinyPy/' },
+              { id: 6, name: 'My Github', type: 'link', url: 'https://github.com/shinyPy/' },
               { id: 11, name: 'rawr.mp4', type: 'file', src: rawrVideo },
             ],
           },

@@ -1,6 +1,14 @@
 import React from 'react';
 
 function FileUtils({ viewingFile, closeViewer, showCloseButton }) {
+  // Handle file types and links
+  const handleFileClick = () => {
+    if (viewingFile.type === 'link' && viewingFile.url) {
+      window.open(viewingFile.url, '_blank');
+    }
+  };
+
+  // Ensure handleFileClick is triggered if needed (e.g., in a button or similar interaction)
   return (
     <div className="fileUtils flex justify-center items-center w-full h-full bg-white text-black relative rounded-lg p-4 overflow-auto">
       {showCloseButton && (
@@ -11,7 +19,14 @@ function FileUtils({ viewingFile, closeViewer, showCloseButton }) {
           Close
         </button>
       )}
-      {viewingFile?.name?.endsWith('.png') || viewingFile?.name?.endsWith('.jpg') ? (
+      {viewingFile?.type === 'link' ? (
+        <button
+          onClick={handleFileClick}
+          className="text-blue-500 underline bg-white hover:text-blue-700"
+        >
+          Open Link
+        </button>
+      ) : viewingFile?.name?.endsWith('.png') || viewingFile?.name?.endsWith('.jpg') ? (
         <img
           src={viewingFile.src}
           alt={viewingFile.name}
