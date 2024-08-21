@@ -39,7 +39,7 @@ const initialFilesystem = [
             ],
           },
           { id: 7, name: 'terminal.exe', type: 'file' },
-          { id: 8, name: 'skills.txt', type: 'file', src: rawrVideo },
+          { id: 8, name: 'skills.txt', type: 'file', src: 'This is an example text file.', },
           { id: 9, name: 'welcome.txt', type: 'file' },
           { id: 10, name: 'introduction.txt', type: 'file' },
         ],

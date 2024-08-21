@@ -1,42 +1,19 @@
 // src/components/windows/VideoViewer.js
 import React from 'react';
-import styled from 'styled-components';
-
-const VideoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-  color: #fff;
-  position: relative;
-
-  video {
-    max-width: 90%;
-    max-height: 90%;
-  }
-
-  button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-`;
 
 const VideoViewer = ({ title, src, onClose }) => (
-  <VideoContainer>
-    <button onClick={onClose}>Close</button>
-    <video controls>
+  <div className="flex flex-col justify-center items-center w-full h-full bg-black bg-opacity-90 relative">
+    <button
+      onClick={onClose}
+      className="absolute top-5 right-5 bg-white bg-opacity-10 text-white border border-white border-opacity-20 px-4 py-2 rounded-full text-sm backdrop-blur-md transition-transform duration-300 hover:bg-opacity-20 hover:scale-110 focus:outline-none"
+    >
+      Close
+    </button>
+    <video controls className="max-w-5/6 max-h-5/6 rounded-lg shadow-lg">
       <source src={src} type="video/mp4" />
       Your browser does not support the video tag.
     </video>
-  </VideoContainer>
+  </div>
 );
 
 export default VideoViewer;

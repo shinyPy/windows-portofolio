@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import backgroundImage from '../../assets/images/windows.jpg';
+import backgroundImage from '../../assets/images/background.jpg';
 
 export const AppContainer = styled.div`
   width: 100vw;

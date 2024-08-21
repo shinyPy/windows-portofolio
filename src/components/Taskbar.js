@@ -3,8 +3,8 @@ import terminalIcon from '../assets/icons/exeIcon.png';
 
 function Taskbar({ windows }) {
   return (
-    <div className="h-10 bg-[#1c1c1c] flex items-center px-2.5 justify-between shadow-md fixed bottom-0 w-full z-50">
-      <div className="flex items-center flex-grow justify-center">
+    <div className="h-10 bg-[#1c1c1c] flex items-center px-2.5 overflow-x-scroll justify-between shadow-md fixed bottom-0 w-full z-50">
+      <div className="flex items-center flex-grow justify-center overflow-x-scroll scrollbar-hide">
         <div className="bg-[#2d2d2d] px-2 py-1 rounded flex items-center cursor-pointer mr-2.5 shadow-inner hover:bg-[#444444]">
           <img src={terminalIcon} alt="Terminal" className="w-5 h-5 mr-2" />
           <span className="text-white text-sm font-medium">Terminal</span>
@@ -12,7 +12,7 @@ function Taskbar({ windows }) {
         {windows.map((win) => (
           <div
             key={win.id}
-            className="bg-[#2d2d2d] text-white text-sm font-medium px-2 py-1 rounded flex items-center cursor-pointer mr-2.5 shadow-inner hover:bg-[#444444]"
+            className="bg-[#2d2d2d] text-white text-sm font-medium px-2 py-1 rounded overflow-x-scroll flex items-center cursor-pointer mr-2.5 shadow-inner hover:bg-[#444444]"
           >
             <img src={win.iconSrc} alt={`${win.title} icon`} className="w-4 h-4 mr-2" />
             {win.title}
@@ -24,6 +24,7 @@ function Taskbar({ windows }) {
 }
 
 export default Taskbar;
+
 
 
 // const TaskbarContainer = styled.div`
