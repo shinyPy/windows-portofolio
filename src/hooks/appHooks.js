@@ -1,6 +1,5 @@
-// src/hooks/appHooks.js
-import { useFilesystem } from '../utils/filesystem';
 import { useState, useEffect } from 'react';
+import { useFilesystem } from './useFilesystem';
 
 export function useAppHooks(initialFilesystem) {
   const { filesystem, findItemById } = useFilesystem(initialFilesystem);
@@ -26,3 +25,16 @@ export function useAppHooks(initialFilesystem) {
     findItemById,
   };
 }
+
+export const getFullPath = (id, filesystem, path = []) => {
+  for (const item of filesystem) {
+    if (item.id === id) {
+      return [...path, id];
+    }
+    if (item.contents) {
+      const result = getFullPath(id, item.contents, [...path, item.id]);
+      if (result) return result;
+    }
+  }
+  return null;
+};

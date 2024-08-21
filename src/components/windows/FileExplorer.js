@@ -47,7 +47,7 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
 
   return (
     <Draggable handle=".fileExplorer-header">
-      <div className="w-[600px] h-[400px] bg-white border border-gray-300 rounded-xl shadow-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col overflow-hidden">
+      <div className="w-[600px] h-[400px] bg-white border border-gray-300 rounded-xl shadow-2xl absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col overflow-hidden font-mono">
         <div className="fileExplorer-header bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-3 flex justify-between items-center rounded-t-xl cursor-move">
           <div className="flex items-center space-x-2">
             <img src={iconSrc} alt={`${title} icon`} className="w-5 h-5" />
@@ -60,7 +60,7 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
             ×
           </button>
         </div>
-        <div className="p-3 h-full bg-gray-50 overflow-auto font-sans">
+        <div className="p-3 h-full bg-gray-50 overflow-auto">
           {viewingFile ? (
             <FileUtils viewingFile={viewingFile} closeViewer={closeViewer} />
           ) : (
