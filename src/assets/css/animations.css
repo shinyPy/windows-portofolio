@@ -48,9 +48,9 @@
 }
 
 .window-container {
-  animation: openWindow 0.5s forwards;
+  animation: openWindow 0.2s forwards;
 }
 
 .window-container.closing {
-  animation: closeWindow 0.5s forwards;
+  animation: closeWindow 0.2s forwards;
 }

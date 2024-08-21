@@ -41,10 +41,14 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
   };
 
   const closeViewer = () => {
+    setViewingFile(null); // Reset viewing file without changing the path
+  };
+
+  const closeWindow = () => {
     setIsClosing(true); // Trigger closing animation
     setTimeout(() => {
       onClose(); // Call the close function after animation
-    }, 100); // Match the duration of the closing animation
+    }, 50); // Match the duration of the closing animation
   };
 
   const initialX = window.innerWidth / 2 - 350; // Horizontal center
@@ -69,7 +73,7 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
             <div className="text-base font-semibold">{title}</div>
           </div>
           <button
-            onClick={closeViewer}
+            onClick={closeWindow}
             className="text-2xl p-1 transition-colors"
           >
             ×
