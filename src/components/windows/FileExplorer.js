@@ -1,11 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Rnd } from 'react-rnd';
-import Breadcrumb from '../../utils/breadcrumb';
-import FileItem from '../../utils/filesystem/fileitem';
-import FileUtils from '../../utils/filesystem/fileutils';
+import React, { useState, useEffect } from "react";
+import { Rnd } from "react-rnd";
+import Breadcrumb from "../../utils/breadcrumb";
+import FileItem from "../../utils/filesystem/fileitem";
+import FileUtils from "../../utils/filesystem/fileutils";
 
-function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemById, viewingFile: externalViewingFile, fullPath = [], showCloseButton = true }) {
-  const [currentPath, setCurrentPath] = useState(fullPath.length ? fullPath : [windowId]);
+function FileExplorer({
+  title,
+  iconSrc,
+  filesystem,
+  windowId,
+  onClose,
+  findItemById,
+  viewingFile: externalViewingFile,
+  fullPath = [],
+  showCloseButton = true,
+}) {
+  const [currentPath, setCurrentPath] = useState(
+    fullPath.length ? fullPath : [windowId],
+  );
   const [viewingFile, setViewingFile] = useState(externalViewingFile || null);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -15,14 +27,17 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
     }
   }, [fullPath]);
 
-  const currentFolder = findItemById(filesystem, currentPath[currentPath.length - 1]);
+  const currentFolder = findItemById(
+    filesystem,
+    currentPath[currentPath.length - 1],
+  );
 
   const updatePath = (id) => {
     const clickedItem = findItemById(filesystem, id);
-    if (clickedItem.type === 'folder') {
+    if (clickedItem.type === "folder") {
       setCurrentPath([...currentPath, id]);
       setViewingFile(null); // Reset viewing file
-    } else if (clickedItem.type === 'file') {
+    } else if (clickedItem.type === "file") {
       setViewingFile(clickedItem); // Set the file to be viewed
     }
   };
@@ -62,11 +77,13 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
         width: 600,
         height: 400,
       }}
-      minWidth={500}
+      minWidth={600}
       minHeight={400}
       bounds="window"
     >
-      <div className={`w-full h-full bg-white border border-gray-300 rounded-xl shadow-2xl flex flex-col overflow-hidden font-mono window-container ${isClosing ? 'closing' : ''}`}>
+      <div
+        className={`w-full h-full bg-white border border-gray-300 rounded-xl shadow-2xl flex flex-col overflow-hidden font-mono window-container ${isClosing ? "closing" : ""}`}
+      >
         <div className="fileExplorer-header bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-3 flex justify-between items-center rounded-t-xl cursor-move">
           <div className="flex items-center space-x-2">
             <img src={iconSrc} alt={`${title} icon`} className="w-5 h-5" />
@@ -81,7 +98,11 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
         </div>
         <div className="p-3 h-full bg-gray-50 overflow-auto">
           {viewingFile ? (
-            <FileUtils viewingFile={viewingFile} closeViewer={closeViewer} showCloseButton={showCloseButton} />
+            <FileUtils
+              viewingFile={viewingFile}
+              closeViewer={closeViewer}
+              showCloseButton={showCloseButton}
+            />
           ) : (
             <>
               <Breadcrumb
@@ -94,7 +115,11 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
               {currentFolder && currentFolder.contents ? (
                 <div className="grid grid-cols-2 gap-4">
                   {currentFolder.contents.map((item) => (
-                    <FileItem key={item.id} item={item} updatePath={updatePath} />
+                    <FileItem
+                      key={item.id}
+                      item={item}
+                      updatePath={updatePath}
+                    />
                   ))}
                 </div>
               ) : (

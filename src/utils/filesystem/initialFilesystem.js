@@ -31,7 +31,7 @@ const initialFilesystem = [
         createFile(4, "picture.jpg", "file", saberImage),
       ]),
       createFolder(5, "Projects!", [
-        createFile(6, "My Github", "link", null, "https://github.com/shinyPy/"),
+        // createFile(6, "My Github", "link", null, "https://github.com/shinyPy/"),
         createFile(
           17,
           "TEFAREN",

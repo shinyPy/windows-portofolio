@@ -35,14 +35,23 @@ Regards,
 Roza.
 `;
 
-export const introductionText = `
-Welcome to this file. This document serves as a foundational introduction to the content you are about to explore. Here, we delve into a brief overview of the key topics and objectives that will be covered.
+export const introductionText = `The website is made using create-react-app framework and TailwindCSS.
+most of the time I spent coding on this project is the file system and Window Container handling,
+so I am quite proud with this project since I made most of structure within 2 days and I still plan to further extend features on this website:
 
-The purpose of this text is to provide a concise summary and context for the material presented, ensuring you have a clear understanding of the core themes and objectives. Whether you are here for a quick reference or a deeper exploration, this introduction will set the stage for the content that follows.
+Future ideas for this website
+- ContextMenu (you can create folder and txt file with this, also delete it.)
+- Mobile Support (when using mobile to access this site, it will emulate android/ios feeling)
 
-As you proceed, you will find detailed information, insights, and resources designed to enhance your understanding and engagement with the subject matter. We aim to make this experience informative and enriching, guiding you through the essentials and beyond.
-
-Feel free to refer back to this introduction as needed to refresh your understanding or to clarify any points. Thank you for your interest, and we hope you find this content both valuable and enjoyable.
+You can contact me on Discord : shiniya_
 `;
 
-export const infoText = `Fun fact: I love back end more than front end, this website idea just come to my mind and I made this within 2 days.`;
+export const infoText = `I am not the type to reveal my real name,
+Some people call me Roza (part of real name but modified) or Shin.
+
+I prefer using PHP to make sites (especially with Laravel framework.
+My hobbies were reading stories, writing code and contributing to people's repositories.
+
+I love developing front end with React (I dont like NextJS somehow but plan on learning it)
+
+Currently using Arch Linux (CachyOS) as Daily Driver and I love it!`;
