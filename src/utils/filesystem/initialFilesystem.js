@@ -1,4 +1,4 @@
-import saberImage from "../../assets/images/saber.jpg";
+// import saberImage from "../../assets/images/saber.jpg";
 import dev from "../../assets/videos/dev.mp4";
 import devs from "../../assets/videos/devs.mp4";
 
@@ -27,9 +27,9 @@ const createFolder = (id, name, contents = []) => ({
 const initialFilesystem = [
   createFolder(1, "/", [
     createFolder(2, "desktop", [
-      createFolder(3, "Achievements", [
-        createFile(4, "picture.jpg", "file", saberImage),
-      ]),
+      // createFolder(3, "Achievements", [
+      //   createFile(4, "picture.jpg", "file", saberImage),
+      // ]),
       createFolder(5, "Projects!", [
         // createFile(6, "My Github", "link", null, "https://github.com/shinyPy/"),
         createFile(

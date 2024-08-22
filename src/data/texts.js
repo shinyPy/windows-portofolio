@@ -41,8 +41,9 @@ so I am quite proud with this project since I made most of structure within 2 da
 
 Future ideas for this website
 - ContextMenu (you can create folder and txt file with this, also delete it.)
-- Mobile Support (when using mobile to access this site, it will emulate android/ios feeling)
+- Mobile Support (when using mobile to access this site, it will emulate android/ios feeling.)
 - Add Terminal (the one in the taskbar is still place holder.)
+- Localization ( still under work.)
 You can contact me on Discord : shiniya_
 `;
 
@@ -54,4 +55,5 @@ My hobbies were reading stories, writing code and contributing to people's repos
 
 I love developing front end with React (I dont like NextJS somehow but plan on learning it)
 
-Currently using Arch Linux (CachyOS) as Daily Driver and I love it!`;
+Currently using Arch Linux (CachyOS) as Daily Driver and I love it!
+Discord : shiniya_`;

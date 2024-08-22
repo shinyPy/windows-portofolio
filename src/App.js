@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import folderIconSrc from "./assets/icons/file-explorer.png";
 import fileIconSrc from "./assets/icons/file.png";
-import backgroundImage from "./assets/images/background.png";
+import backgroundImage from "./assets/images/background2.png";
 import DesktopIconContainer from "./components/container/DesktopIconContainer";
 import WindowContainer from "./components/container/WindowContainer";
 import Taskbar from "./components/Taskbar";
