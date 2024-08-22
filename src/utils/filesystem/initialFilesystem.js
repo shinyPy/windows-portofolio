@@ -5,7 +5,7 @@ import devs from "../../assets/videos/devs.mp4";
 import {
   skillsText,
   welcomeText,
-  introductionText,
+  aboutwebsiteText,
   infoText,
 } from "../../data/texts";
 
@@ -65,7 +65,7 @@ const initialFilesystem = [
       ]),
       createFile(8, "skills.txt", "file", skillsText),
       createFile(9, "welcome.txt", "file", welcomeText),
-      createFile(10, "introduction.txt", "file", introductionText),
+      createFile(10, "about website.txt", "file", aboutwebsiteText),
     ]),
   ]),
 ];

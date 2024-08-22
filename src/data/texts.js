@@ -9,13 +9,13 @@ export const skillsText = `Tools that I use:
   Easily sends a project to anyone without causing errors.
 
 Frameworks that I use:
-- Laravel, ReactJS, NextJS.
+- Laravel, ReactJS.
 
 Languages that I use:
 - JavaScript, PHP, Lua.
 
 Databases that I use:
-- MySQL/MariaDB, MongoDB, Text files.
+- MySQL/MariaDB, MongoDB, Text files, JSON.
 
 Architectures:
 - RESTful API, OOP.
@@ -35,14 +35,14 @@ Regards,
 Roza.
 `;
 
-export const introductionText = `The website is made using create-react-app framework and TailwindCSS.
+export const aboutwebsiteText = `The website is made using create-react-app framework and TailwindCSS.
 most of the time I spent coding on this project is the file system and Window Container handling,
 so I am quite proud with this project since I made most of structure within 2 days and I still plan to further extend features on this website:
 
 Future ideas for this website
 - ContextMenu (you can create folder and txt file with this, also delete it.)
 - Mobile Support (when using mobile to access this site, it will emulate android/ios feeling)
-
+- Add Terminal (the one in the taskbar is still place holder.)
 You can contact me on Discord : shiniya_
 `;
 
