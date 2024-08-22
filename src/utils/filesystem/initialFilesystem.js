@@ -1,12 +1,14 @@
 // import saberImage from "../../assets/images/saber.jpg";
 import dev from "../../assets/videos/dev.mp4";
 import devs from "../../assets/videos/devs.mp4";
+import ReactMarkdown from "react-markdown";
 
 import {
   skillsText,
   welcomeText,
   aboutwebsiteText,
   infoText,
+  markdownContent,
 } from "../../data/texts";
 
 const createFile = (id, name, type, src = null, url = null) => ({
@@ -27,11 +29,7 @@ const createFolder = (id, name, contents = []) => ({
 const initialFilesystem = [
   createFolder(1, "/", [
     createFolder(2, "desktop", [
-      // createFolder(3, "Achievements", [
-      //   createFile(4, "picture.jpg", "file", saberImage),
-      // ]),
       createFolder(5, "Projects!", [
-        // createFile(6, "My Github", "link", null, "https://github.com/shinyPy/"),
         createFile(
           17,
           "TEFAREN",
@@ -60,12 +58,12 @@ const initialFilesystem = [
           null,
           "https://github.com/shinyPy/",
         ),
-        // createFile(14, "rawr.mp4", "file", rawrVideo),
         createFile(19, "info.txt", "file", infoText),
       ]),
       createFile(8, "skills.txt", "file", skillsText),
       createFile(9, "welcome.txt", "file", welcomeText),
       createFile(10, "about website.txt", "file", aboutwebsiteText),
+      createFile(15, "README.md", "file", markdownContent), // Example .md file
     ]),
   ]),
 ];

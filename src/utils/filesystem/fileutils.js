@@ -1,4 +1,6 @@
 import React from "react";
+import ReactMarkdown from "react-markdown";
+import rehypeRaw from "rehype-raw"; // Import the plugin for rendering raw HTML
 
 const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
   const handleLinkClick = () => {
@@ -42,6 +44,12 @@ const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
               <pre className="font-mono text-base leading-relaxed w-full h-full overflow-x text-balance">
                 {src}
               </pre>
+            </div>
+          );
+        } else if (name.endsWith(".md")) {
+          return (
+            <div className="w-full h-full bg-white p-4 rounded-lg overflow-auto text-balance prose prose-sm">
+              <ReactMarkdown rehypePlugins={[rehypeRaw]}>{src}</ReactMarkdown>
             </div>
           );
         } else {
