@@ -1,9 +1,54 @@
-import React from 'react';
+import React from "react";
 
-function FileUtils({ viewingFile, closeViewer, showCloseButton }) {
-  const handleFileClick = () => {
-    if (viewingFile.type === 'link' && viewingFile.url) {
-      window.open(viewingFile.url, '_blank');
+const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
+  const handleLinkClick = () => {
+    if (viewingFile.type === "link" && viewingFile.url) {
+      window.open(viewingFile.url, "_blank");
+    }
+  };
+
+  const renderContent = () => {
+    const { type, name, src } = viewingFile;
+
+    switch (type) {
+      case "link":
+        return (
+          <button
+            onClick={handleLinkClick}
+            className="text-blue-500 underline bg-white hover:text-blue-700"
+          >
+            Open Link
+          </button>
+        );
+      case "file":
+        if (name.endsWith(".jpg") || name.endsWith(".png")) {
+          return (
+            <img
+              src={src}
+              alt={name}
+              className="max-w-[90%] max-h-[90%] rounded-lg"
+            />
+          );
+        } else if (name.endsWith(".mp4")) {
+          return (
+            <video controls className="max-w-[90%] max-h-[90%] rounded-lg">
+              <source src={src} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          );
+        } else if (name.endsWith(".txt")) {
+          return (
+            <div className="w-full h-full bg-white p-4 rounded-lg whitespace-pre-wrap overflow-auto text-balance text-black">
+              <pre className="font-mono text-base leading-relaxed w-full h-full overflow-x text-balance">
+                {src}
+              </pre>
+            </div>
+          );
+        } else {
+          return <div>Unsupported file format</div>;
+        }
+      default:
+        return <div>Unsupported file type</div>;
     }
   };
 
@@ -17,35 +62,9 @@ function FileUtils({ viewingFile, closeViewer, showCloseButton }) {
           Close
         </button>
       )}
-      {viewingFile?.type === 'link' ? (
-        <button
-          onClick={handleFileClick}
-          className="text-blue-500 underline bg-white hover:text-blue-700"
-        >
-          Open Link
-        </button>
-      ) : viewingFile?.name?.endsWith('.png') || viewingFile?.name?.endsWith('.jpg') ? (
-        <img
-          src={viewingFile.src}
-          alt={viewingFile.name}
-          className="max-w-[90%] max-h-[90%] rounded-lg"
-        />
-      ) : viewingFile?.name?.endsWith('.mp4') ? (
-        <video controls className="max-w-[90%] max-h-[90%] rounded-lg">
-          <source src={viewingFile.src} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      ) : viewingFile?.name?.endsWith('.txt') ? (
-        <div className="w-full h-full bg-white p-4 rounded-lg whitespace-pre-wrap overflow-auto text-balance text-black">
-          <pre className="font-mono text-base leading-relaxed w-full h-full overflow-x text-balance">
-            {viewingFile.src}
-          </pre>
-        </div>
-      ) : (
-        <div>Unsupported file format</div>
-      )}
+      {renderContent()}
     </div>
   );
-}
+};
 
 export default FileUtils;
