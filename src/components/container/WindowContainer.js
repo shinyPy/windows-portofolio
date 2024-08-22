@@ -7,7 +7,7 @@ const WindowContainer = ({ windows, closeWindow, filesystem, findItemById }) => 
 
   const handleClose = (id) => {
     setClosingWindows([...closingWindows, id]);
-    setTimeout(() => closeWindow(id), 500); // Delay closing the window to allow animation
+    setTimeout(() => closeWindow(id), 200); // Delay closing the window to allow animation
   };
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import FileExplorer from './components/windows/FileExplorer';
-import { AppContainer, ContentWrapper, WarningContainer } from './components/style/ContainerStyle';
 import folderIconSrc from './assets/icons/file-explorer.png';
 import fileIconSrc from './assets/icons/file.png';
 import initialFilesystem from './utils/filesystem/initialFilesystem';
@@ -8,6 +7,7 @@ import DesktopIconContainer from './components/container/DesktopIconContainer';
 import WindowContainer from './components/container/WindowContainer';
 import Taskbar from './components/Taskbar';
 import { useAppHooks, getFullPath } from './hooks/appHooks';
+import backgroundImage from './assets/images/background.png';
 
 function App() {
   const { filesystem, windows, setWindows, isMobile, findItemById } = useAppHooks(initialFilesystem);
@@ -25,7 +25,7 @@ function App() {
         windowId: id,
         viewingFile,
         fullPath,
-        showCloseButton, // Pass the showCloseButton prop
+        showCloseButton,
       }]);
     }
   };
@@ -38,7 +38,7 @@ function App() {
       if (clickedItem.type === 'folder') {
         openWindow('File Explorer', id, null, fullPath);
       } else if (clickedItem.type === 'file') {
-        openWindow(clickedItem.name, id, clickedItem, fullPath, false); // Set showCloseButton to false
+        openWindow(clickedItem.name, id, clickedItem, fullPath, false);
       } else if (clickedItem.type === 'link') {
         window.open(clickedItem.url, '_blank');
       }
@@ -58,20 +58,22 @@ function App() {
 
   return (
     <>
-      <AppContainer>
-        <ContentWrapper isMobile={isMobile}>
+      <div className={`w-screen h-screen bg-center bg-cover flex flex-col justify-between relative ${isMobile ? 'filter blur-[5px]' : ''}`} style={{ backgroundImage: `url(${backgroundImage})` }}>
+        <div className="w-full h-full">
           <DesktopIconContainer
             filesystem={initialFilesystem[0].contents[0].contents}
             onFileClick={onFileClick}
             openWindow={openWindow}
           />
           <WindowContainer windows={windows} closeWindow={closeWindow} filesystem={filesystem} findItemById={findItemById} />
-        </ContentWrapper>
+        </div>
         <Taskbar windows={windows} />
-        <WarningContainer isMobile={isMobile}>
-          <div className="warning-message font-mono text-lg">Bad experience for mobile users, use pc for better experience.</div>
-        </WarningContainer>
-      </AppContainer>
+      </div>
+      {isMobile && (
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white text-black p-5 rounded-lg z-50 flex items-center justify-center">
+          <div className="text-center text-lg font-mono">Bad experience for mobile users, use a PC for a better experience.</div>
+        </div>
+      )}
     </>
   );
 }

@@ -48,7 +48,7 @@ function FileExplorer({ title, iconSrc, filesystem, windowId, onClose, findItemB
     setIsClosing(true); // Trigger closing animation
     setTimeout(() => {
       onClose(); // Call the close function after animation
-    }, 50); // Match the duration of the closing animation
+    }, 200); // Match the duration of the closing animation
   };
 
   const initialX = window.innerWidth / 2 - 350; // Horizontal center

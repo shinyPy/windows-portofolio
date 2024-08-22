@@ -1,14 +1,12 @@
 import React from 'react';
 
 function FileUtils({ viewingFile, closeViewer, showCloseButton }) {
-  // Handle file types and links
   const handleFileClick = () => {
     if (viewingFile.type === 'link' && viewingFile.url) {
       window.open(viewingFile.url, '_blank');
     }
   };
 
-  // Ensure handleFileClick is triggered if needed (e.g., in a button or similar interaction)
   return (
     <div className="fileUtils flex justify-center items-center w-full h-full bg-white text-black relative rounded-lg p-4 overflow-auto">
       {showCloseButton && (
@@ -30,16 +28,16 @@ function FileUtils({ viewingFile, closeViewer, showCloseButton }) {
         <img
           src={viewingFile.src}
           alt={viewingFile.name}
-          className="max-w-[90%] max-h-[90%] rounded-lg shadow-lg"
+          className="max-w-[90%] max-h-[90%] rounded-lg"
         />
       ) : viewingFile?.name?.endsWith('.mp4') ? (
-        <video controls className="max-w-[90%] max-h-[90%] rounded-lg shadow-lg">
+        <video controls className="max-w-[90%] max-h-[90%] rounded-lg">
           <source src={viewingFile.src} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       ) : viewingFile?.name?.endsWith('.txt') ? (
-        <div className="w-full h-full bg-white p-4 rounded-lg shadow-lg whitespace-pre-wrap overflow-auto text-balance text-black">
-          <pre className="font-mono text-sm leading-relaxed w-full h-full overflow-x text-balance">
+        <div className="w-full h-full bg-white p-4 rounded-lg whitespace-pre-wrap overflow-auto text-balance text-black">
+          <pre className="font-mono text-base leading-relaxed w-full h-full overflow-x text-balance">
             {viewingFile.src}
           </pre>
         </div>
