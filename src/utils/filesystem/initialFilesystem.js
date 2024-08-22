@@ -1,6 +1,6 @@
 import saberImage from "../../assets/images/saber.jpg";
-import Video1 from "../../assets/videos/video1.mp4";
-import Video2 from "../../assets/videos/video2.mp4";
+import dev from "../../assets/videos/dev.mp4";
+import devs from "../../assets/videos/devs.mp4";
 
 import {
   skillsText,
@@ -43,13 +43,13 @@ const initialFilesystem = [
           11,
           "Earlier Development Stage of this website.mp4",
           "file",
-          Video1,
+          dev,
         ),
         createFile(
           21,
           "Earlier Development Stage of this website 2.mp4",
           "file",
-          Video2,
+          devs,
         ),
       ]),
       createFolder(12, "About me!", [

@@ -1,10 +1,10 @@
-import React from 'react';
-import terminalIcon from '../assets/icons/exeIcon.png'; 
+import React from "react";
+import terminalIcon from "../assets/icons/exeIcon.png";
 
 function Taskbar({ windows }) {
   return (
-    <div className="h-12 bg-[#1c1c1c] flex items-center px-2.5 overflow-x-scroll justify-between shadow-md fixed bottom-0 w-full z-50">
-      <div className="flex items-center flex-grow justify-center overflow-x-scroll scrollbar-hide font-mono">
+    <div className="h-12 bg-[#1c1c1c] flex items-center px-2.5 overflow-x-auto justify-between shadow-md fixed bottom-0 w-full z-50">
+      <div className="flex items-center flex-grow justify-center overflow-x-auto scrollbar-hide font-mono">
         <div className="bg-[#2d2d2d] px-6 py-1 rounded flex items-center cursor-pointer mr-2.5 shadow-inner hover:bg-[#444444]">
           <img src={terminalIcon} alt="Terminal" className="w-5 h-5 mr-2" />
           <span className="text-white text-lg font-medium">Terminal</span>
@@ -12,9 +12,13 @@ function Taskbar({ windows }) {
         {windows.map((win) => (
           <div
             key={win.id}
-            className="bg-[#2d2d2d] text-white text-lg font-medium px-6 py-1 rounded overflow-x-scroll flex items-center cursor-pointer mr-2.5 shadow-inner hover:bg-[#444444]"
+            className="bg-[#2d2d2d] text-white text-lg font-medium px-6 py-1 rounded flex items-center cursor-pointer mr-2.5 shadow-inner hover:bg-[#444444] whitespace-nowrap"
           >
-            <img src={win.iconSrc} alt={`${win.title} icon`} className="w-5 h-5 mr-2" />
+            <img
+              src={win.iconSrc}
+              alt={`${win.title} icon`}
+              className="w-5 h-5 mr-2"
+            />
             {win.title}
           </div>
         ))}
@@ -24,8 +28,6 @@ function Taskbar({ windows }) {
 }
 
 export default Taskbar;
-
-
 
 // const TaskbarContainer = styled.div`
 //   height: 40px;
