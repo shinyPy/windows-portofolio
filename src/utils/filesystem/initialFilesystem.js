@@ -2,13 +2,13 @@
 import dev from "../../assets/videos/dev.mp4";
 import devs from "../../assets/videos/devs.mp4";
 
-import {
-  skillsText,
-  welcomeText,
-  aboutwebsiteText,
-  infoText,
-  // markdownContent,
-} from "../../data/texts";
+// import {
+//   skillsText,
+//   welcomeText,
+//   aboutwebsiteText,
+//   infoText,
+//   // markdownContent,
+// } from "../../data/texts";
 
 const createFile = (id, name, type, src = null, url = null) => ({
   id,
@@ -57,11 +57,11 @@ const initialFilesystem = [
           null,
           "https://github.com/shinyPy/",
         ),
-        createFile(19, "info.txt", "file", infoText),
+        createFile(19, "info.txt", "file"),
       ]),
-      createFile(8, "skills.txt", "file", skillsText),
-      createFile(9, "welcome.txt", "file", welcomeText),
-      createFile(10, "about website.txt", "file", aboutwebsiteText),
+      createFile(8, "skills.txt", "file"),
+      createFile(9, "welcome.txt", "file"),
+      createFile(10, "about website.txt", "file"),
       // createFile(15, "README.md", "file", markdownContent), // Example .md file
     ]),
   ]),

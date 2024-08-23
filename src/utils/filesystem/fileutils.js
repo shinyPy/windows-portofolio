@@ -1,5 +1,5 @@
 import React from "react";
-import ReactMarkdown from "react-markdown";
+// import ReactMarkdown from "react-markdown";
 // import rehypeRaw from "rehype-raw"; // Import the plugin for rendering raw HTML
 import { useLanguage } from "../LanguageContext"; // Import the useLanguage hook
 
@@ -70,12 +70,12 @@ const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
               </pre>
             </div>
           );
-        } else if (name.endsWith(".md")) {
-          return (
-            <div className="w-full h-full bg-white p-4 rounded-lg overflow-auto text-balance prose prose-sm">
-              <ReactMarkdown>{viewingFile.src}</ReactMarkdown>
-            </div>
-          );
+          // } else if (name.endsWith(".md")) {
+          //   return (
+          //     <div className="w-full h-full bg-white p-4 rounded-lg overflow-auto text-balance prose prose-sm">
+          //       <ReactMarkdown>{viewingFile.src}</ReactMarkdown>
+          //     </div>
+          //   );
         } else {
           return <div>Unsupported file format</div>;
         }

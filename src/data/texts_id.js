@@ -27,6 +27,7 @@ Fitur:
 - Mendukung gambar, video, file teks, dan tautan.
 - Ubah ukuran jendela dengan menyeret sudut kanan bawah.
 - Taskbar yang melacak jendela yang terbuka.
+- Ganti Bahasa Inggris dan Indonesia menggunakan tombol bahasa di Taskbar
 
 Proyek ini adalah demonstrasi antarmuka desktop berbasis web modern, menggabungkan React dan Tailwind CSS untuk menciptakan pengalaman pengguna yang lancar dan interaktif.
 
