@@ -1,16 +1,17 @@
-import React from 'react';
+import React from "react";
 
 function FileItem({ item, updatePath }) {
   const getIcon = () => {
-    if (item.type === 'folder') return '📁';
-    if (item.type === 'link') return '🔗'; // Icon for link type
-    if (item.name.endsWith('.exe')) return '💻';
-    return '📄';
+    if (item.type === "folder") return "📁";
+    if (item.type === "link") return "🔗"; // Icon for link type
+    if (item.name.endsWith(".exe")) return "💻";
+    // if (item.name.endsWith(".md")) return "📝"; // Icon for Markdown files
+    return "📄";
   };
 
   const handleDoubleClick = () => {
-    if (item.type === 'link') {
-      window.open(item.url, '_blank'); // Open link in a new tab
+    if (item.type === "link") {
+      window.open(item.url, "_blank"); // Open link in a new tab
     } else {
       updatePath(item.id);
     }
