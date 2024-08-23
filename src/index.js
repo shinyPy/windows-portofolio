@@ -4,12 +4,14 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { LanguageProvider } from "./utils/LanguageContext";
+import { Analytics } from "@vercel/analytics/react";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <LanguageProvider>
     <React.StrictMode>
       <App />
+      <Analytics />
     </React.StrictMode>
   </LanguageProvider>,
 );
