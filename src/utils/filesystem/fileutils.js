@@ -1,8 +1,12 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
-import rehypeRaw from "rehype-raw"; // Import the plugin for rendering raw HTML
+// import rehypeRaw from "rehype-raw"; // Import the plugin for rendering raw HTML
+import { useLanguage } from "../LanguageContext"; // Import the useLanguage hook
 
 const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
+  const { texts } = useLanguage(); // Get the current texts based on selected language
+  const { skillsText, welcomeText, aboutwebsiteText, infoText } = texts;
+
   const handleLinkClick = () => {
     if (viewingFile.type === "link" && viewingFile.url) {
       window.open(viewingFile.url, "_blank");
@@ -10,7 +14,7 @@ const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
   };
 
   const renderContent = () => {
-    const { type, name, src } = viewingFile;
+    const { type, name } = viewingFile;
 
     switch (type) {
       case "link":
@@ -26,7 +30,7 @@ const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
         if (name.endsWith(".jpg") || name.endsWith(".png")) {
           return (
             <img
-              src={src}
+              src={viewingFile.src}
               alt={name}
               className="max-w-[90%] max-h-[90%] rounded-lg"
             />
@@ -34,22 +38,42 @@ const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
         } else if (name.endsWith(".mp4")) {
           return (
             <video controls className="max-w-[90%] max-h-[90%] rounded-lg">
-              <source src={src} type="video/mp4" />
+              <source src={viewingFile.src} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           );
         } else if (name.endsWith(".txt")) {
+          // Determine the correct text content based on the file name
+          let content;
+          switch (name) {
+            case "skills.txt":
+              content = skillsText;
+              break;
+            case "welcome.txt":
+              content = welcomeText;
+              break;
+            case "about website.txt":
+              content = aboutwebsiteText;
+              break;
+            case "info.txt":
+              content = infoText;
+              break;
+            default:
+              content = "File not found.";
+              break;
+          }
+
           return (
             <div className="w-full h-full bg-white p-4 rounded-lg whitespace-pre-wrap overflow-auto text-balance text-black">
               <pre className="font-mono text-base leading-relaxed w-full h-full overflow-x text-balance">
-                {src}
+                {content}
               </pre>
             </div>
           );
         } else if (name.endsWith(".md")) {
           return (
             <div className="w-full h-full bg-white p-4 rounded-lg overflow-auto text-balance prose prose-sm">
-              <ReactMarkdown rehypePlugins={[rehypeRaw]}>{src}</ReactMarkdown>
+              <ReactMarkdown>{viewingFile.src}</ReactMarkdown>
             </div>
           );
         } else {

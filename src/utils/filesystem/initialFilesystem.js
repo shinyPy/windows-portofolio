@@ -1,14 +1,13 @@
 // import saberImage from "../../assets/images/saber.jpg";
 import dev from "../../assets/videos/dev.mp4";
 import devs from "../../assets/videos/devs.mp4";
-import ReactMarkdown from "react-markdown";
 
 import {
   skillsText,
   welcomeText,
   aboutwebsiteText,
   infoText,
-  markdownContent,
+  // markdownContent,
 } from "../../data/texts";
 
 const createFile = (id, name, type, src = null, url = null) => ({
@@ -63,7 +62,7 @@ const initialFilesystem = [
       createFile(8, "skills.txt", "file", skillsText),
       createFile(9, "welcome.txt", "file", welcomeText),
       createFile(10, "about website.txt", "file", aboutwebsiteText),
-      createFile(15, "README.md", "file", markdownContent), // Example .md file
+      // createFile(15, "README.md", "file", markdownContent), // Example .md file
     ]),
   ]),
 ];

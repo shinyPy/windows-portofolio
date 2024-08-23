@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import terminalIcon from "../assets/icons/exeIcon.png";
+import { LanguageContext } from "../utils/LanguageContext"; // Import the LanguageContext
 
 function Taskbar({ windows }) {
+  const { language, setLanguage } = useContext(LanguageContext); // Get the current language and setter from context
+
+  const toggleLanguage = () => {
+    setLanguage(language === "en" ? "id" : "en"); // Toggle between English and Indonesian
+  };
+
   return (
     <div className="h-12 bg-[#1c1c1c] flex items-center px-2.5 overflow-x-auto justify-between shadow-md fixed bottom-0 w-full z-50">
       <div className="flex items-center flex-grow justify-center overflow-x-auto scrollbar-hide font-mono">
@@ -22,6 +29,15 @@ function Taskbar({ windows }) {
             {win.title}
           </div>
         ))}
+      </div>
+      <div className="flex items-center">
+        {/* Language Switcher Button */}
+        <button
+          onClick={toggleLanguage}
+          className="text-white px-4 py-2 rounded bg-[#2d2d2d] hover:bg-[#444444] transition-colors duration-200"
+        >
+          {language === "en" ? "EN" : "ID"}
+        </button>
       </div>
     </div>
   );
