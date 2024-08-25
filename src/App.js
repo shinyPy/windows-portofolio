@@ -85,8 +85,13 @@ function App() {
   return (
     <>
       <div
-        className={`w-screen h-screen bg-center bg-cover flex flex-col justify-between relative ${isMobile ? "filter blur-[5px]" : ""}`}
-        style={{ backgroundImage: `url(${backgroundImage})` }}
+        className={`w-[100vw] h-[100vh] bg-center bg-cover flex flex-col justify-between relative ${
+          isMobile ? "filter blur-[5px]" : ""
+        }`}
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          overflow: "hidden",
+        }}
       >
         <div className="w-full h-full">
           <DesktopIconContainer
