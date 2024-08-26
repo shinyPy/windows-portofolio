@@ -66,8 +66,8 @@ function FileExplorer({
     }, 200); // Match the duration of the closing animation
   };
 
-  const initialX = window.innerWidth / 2 - 350; // Horizontal center
-  const initialY = window.innerHeight / 2 - 750; // Vertical center
+  const initialX = Math.round(window.innerWidth / 2 - 355); // Horizontal center
+  const initialY = Math.round(window.innerHeight / 2 - 750); // Vertical center
 
   return (
     <Rnd
