@@ -67,3 +67,10 @@ Discord : shiniya_`;
 //   <img src="https://discord.c99.nl/widget/theme-2/656757505426325527.png"/>
 
 // `;
+
+export const changelogText = `Changelog:
+  26/08/2024
+  - Menambahkan lokalisasi.
+  - Memperbaiki masalah di mana posisi transformasi pada desimal menyebabkan Window menjadi buram (thanks math.round).
+  - Mengubah gaya taskbar dan File Manager dan mengubah namanya menjadi Thunar.
+`;

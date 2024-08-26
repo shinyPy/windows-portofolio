@@ -1,15 +1,23 @@
-// Breadcrumb.js
-import React from 'react';
+import React from "react";
 
-function Breadcrumb({ currentPath, goToFolder, goBack, findItemById, filesystem }) {
+function Breadcrumb({
+  currentPath,
+  goToFolder,
+  goBack,
+  findItemById,
+  filesystem,
+}) {
   return (
-    <nav className="flex px-4 py-2 text-gray-700 border border-gray-200 rounded-lg bg-white mb-4 shadow-sm" aria-label="Breadcrumb">
+    <nav
+      className="flex items-center px-4 py-2 text-gray-700"
+      aria-label="Breadcrumb"
+    >
       <ol className="inline-flex items-center space-x-2">
         {currentPath.length > 1 && (
           <li className="inline-flex items-center">
             <button
               onClick={goBack}
-              className="inline-flex items-center text-sm font-medium text-gray-600 hover:text-blue-500 transition-colors"
+              className="inline-flex items-center text-sm font-medium text-gray-600 hover:bg-gray-200 transition-colors px-2 py-1 rounded-lg"
             >
               <svg
                 className="w-4 h-4 mr-1.5"
@@ -17,7 +25,7 @@ function Breadcrumb({ currentPath, goToFolder, goBack, findItemById, filesystem 
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
-                <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
+                <path d="M19.707 9.293l-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z" />
               </svg>
               Back
             </button>
@@ -39,19 +47,19 @@ function Breadcrumb({ currentPath, goToFolder, goBack, findItemById, filesystem 
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
-                    d="m1 9 4-4-4-4"
+                    d="M1 9l4-4-4-4"
                   />
                 </svg>
               )}
               <button
                 onClick={() => goToFolder(id)}
-                className={`text-sm font-medium ${
+                className={`text-sm font-medium rounded-lg px-2 py-1 ${
                   index === currentPath.length - 1
-                    ? 'text-blue-600'
-                    : 'text-gray-600 hover:text-blue-500 transition-colors'
+                    ? "inline-flex items-center text-sm font-medium text-gray-800 bg-gray-300 transition-colors px-2 py-1 rounded-lg"
+                    : "inline-flex items-center text-sm font-medium text-gray-600 hover:bg-gray-200 transition-colors px-2 py-1 rounded-lg"
                 }`}
               >
-                {folder.name === '/' ? '/' : folder.name}
+                {folder.name === "/" ? "root" : folder.name}
               </button>
             </li>
           );

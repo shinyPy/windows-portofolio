@@ -56,6 +56,7 @@ const initialFilesystem = [
       createFile(8, "skills.txt", "file"),
       createFile(9, "welcome.txt", "file"),
       createFile(10, "about website.txt", "file"),
+      createFile(18, "changelog.txt", "file"),
     ]),
   ]),
 ];

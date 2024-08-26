@@ -3,7 +3,8 @@ import { useLanguage } from "../LanguageContext";
 
 const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
   const { texts } = useLanguage();
-  const { skillsText, welcomeText, aboutwebsiteText, infoText } = texts;
+  const { skillsText, welcomeText, aboutwebsiteText, infoText, changelogText } =
+    texts;
 
   const getTextContent = (name) => {
     const textMapping = {
@@ -11,23 +12,28 @@ const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
       "welcome.txt": welcomeText,
       "about website.txt": aboutwebsiteText,
       "info.txt": infoText,
+      "changelog.txt": changelogText,
     };
     return textMapping[name] || "File not found.";
   };
 
   const renderImage = (src, name) => (
-    <img src={src} alt={name} className="max-w-[90%] max-h-[90%] rounded-lg" />
+    <img
+      src={src}
+      alt={name}
+      className="max-w-[90%] max-h-[90%] rounded-lg shadow-md border border-gray-300"
+    />
   );
 
   const renderVideo = (src) => (
-    <video controls className="max-w-[90%] max-h-[90%] rounded-lg">
+    <video controls className="max-w-[90%] max-h-[90%] rounded-lg shadow-md">
       <source src={src} type="video/mp4" />
       Your browser does not support the video tag.
     </video>
   );
 
   const renderTextFile = (content) => (
-    <div className="w-full h-full bg-white p-4 rounded-lg whitespace-pre-wrap overflow-auto text-balance text-black">
+    <div className="w-full h-full bg-white p-4 rounded-lg whitespace-pre-wrap overflow-auto text-balance text-black border border-gray-200">
       <pre className="font-mono text-base leading-relaxed w-full h-full overflow-x text-balance">
         {content}
       </pre>
@@ -41,7 +47,7 @@ const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
       link: (
         <button
           onClick={() => window.open(url, "_blank")}
-          className="text-blue-500 underline bg-white hover:text-blue-700"
+          className="text-blue-500 underline bg-white hover:text-blue-700 transition-colors"
         >
           Open Link
         </button>
@@ -54,21 +60,25 @@ const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
         ) : name.endsWith(".txt") ? (
           renderTextFile(getTextContent(name))
         ) : (
-          <div>Unsupported file format</div>
+          <div className="text-gray-600">Unsupported file format</div>
         ),
     };
 
-    return contentMapping[type] || <div>Unsupported file type</div>;
+    return (
+      contentMapping[type] || (
+        <div className="text-gray-600">Unsupported file type</div>
+      )
+    );
   };
 
   return (
-    <div className="fileUtils flex justify-center items-center w-full h-full bg-white text-black relative rounded-lg p-4 overflow-auto">
+    <div className="fileUtils flex justify-center items-center w-full h-full bg-gradient-to-b from-gray-50 to-gray-100 text-black relative rounded-lg p-4 overflow-auto">
       {showCloseButton && (
         <button
           onClick={closeViewer}
-          className="absolute top-5 right-5 bg-black bg-opacity-10 text-black border border-black border-opacity-20 px-4 py-2 rounded-full text-sm backdrop-blur-md transition-transform duration-300 hover:bg-opacity-20 hover:scale-110 focus:outline-none"
+          className="absolute top-5 right-5 bg-gray-200 text-gray-800 px-4 py-2 rounded-full shadow hover:bg-gray-300 transition-transform duration-300 hover:scale-110 focus:outline-none"
         >
-          Close
+          ✕
         </button>
       )}
       {renderContent()}

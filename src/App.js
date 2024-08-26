@@ -54,7 +54,7 @@ function App() {
 
     if (clickedItem) {
       if (clickedItem.type === "folder") {
-        openWindow("File Explorer", id, null, fullPath);
+        openWindow("Thunar", id, null, fullPath);
       } else if (clickedItem.type === "file") {
         openWindow(clickedItem.name, id, clickedItem, fullPath, false);
       } else if (clickedItem.type === "link") {

@@ -67,36 +67,38 @@ function FileExplorer({
   };
 
   const initialX = Math.round(window.innerWidth / 2 - 355); // Horizontal center
-  const initialY = Math.round(window.innerHeight / 2 - 750); // Vertical center
+  const initialY = Math.round(window.innerHeight / 2 - 950); // Vertical center
 
   return (
     <Rnd
       default={{
         x: initialX,
         y: initialY,
-        width: 600,
-        height: 400,
+        width: 800,
+        height: 600,
       }}
       minWidth={600}
-      minHeight={400}
+      minHeight={300}
       bounds="window"
     >
       <div
-        className={`w-full h-full bg-white border border-gray-300 rounded-xl shadow-2xl flex flex-col overflow-hidden font-mono window-container ${isClosing ? "closing" : ""}`}
+        className={`w-full h-full bg-white border border-gray-200 rounded-lg shadow-lg flex flex-col overflow-hidden font-mono window-container ${
+          isClosing ? "closing" : ""
+        }`}
       >
-        <div className="fileExplorer-header bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-3 flex justify-between items-center rounded-t-xl cursor-move">
-          <div className="flex items-center space-x-2">
-            <img src={iconSrc} alt={`${title} icon`} className="w-5 h-5" />
-            <div className="text-base font-semibold">{title}</div>
+        <div className="fileExplorer-header bg-gray-200 text-gray-900 p-2 flex justify-between items-center rounded-t-lg cursor-move">
+          <div className="flex-1 text-center text-sm font-semibold">
+            {title}
           </div>
-          <button
-            onClick={closeWindow}
-            className="text-2xl p-1 transition-colors"
-          >
-            ×
-          </button>
+          <div className="flex space-x-1 ml-auto">
+            <span className="block w-3 h-3 bg-yellow-500 rounded-full"></span>
+            <span
+              onClick={closeWindow}
+              className="block w-3 h-3 bg-red-500 rounded-full cursor-pointer"
+            ></span>
+          </div>
         </div>
-        <div className="p-3 h-full bg-gray-50 overflow-auto">
+        <div className="p-3 h-full bg-gray-100 overflow-auto">
           {viewingFile ? (
             <FileUtils
               viewingFile={viewingFile}
@@ -113,17 +115,18 @@ function FileExplorer({
                 filesystem={filesystem}
               />
               {currentFolder && currentFolder.contents ? (
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-2">
                   {currentFolder.contents.map((item) => (
                     <FileItem
                       key={item.id}
                       item={item}
                       updatePath={updatePath}
+                      className="macos-file-item"
                     />
                   ))}
                 </div>
               ) : (
-                <div className="text-gray-600 text-center">No items</div>
+                <div className="text-gray-600 text-center mt-10">No items</div>
               )}
             </>
           )}
