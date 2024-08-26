@@ -5,7 +5,8 @@ function FileItem({ item, updatePath }) {
     if (item.type === "folder") return "📁";
     if (item.type === "link") return "🔗"; // Icon for link type
     if (item.name.endsWith(".exe")) return "💻";
-    // if (item.name.endsWith(".md")) return "📝"; // Icon for Markdown files
+    if (item.name.endsWith(".md")) return "📝"; // Icon for Markdown files
+    if (item.name.endsWith(".jpg") || item.name.endsWith(".png")) return "🖼️"; // Icon for image files
     return "📄";
   };
 

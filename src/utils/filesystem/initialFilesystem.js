@@ -1,6 +1,6 @@
 import dev from "../../assets/videos/dev.mp4";
 import devs from "../../assets/videos/devs.mp4";
-
+import mern from "../../assets/images/udemy.jpg";
 const createFile = (id, name, type, src = null, url = null) => ({
   id,
   name,
@@ -39,6 +39,9 @@ const initialFilesystem = [
           "file",
           devs,
         ),
+      ]),
+      createFolder(29, "Achievements", [
+        createFile(43, "certificate.jpg", "file", mern),
       ]),
       createFolder(12, "About me!", [
         createFile(

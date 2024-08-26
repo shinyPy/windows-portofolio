@@ -48,7 +48,7 @@ Anda dapat menghubungi saya di Discord: shiniya_
 `;
 
 export const infoText = `Saya bukan tipe yang mengungkapkan nama asli saya,
-Beberapa orang memanggil saya Roza (bagian dari nama asli tapi dimodifikasi) atau Shin.
+Beberapa orang memanggil saya Roza (bagian dari nama asli tapi dimodifikasi) atau Shin (villhaze).
 
 Saya lebih suka menggunakan PHP untuk membuat situs (terutama dengan framework Laravel).
 Hobi saya adalah membaca cerita, menulis kode, dan berkontribusi ke repositori orang lain.
