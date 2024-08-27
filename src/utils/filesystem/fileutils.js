@@ -10,7 +10,7 @@ const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
     const textMapping = {
       "skills.txt": skillsText,
       "welcome.txt": welcomeText,
-      "about website.txt": aboutwebsiteText,
+      "aboutWebsite.txt": aboutwebsiteText,
       "info.txt": infoText,
       "changelog.txt": changelogText,
     };
