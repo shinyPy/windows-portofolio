@@ -16,7 +16,7 @@ function FileExplorer({
   showCloseButton = true,
 }) {
   const [currentPath, setCurrentPath] = useState(
-    fullPath.length ? fullPath : [windowId],
+    fullPath.length ? fullPath : [windowId]
   );
   const [viewingFile, setViewingFile] = useState(externalViewingFile || null);
   const [isClosing, setIsClosing] = useState(false);
@@ -29,7 +29,7 @@ function FileExplorer({
 
   const currentFolder = findItemById(
     filesystem,
-    currentPath[currentPath.length - 1],
+    currentPath[currentPath.length - 1]
   );
 
   const updatePath = (id) => {
@@ -115,13 +115,12 @@ function FileExplorer({
                 filesystem={filesystem}
               />
               {currentFolder && currentFolder.contents ? (
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-2">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 p-4">
                   {currentFolder.contents.map((item) => (
                     <FileItem
                       key={item.id}
                       item={item}
                       updatePath={updatePath}
-                      className="macos-file-item"
                     />
                   ))}
                 </div>
