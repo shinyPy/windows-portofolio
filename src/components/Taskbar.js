@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import terminalIcon from "../assets/icons/exeIcon.png";
-import { LanguageContext } from "../utils/LanguageContext"; // Import the LanguageContext
+import { LanguageContext } from "../utils/LanguageContext";
+import DateTimeDisplay from "./DateTimeDisplay";
 
 function Taskbar({ windows }) {
   const { language, setLanguage } = useContext(LanguageContext); // Get the current language and setter from context
 
+  // Function to toggle language
   const toggleLanguage = () => {
-    setLanguage(language === "en" ? "id" : "en"); // Toggle between English and Indonesian
+    setLanguage(language === "en" ? "id" : "en");
   };
 
   return (
@@ -30,7 +32,7 @@ function Taskbar({ windows }) {
           </div>
         ))}
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center space-x-4">
         {/* Language Switcher Button */}
         <button
           onClick={toggleLanguage}
@@ -38,82 +40,11 @@ function Taskbar({ windows }) {
         >
           {language === "en" ? "EN" : "ID"}
         </button>
+        {/* Date and Time Display */}
+        <DateTimeDisplay /> {/* Include the DateTimeDisplay component */}
       </div>
     </div>
   );
 }
 
 export default Taskbar;
-
-// const TaskbarContainer = styled.div`
-//   height: 40px;
-//   background: #1c1c1c;
-//   display: flex;
-//   align-items: center;
-//   padding: 0 10px;
-//   justify-content: space-between;
-//   box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.5);
-//   position: absolute;
-//   bottom: 0;
-//   width: 100%;
-// `;
-
-// const TaskbarLeft = styled.div`
-//   display: flex;
-//   align-items: center;
-// `;
-
-// const TaskbarRight = styled.div`
-//   display: flex;
-//   align-items: center;
-// `;
-
-// const StartButton = styled.div`
-//   background: #2d2d2d;
-//   padding: 5px 8px;
-//   border-radius: 4px;
-//   display: flex;
-//   align-items: center;
-//   cursor: pointer;
-//   margin-right: 10px;
-//   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-
-//   &:hover {
-//     background: #444444;
-//   }
-
-//   img {
-//     width: 20px;
-//     height: 20px;
-//     margin-right: 8px;
-//   }
-
-//   span {
-//     color: white;
-//     font-size: 14px;
-//     font-weight: 500;
-//   }
-// `;
-
-// const TaskbarItem = styled.div`
-//   color: white;
-//   padding: 5px 10px;
-//   display: flex;
-//   align-items: center;
-//   background: #2d2d2d;
-//   border-radius: 4px;
-//   margin-right: 5px;
-//   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-//   min-width: 120px;
-//   cursor: pointer;
-
-//   &:hover {
-//     background: #444444;
-//   }
-
-//   img {
-//     width: 16px;
-//     height: 16px;
-//     margin-right: 8px;
-//   }
-// `;
