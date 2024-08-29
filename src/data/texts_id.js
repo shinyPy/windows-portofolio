@@ -73,4 +73,6 @@ export const changelogText = `Changelog:
   - Menambahkan lokalisasi.
   - Memperbaiki masalah di mana posisi transformasi pada desimal menyebabkan Window menjadi buram (thanks math.round).
   - Mengubah gaya taskbar dan File Manager dan mengubah namanya menjadi Thunar.
-`;
+   28/08/2024
+  - Tambah DateTime ke Taskbar
+  - Spotify Playlist`;

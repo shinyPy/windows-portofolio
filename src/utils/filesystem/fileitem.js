@@ -33,7 +33,7 @@ function FileItem({ item, updatePath }) {
       aria-label={`Open ${item.name}`}
     >
       <span className="text-4xl mb-4">{getIcon()}</span>
-      <span className="text-sm text-center break-all font-medium text-gray-800 truncate w-full">
+      <span className="text-sm text-center break-all font-medium text-clip text-gray-800 w-full">
         {item.name}
       </span>
     </div>
