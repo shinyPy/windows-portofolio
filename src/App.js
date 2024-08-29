@@ -52,32 +52,25 @@ function App() {
     }
   };
 
-  const toggleSpotifyPlayer = () => {
-    setSpotifyOpen(!isSpotifyOpen);
-  };
 
   const closeSpotifyPlayer = () => {
     setSpotifyOpen(false);
   };
-
   const onFileClick = (id) => {
     const clickedItem = findItemById(filesystem, id);
     const fullPath = getFullPath(id, filesystem);
-
+  
     if (clickedItem) {
       if (clickedItem.type === "folder") {
         openWindow("Thunar", id, null, fullPath);
       } else if (clickedItem.type === "file") {
         openWindow(clickedItem.name, id, clickedItem, fullPath, false);
       } else if (clickedItem.type === "link") {
-        if (clickedItem.url === "spotify") {
-          toggleSpotifyPlayer();
-        } else {
-          window.open(clickedItem.url, "_blank");
-        }
+        window.open(clickedItem.url, "_blank");
       }
     }
   };
+  
 
   const closeWindow = (id) => {
     setWindows(windows.filter((win) => win.id !== id));
@@ -126,7 +119,6 @@ function App() {
         <Taskbar 
           windows={windows} 
           isSpotifyOpen={isSpotifyOpen} 
-          toggleSpotifyPlayer={toggleSpotifyPlayer} 
         />
       </div>
       <SpeedInsights />

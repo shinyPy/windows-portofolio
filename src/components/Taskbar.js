@@ -4,7 +4,7 @@ import spotifyIcon from "../assets/icons/SpotifyIcon.png"; // Add a Spotify icon
 import { LanguageContext } from "../utils/LanguageContext";
 import DateTimeDisplay from "./DateTimeDisplay";
 
-function Taskbar({ windows, isSpotifyOpen, toggleSpotifyPlayer }) {
+function Taskbar({ windows, isSpotifyOpen, }) {
   const { language, setLanguage } = useContext(LanguageContext); // Get the current language and setter from context
 
   // Function to toggle language
@@ -34,7 +34,7 @@ function Taskbar({ windows, isSpotifyOpen, toggleSpotifyPlayer }) {
         ))}
         {isSpotifyOpen && (
           <div
-            onClick={toggleSpotifyPlayer} // Allow clicking to bring Spotify to the front
+            
             className="bg-gray-200 bg-opacity-80 px-7 py-2 rounded-lg flex items-center cursor-pointer shadow-md hover:bg-gray-400 transition-all font-mono"
           >
             <img src={spotifyIcon} alt="Spotify" className="w-6 h-6 mr-2" />
