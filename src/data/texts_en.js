@@ -65,4 +65,7 @@ export const changelogText = `Changelog:
   26/08/2024
   - Add localization.
   - Fixed a problem where the transform position on decimal will blur the window (thanks math.round)
-  - Change the style of taskbar and File Manager and renamed it to Thunar`;
+  - Change the style of taskbar and File Manager and renamed it to Thunar
+  28/08/2024
+  - Add DateTime to Taskbar
+  - Spotify Playlist`;

@@ -84,12 +84,12 @@ function App() {
   };
 
   useEffect(() => {
-    if (!hasWelcomeOpened) { // Check if the welcome window has already opened
+    if (!hasWelcomeOpened) {
       const welcomeFile = filesystem[0]?.contents[0]?.contents.find(item => item.name === "welcome.txt");
 
       if (welcomeFile) {
         openWindow(welcomeFile.name, welcomeFile.id, welcomeFile, getFullPath(welcomeFile.id, filesystem), false);
-        setHasWelcomeOpened(true); // Set the flag to true after opening the window
+        setHasWelcomeOpened(true);
       }
     }
 
@@ -123,7 +123,11 @@ function App() {
           />
           {isSpotifyOpen && <SpotifyPlayer onClose={closeSpotifyPlayer} />}
         </div>
-        <Taskbar windows={windows} />
+        <Taskbar 
+          windows={windows} 
+          isSpotifyOpen={isSpotifyOpen} 
+          toggleSpotifyPlayer={toggleSpotifyPlayer} 
+        />
       </div>
       <SpeedInsights />
       {isMobile && (
