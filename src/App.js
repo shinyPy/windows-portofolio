@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import folderIconSrc from "./assets/icons/file-explorer.png";
 import fileIconSrc from "./assets/icons/file.png";
-import backgroundImage from "./assets/images/mountain.png";
 import DesktopIconContainer from "./components/container/DesktopIconContainer";
 import WindowContainer from "./components/container/WindowContainer";
 import Taskbar from "./components/Taskbar";
@@ -10,28 +9,23 @@ import { getFullPath, useAppHooks } from "./hooks/appHooks";
 import initialFilesystem from "./utils/filesystem/initialFilesystem";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import SpotifyPlayer from "./components/SpotifyPlayer";
+import { useSpotify } from "./hooks/useSpotify";
+import { useWelcomeFile } from "./hooks/useWelcomeFile";
+import Background from "./components/Background";
+import MobileWarning from "./components/mobile/MobileWarning";
 
 function App() {
-  const { filesystem, windows, setWindows, isMobile, findItemById } =
-    useAppHooks(initialFilesystem);
+  const { filesystem, windows, setWindows, isMobile, findItemById } = useAppHooks(initialFilesystem);
+  const { isSpotifyOpen, closeSpotifyPlayer } = useSpotify(true);
 
-  const [isSpotifyOpen, setSpotifyOpen] = useState(false);
-  const [hasWelcomeOpened, setHasWelcomeOpened] = useState(false); 
-
-  const openWindow = (
-    title,
-    id,
-    viewingFile = null,
-    fullPath,
-    showCloseButton = true,
-  ) => {
+  const openWindow = (title, id, viewingFile = null, fullPath, showCloseButton = true) => {
     const existingWindow = windows.find(
-      (win) => win.windowId === id && win.viewingFile === viewingFile,
+      (win) => win.windowId === id && win.viewingFile === viewingFile
     );
     if (existingWindow) {
       setWindows([
         ...windows.filter(
-          (win) => win.windowId !== id || win.viewingFile !== viewingFile,
+          (win) => win.windowId !== id || win.viewingFile !== viewingFile
         ),
         existingWindow,
       ]);
@@ -52,14 +46,10 @@ function App() {
     }
   };
 
-
-  const closeSpotifyPlayer = () => {
-    setSpotifyOpen(false);
-  };
   const onFileClick = (id) => {
     const clickedItem = findItemById(filesystem, id);
     const fullPath = getFullPath(id, filesystem);
-  
+
     if (clickedItem) {
       if (clickedItem.type === "folder") {
         openWindow("Thunar", id, null, fullPath);
@@ -70,38 +60,16 @@ function App() {
       }
     }
   };
-  
 
   const closeWindow = (id) => {
     setWindows(windows.filter((win) => win.id !== id));
   };
 
-  useEffect(() => {
-    if (!hasWelcomeOpened) {
-      const welcomeFile = filesystem[0]?.contents[0]?.contents.find(item => item.name === "welcome.txt");
-
-      if (welcomeFile) {
-        openWindow(welcomeFile.name, welcomeFile.id, welcomeFile, getFullPath(welcomeFile.id, filesystem), false);
-        setHasWelcomeOpened(true);
-      }
-    }
-
-    setSpotifyOpen(true);
-
-    // eslint-disable-next-line
-  }, [filesystem]);
+  useWelcomeFile(filesystem, openWindow);
 
   return (
     <>
-      <div
-        className={`w-[100vw] h-[100vh] bg-center bg-cover flex flex-col justify-between relative ${
-          isMobile ? "filter blur-[5px]" : ""
-        }`}
-        style={{
-          backgroundImage: `url(${backgroundImage})`,
-          overflow: "hidden",
-        }}
-      >
+      <Background isMobile={isMobile}>
         <div className="w-full h-full">
           <DesktopIconContainer
             filesystem={initialFilesystem[0].contents[0].contents}
@@ -120,15 +88,9 @@ function App() {
           windows={windows} 
           isSpotifyOpen={isSpotifyOpen} 
         />
-      </div>
+      </Background>
       <SpeedInsights />
-      {isMobile && (
-        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white text-black p-5 rounded-lg z-50 flex items-center justify-center">
-          <div className="text-center text-lg font-mono">
-            Bad experience for mobile users, use a PC for a better experience.
-          </div>
-        </div>
-      )}
+      {isMobile && <MobileWarning />}
     </>
   );
 }
