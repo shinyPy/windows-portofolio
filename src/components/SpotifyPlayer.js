@@ -13,18 +13,14 @@ const SpotifyPlayer = ({ onClose }) => {
       minWidth={400}
       minHeight={225}
       bounds="parent"
-      className="bg-gray-200 rounded-2xl shadow-lg p-4"
+      className="bg-white rounded-lg shadow-md p-4 border border-gray-200"
       enableResizing={false}
     >
-      <div className="flex justify-between items-center">
-        <h3 className="text-black font-mono text-lg m-0">Spotify Playlist</h3>
-        <div className="flex space-x-1 ml-auto">
-          <span className="block w-3 h-3 bg-yellow-500 rounded-full"></span>
-
-          <span
-            onClick={onClose}
-            className="block w-3 h-3 bg-red-500 rounded-full cursor-pointer"
-          ></span>
+      <div className="flex items-center justify-between border-b border-gray-200 pb-2 mb-2">
+        <h3 className="text-gray-800 text-lg font-semibold font-mono">Spotify Playlist</h3>
+        <div className="flex space-x-2">
+        <span className="block w-3 h-3 bg-yellow-500 rounded-full cursor-pointer"></span>
+          <span className="block w-3 h-3 bg-red-500 rounded-full cursor-pointer" onClick={onClose}></span>
         </div>
       </div>
       <iframe
@@ -34,7 +30,7 @@ const SpotifyPlayer = ({ onClose }) => {
         height="152"
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
-        className="rounded-lg mt-2"
+        className="rounded-lg"
       ></iframe>
     </Rnd>
   );
