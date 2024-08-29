@@ -1,4 +1,3 @@
-# my attempt on learning react and stuff
+# Windows Portofolio
 
-'Inspired' from [adhptrh](https://github.com/adhptrh/adhptrh-vercel).
-
+A portofolio that attempts to recreate Desktop experience.

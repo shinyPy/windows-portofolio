@@ -44,12 +44,14 @@ Future ideas for this website
 - ContextMenu (you can create folder and txt file with this, also delete it.)
 - Mobile Support (when using mobile to access this site, it will emulate android/ios feeling.)
 - Add Terminal (the one in the taskbar is still place holder.)
-- Localization ( still under work.)
+
+
 You can contact me on Discord : shiniya_
+
 `;
 
 export const infoText = `I am not the type to reveal my real name,
-Some people call me Roza (part of real name but modified) or Shin.
+Some people call me Roza (part of real name but modified) or Shin (villhaze).
 
 I prefer using PHP to make sites (especially with Laravel framework.
 My hobbies were reading stories, writing code and contributing to people's repositories.
@@ -58,3 +60,9 @@ I love developing front end with React (I dont like NextJS somehow but plan on l
 
 Currently using Arch Linux (CachyOS) as Daily Driver and I love it!
 Discord : shiniya_`;
+
+export const changelogText = `Changelog:
+  26/08/2024
+  - Add localization.
+  - Fixed a problem where the transform position on decimal will blur the window (thanks math.round)
+  - Change the style of taskbar and File Manager and renamed it to Thunar`;

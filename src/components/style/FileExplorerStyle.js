@@ -1,5 +1,5 @@
 // FileExplorerStyledComponents.js
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const FileExplorerContainer = styled.div`
   width: 600px;
@@ -91,7 +91,8 @@ export const FileViewer = styled.div`
   color: #fff;
   position: relative;
 
-  img, video {
+  img,
+  video {
     max-width: 90%;
     max-height: 90%;
   }

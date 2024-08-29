@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import folderIconSrc from "./assets/icons/file-explorer.png";
 import fileIconSrc from "./assets/icons/file.png";
-import backgroundImage from "./assets/images/background2.png";
+import backgroundImage from "./assets/images/mountain.png";
 import DesktopIconContainer from "./components/container/DesktopIconContainer";
 import WindowContainer from "./components/container/WindowContainer";
 import Taskbar from "./components/Taskbar";
 import FileExplorer from "./components/windows/FileExplorer";
 import { getFullPath, useAppHooks } from "./hooks/appHooks";
 import initialFilesystem from "./utils/filesystem/initialFilesystem";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 function App() {
   const { filesystem, windows, setWindows, isMobile, findItemById } =
@@ -53,7 +54,7 @@ function App() {
 
     if (clickedItem) {
       if (clickedItem.type === "folder") {
-        openWindow("File Explorer", id, null, fullPath);
+        openWindow("Thunar", id, null, fullPath);
       } else if (clickedItem.type === "file") {
         openWindow(clickedItem.name, id, clickedItem, fullPath, false);
       } else if (clickedItem.type === "link") {
@@ -84,8 +85,13 @@ function App() {
   return (
     <>
       <div
-        className={`w-screen h-screen bg-center bg-cover flex flex-col justify-between relative ${isMobile ? "filter blur-[5px]" : ""}`}
-        style={{ backgroundImage: `url(${backgroundImage})` }}
+        className={`w-[100vw] h-[100vh] bg-center bg-cover flex flex-col justify-between relative ${
+          isMobile ? "filter blur-[5px]" : ""
+        }`}
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          overflow: "hidden",
+        }}
       >
         <div className="w-full h-full">
           <DesktopIconContainer
@@ -102,6 +108,7 @@ function App() {
         </div>
         <Taskbar windows={windows} />
       </div>
+      <SpeedInsights />
       {isMobile && (
         <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white text-black p-5 rounded-lg z-50 flex items-center justify-center">
           <div className="text-center text-lg font-mono">

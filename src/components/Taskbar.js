@@ -1,119 +1,50 @@
 import React, { useContext } from "react";
 import terminalIcon from "../assets/icons/exeIcon.png";
-import { LanguageContext } from "../utils/LanguageContext"; // Import the LanguageContext
+import { LanguageContext } from "../utils/LanguageContext";
+import DateTimeDisplay from "./DateTimeDisplay";
 
 function Taskbar({ windows }) {
   const { language, setLanguage } = useContext(LanguageContext); // Get the current language and setter from context
 
+  // Function to toggle language
   const toggleLanguage = () => {
-    setLanguage(language === "en" ? "id" : "en"); // Toggle between English and Indonesian
+    setLanguage(language === "en" ? "id" : "en");
   };
 
   return (
-    <div className="h-12 bg-[#1c1c1c] flex items-center px-2.5 overflow-x-auto justify-between shadow-md fixed bottom-0 w-full z-50">
-      <div className="flex items-center flex-grow justify-center overflow-x-auto scrollbar-hide font-mono">
-        <div className="bg-[#2d2d2d] px-6 py-1 rounded flex items-center cursor-pointer mr-2.5 shadow-inner hover:bg-[#444444]">
-          <img src={terminalIcon} alt="Terminal" className="w-5 h-5 mr-2" />
-          <span className="text-white text-lg font-medium">Terminal</span>
+    <div className="h-14 bg-white bg-opacity-80 backdrop-blur-md flex items-center px-4 shadow-lg fixed bottom-0 w-full z-50">
+      <div className="flex items-center flex-grow justify-center overflow-x-auto font-mono space-x-4">
+        <div className="bg-gray-200 bg-opacity-80 px-7 py-2 rounded-lg flex items-center cursor-pointer shadow-md hover:bg-gray-400 transition-all">
+          <img src={terminalIcon} alt="Terminal" className="w-6 h-6 mr-2" />
+          <span className="text-gray-800 text-sm font-medium">Terminal</span>
         </div>
         {windows.map((win) => (
           <div
             key={win.id}
-            className="bg-[#2d2d2d] text-white text-lg font-medium px-6 py-1 rounded flex items-center cursor-pointer mr-2.5 shadow-inner hover:bg-[#444444] whitespace-nowrap"
+            className="bg-gray-200 bg-opacity-80 px-7 py-2 rounded-lg flex items-center cursor-pointer shadow-md hover:bg-gray-400 transition-all"
           >
             <img
               src={win.iconSrc}
               alt={`${win.title} icon`}
-              className="w-5 h-5 mr-2"
+              className="w-6 h-6 mr-2"
             />
             {win.title}
           </div>
         ))}
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center space-x-4">
         {/* Language Switcher Button */}
         <button
           onClick={toggleLanguage}
-          className="text-white px-4 py-2 rounded bg-[#2d2d2d] hover:bg-[#444444] transition-colors duration-200"
+          className="text-gray-800 px-4 py-2 rounded-lg bg-gray-200 bg-opacity-80 hover:bg-gray-400 shadow-md transition-all duration-200"
         >
           {language === "en" ? "EN" : "ID"}
         </button>
+        {/* Date and Time Display */}
+        <DateTimeDisplay /> {/* Include the DateTimeDisplay component */}
       </div>
     </div>
   );
 }
 
 export default Taskbar;
-
-// const TaskbarContainer = styled.div`
-//   height: 40px;
-//   background: #1c1c1c;
-//   display: flex;
-//   align-items: center;
-//   padding: 0 10px;
-//   justify-content: space-between;
-//   box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.5);
-//   position: absolute;
-//   bottom: 0;
-//   width: 100%;
-// `;
-
-// const TaskbarLeft = styled.div`
-//   display: flex;
-//   align-items: center;
-// `;
-
-// const TaskbarRight = styled.div`
-//   display: flex;
-//   align-items: center;
-// `;
-
-// const StartButton = styled.div`
-//   background: #2d2d2d;
-//   padding: 5px 8px;
-//   border-radius: 4px;
-//   display: flex;
-//   align-items: center;
-//   cursor: pointer;
-//   margin-right: 10px;
-//   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-
-//   &:hover {
-//     background: #444444;
-//   }
-
-//   img {
-//     width: 20px;
-//     height: 20px;
-//     margin-right: 8px;
-//   }
-
-//   span {
-//     color: white;
-//     font-size: 14px;
-//     font-weight: 500;
-//   }
-// `;
-
-// const TaskbarItem = styled.div`
-//   color: white;
-//   padding: 5px 10px;
-//   display: flex;
-//   align-items: center;
-//   background: #2d2d2d;
-//   border-radius: 4px;
-//   margin-right: 5px;
-//   box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
-//   min-width: 120px;
-//   cursor: pointer;
-
-//   &:hover {
-//     background: #444444;
-//   }
-
-//   img {
-//     width: 16px;
-//     height: 16px;
-//     margin-right: 8px;
-//   }
-// `;
