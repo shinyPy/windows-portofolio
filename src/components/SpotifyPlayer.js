@@ -14,20 +14,22 @@ const SpotifyPlayer = ({ onClose }) => {
       minHeight={225}
       bounds="parent"
       className="bg-gray-200 rounded-2xl shadow-lg p-4"
-      enableResizing={false} 
+      enableResizing={false}
     >
       <div className="flex justify-between items-center">
         <h3 className="text-black font-mono text-lg m-0">Spotify Playlist</h3>
         <div className="flex space-x-1 ml-auto">
-            <span
-              onClick={onClose}
-              className="block w-3 h-3 bg-red-500 rounded-full cursor-pointer"
-            ></span>
-          </div>
+          <span className="block w-3 h-3 bg-yellow-500 rounded-full"></span>
+
+          <span
+            onClick={onClose}
+            className="block w-3 h-3 bg-red-500 rounded-full cursor-pointer"
+          ></span>
+        </div>
       </div>
       <iframe
         src="https://open.spotify.com/embed/playlist/0TrcprHEGEVzpNzZO3tGfO?utm_source=generator"
-        title="Spotify Playlist" 
+        title="Spotify Playlist"
         width="100%"
         height="152"
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
