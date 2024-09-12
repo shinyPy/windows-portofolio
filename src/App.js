@@ -9,14 +9,14 @@ import { getFullPath, useAppHooks } from "./hooks/appHooks";
 import initialFilesystem from "./utils/filesystem/initialFilesystem";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import SpotifyPlayer from "./components/SpotifyPlayer";
-import { useSpotify } from "./hooks/useSpotify";
+// import { useSpotify } from "./hooks/useSpotify";
 import { useWelcomeFile } from "./hooks/useWelcomeFile";
 import Background from "./components/Background";
 import MobileWarning from "./components/mobile/MobileWarning";
 
 function App() {
   const { filesystem, windows, setWindows, isMobile, findItemById } = useAppHooks(initialFilesystem);
-  const { isSpotifyOpen, closeSpotifyPlayer } = useSpotify(true);
+  // const { isSpotifyOpen, closeSpotifyPlayer } = useSpotify(true);
 
   const openWindow = (title, id, viewingFile = null, fullPath, showCloseButton = true) => {
     const existingWindow = windows.find(
@@ -82,11 +82,11 @@ function App() {
             filesystem={filesystem}
             findItemById={findItemById}
           />
-          {isSpotifyOpen && <SpotifyPlayer onClose={closeSpotifyPlayer} />}
+          {/* {isSpotifyOpen && <SpotifyPlayer onClose={closeSpotifyPlayer} />} */}
         </div>
         <Taskbar 
           windows={windows} 
-          isSpotifyOpen={isSpotifyOpen} 
+          // isSpotifyOpen={isSpotifyOpen} 
         />
       </Background>
       <SpeedInsights />
