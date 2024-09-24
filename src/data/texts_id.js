@@ -32,7 +32,7 @@ Fitur:
 Proyek ini adalah demonstrasi antarmuka desktop berbasis web modern, menggabungkan React dan Tailwind CSS untuk menciptakan pengalaman pengguna yang lancar dan interaktif.
 
 Salam,
-Roza.
+Rozi.
 `;
 
 export const aboutwebsiteText = `Situs web ini dibuat menggunakan framework create-react-app dan TailwindCSS.
@@ -47,9 +47,7 @@ Ide Masa Depan untuk Situs Web Ini
 Anda dapat menghubungi saya di Discord: shiniya_
 `;
 
-export const infoText = `Saya bukan tipe yang mengungkapkan nama asli saya,
-Beberapa orang memanggil saya Roza (bagian dari nama asli tapi dimodifikasi) atau Shin (villhaze).
-
+export const infoText = `Nama saya adalah Fathul Rozi
 Saya lebih suka menggunakan PHP untuk membuat situs (terutama dengan framework Laravel).
 Hobi saya adalah membaca cerita, menulis kode, dan berkontribusi ke repositori orang lain.
 
@@ -74,5 +72,4 @@ export const changelogText = `Changelog:
   - Memperbaiki masalah di mana posisi transformasi pada desimal menyebabkan Window menjadi buram (thanks math.round).
   - Mengubah gaya taskbar dan File Manager dan mengubah namanya menjadi Thunar.
    28/08/2024
-  - Tambah DateTime ke Taskbar
-  - Spotify Playlist`;
+  - Tambah DateTime ke Taskbar`;

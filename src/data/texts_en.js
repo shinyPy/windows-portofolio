@@ -33,7 +33,7 @@ Features:
 This project is a demonstration of a modern web-based desktop interface, combining React and Tailwind CSS to create a fluid and interactive user experience.
 
 Regards,
-Roza.
+Rozi.
 `;
 
 export const aboutwebsiteText = `The website is made using create-react-app framework and TailwindCSS.
@@ -50,9 +50,7 @@ You can contact me on Discord : shiniya_
 
 `;
 
-export const infoText = `I am not the type to reveal my real name,
-Some people call me Roza (part of real name but modified) or Shin (villhaze).
-
+export const infoText = `My name is Fathul Rozi
 I prefer using PHP to make sites (especially with Laravel framework.
 My hobbies were reading stories, writing code and contributing to people's repositories.
 
@@ -68,4 +66,4 @@ export const changelogText = `Changelog:
   - Change the style of taskbar and File Manager and renamed it to Thunar
   28/08/2024
   - Add DateTime to Taskbar
-  - Spotify Playlist`;
+  `;
