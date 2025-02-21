@@ -47,9 +47,9 @@ Ide Masa Depan untuk Situs Web Ini
 Anda dapat menghubungi saya di Discord: shiniya_
 `;
 
-export const infoText = `Nama saya adalah Fathul Rozi
+export const infoText = `Nama saya adalah Roza.
 Saya lebih suka menggunakan PHP untuk membuat situs (terutama dengan framework Laravel).
-Hobi saya adalah membaca cerita, menulis kode, dan berkontribusi ke repositori orang lain.
+Hobi saya adalah membaca dan menulis cerita, modif software, dan berkontribusi ke repositori orang lain.
 
 Saya suka mengembangkan front end dengan React (saya entah mengapa tidak suka NextJS tapi berencana untuk mempelajarinya).
 

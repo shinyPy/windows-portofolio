@@ -5,7 +5,7 @@ const SpotifyPlayer = ({ onClose }) => {
   return (
     <Rnd
       default={{
-        x: 1500,
+        x: 1000,
         y: 45,
         width: 400,
         height: 225,
@@ -24,7 +24,7 @@ const SpotifyPlayer = ({ onClose }) => {
         </div>
       </div>
       <iframe
-        src="https://open.spotify.com/embed/playlist/0TrcprHEGEVzpNzZO3tGfO?utm_source=generator"
+        src="https://open.spotify.com/embed/playlist/0or34uqY4LUkkBxaBoCBjM?utm_source=generator"
         title="Spotify Playlist"
         width="100%"
         height="152"

@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import terminalIcon from "../assets/icons/exeIcon.png";
-// import spotifyIcon from "../assets/icons/SpotifyIcon.png"; // Add a Spotify icon
+import spotifyIcon from "../assets/icons/SpotifyIcon.png"; // Add a Spotify icon
 import { LanguageContext } from "../utils/LanguageContext";
 import DateTimeDisplay from "./DateTimeDisplay";
 
 // function Taskbar({ windows, isSpotifyOpen, }) {
 
-function Taskbar({ windows, }) {
+function Taskbar({ windows, isSpotifyOpen }) {
   const { language, setLanguage } = useContext(LanguageContext); // Get the current language and setter from context
 
   // Function to toggle language
@@ -34,14 +34,14 @@ function Taskbar({ windows, }) {
             {win.title}
           </div>
         ))}
-        {/* {isSpotifyOpen && (
+        {isSpotifyOpen && (
           <div
             className="bg-gray-200 bg-opacity-80 px-7 py-2 rounded-lg flex items-center cursor-pointer shadow-md hover:bg-gray-400 transition-all font-mono"
           >
             <img src={spotifyIcon} alt="Spotify" className="w-6 h-6 mr-2" />
             Spotify
           </div>
-        )} */}
+        )}
       </div>
       <div className="flex items-center space-x-4">
         <button
@@ -50,7 +50,7 @@ function Taskbar({ windows, }) {
         >
           {language === "en" ? "EN" : "ID"}
         </button>
-        <DateTimeDisplay /> 
+        <DateTimeDisplay />
       </div>
     </div>
   );

@@ -50,9 +50,9 @@ You can contact me on Discord : shiniya_
 
 `;
 
-export const infoText = `My name is Fathul Rozi
+export const infoText = `My name is Roza.
 I prefer using PHP to make sites (especially with Laravel framework.
-My hobbies were reading stories, writing code and contributing to people's repositories.
+My hobbies were reading or writing stories, tinkering with software and contributing to people's repositories.
 
 I love developing front end with React (I dont like NextJS somehow but plan on learning it)
 
