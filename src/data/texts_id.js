@@ -1,6 +1,6 @@
 // src/data/texts.js
 export const skillsText = `Alat yang Saya Gunakan:
-- Zed
+- VSCode
   Biasanya untuk coding website dan aplikasi antarmuka command-line.
 - Git
   Membantu mengelola proyek saya dan berkolaborasi dengan programmer lain.
@@ -28,6 +28,7 @@ Fitur:
 - Ubah ukuran jendela dengan menyeret sudut kanan bawah.
 - Taskbar yang melacak jendela yang terbuka.
 - Ganti Bahasa Inggris dan Indonesia menggunakan tombol bahasa di Taskbar
+- Terminal emulator dengan perintah dasar (cd, ls, cat, clear, help)
 
 Proyek ini adalah demonstrasi antarmuka desktop berbasis web modern, menggabungkan React dan Tailwind CSS untuk menciptakan pengalaman pengguna yang lancar dan interaktif.
 
@@ -72,4 +73,10 @@ export const changelogText = `Changelog:
   - Memperbaiki masalah di mana posisi transformasi pada desimal menyebabkan Window menjadi buram (thanks math.round).
   - Mengubah gaya taskbar dan File Manager dan mengubah namanya menjadi Thunar.
    28/08/2024
-  - Tambah DateTime ke Taskbar`;
+  - Tambah DateTime ke Taskbar
+    21/02/2025
+  - Membuat icon wrapping mirip dengan behavior icon Windows
+  - Memisahkan File Explorer dan handling .exe
+  - Menambahkan terminal dan membuat virtual FS untuk parsing initialFilesystem
+  - Parsing filesystem secara langsung sehingga kita bisa mengaksesnya dan memodifikasinya untuk masa depan
+  - kemungkinan akan menambahkan perintah mkdir dan nano`;

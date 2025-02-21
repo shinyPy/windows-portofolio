@@ -1,7 +1,7 @@
 // src/data/texts.js
 
 export const skillsText = `Tools that I use:
-- Zed
+- VSCode
   Mostly to code websites and command-line interface applications.
 - Git
   Helps to manage my projects and collaborate with other programmers.
@@ -29,6 +29,7 @@ Features:
 - Resize windows by dragging the bottom right corner.
 - A taskbar that tracks open windows.
 - Switch between English and Indonesian using the language button on the taskbar.
+- Terminal emulator with basic commands (cd, ls, cat, clear, help)
 
 This project is a demonstration of a modern web-based desktop interface, combining React and Tailwind CSS to create a fluid and interactive user experience.
 
@@ -66,4 +67,10 @@ export const changelogText = `Changelog:
   - Change the style of taskbar and File Manager and renamed it to Thunar
   28/08/2024
   - Add DateTime to Taskbar
+  21/02/2025
+  - Make icon wrap similiar to Windows icon behavior
+  - Separate File Explorer and .exe handler
+  - Add terminal and make the virtual FS to parse initalFilesystem
+  - Parse filesystem directly so we could access it and modify it for future
+  - probably gonna add mkdir and nano commands
   `;

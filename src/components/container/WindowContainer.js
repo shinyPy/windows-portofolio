@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import FileExplorer from '../windows/FileExplorer';
 import '../../assets/css/animations.css'; // Import CSS for animations
 
-const WindowContainer = ({ windows, closeWindow, filesystem, findItemById }) => {
+const WindowContainer = ({ windows, closeWindow, filesystem, findItemById, onExeClick }) => {
   const [closingWindows, setClosingWindows] = useState([]);
 
   const handleClose = (id) => {
@@ -26,15 +26,12 @@ const WindowContainer = ({ windows, closeWindow, filesystem, findItemById }) => 
         >
           <div className="window-content">
             <FileExplorer
-              title={win.title}
-              iconSrc={win.iconSrc}
+              isExeWindow={window.type === 'exe'}
+              onExeClick={onExeClick}
+              {...win}
               onClose={() => handleClose(win.id)}
               filesystem={filesystem}
-              windowId={win.windowId}
               findItemById={findItemById}
-              viewingFile={win.viewingFile}
-              fullPath={win.fullPath}
-              showCloseButton={win.showCloseButton}
             />
           </div>
         </div>

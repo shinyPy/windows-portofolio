@@ -4,17 +4,18 @@ import Breadcrumb from "../../utils/breadcrumb";
 import FileItem from "../../utils/filesystem/fileitem";
 import FileUtils from "../../utils/filesystem/fileutils";
 
-function FileExplorer({
-  title,
-  iconSrc,
-  filesystem,
-  windowId,
-  onClose,
-  findItemById,
-  viewingFile: externalViewingFile,
-  fullPath = [],
-  showCloseButton = true,
-}) {
+function FileExplorer({ onExeClick, isExeWindow = false, ...other }) {
+  const {
+    title,
+    filesystem,
+    windowId,
+    onClose,
+    findItemById,
+    viewingFile: externalViewingFile,
+    fullPath = [],
+    showCloseButton = true,
+  } = other;
+
   const [currentPath, setCurrentPath] = useState(
     fullPath.length ? fullPath : [windowId]
   );
@@ -38,7 +39,15 @@ function FileExplorer({
       setCurrentPath([...currentPath, id]);
       setViewingFile(null); // Reset viewing file
     } else if (clickedItem.type === "file") {
-      setViewingFile(clickedItem); // Set the file to be viewed
+      if (clickedItem.name.endsWith('.exe')) {
+        onExeClick?.(clickedItem.name); // Call onExeClick for .exe files
+        // Only close if this is an exe-specific window
+        if (isExeWindow) {
+          closeWindow();
+        }
+      } else {
+        setViewingFile(clickedItem); // Set the file to be viewed
+      }
     }
   };
 

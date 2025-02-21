@@ -20,7 +20,7 @@ const createFolder = (id, name, contents = []) => ({
 const initialFilesystem = [
   createFolder(1, "/", [
     createFolder(2, "desktop", [
-      createFolder(3, "Projects!", [
+      createFolder(3, "Projects", [
         createFile(
           4,
           "TEFAREN",
@@ -44,7 +44,7 @@ const initialFilesystem = [
       createFolder(7, "Achievements", [
         createFile(8, "certificate.jpg", "file", mern),
       ]),
-      createFolder(9, "About_me!", [
+      createFolder(9, "About_me", [
         createFile(
           10,
           "My_Github",

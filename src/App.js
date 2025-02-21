@@ -109,6 +109,22 @@ function App() {
   const exeWindows = windows.filter(win => win.Component !== FileExplorer);
   const fileWindows = windows.filter(win => win.Component === FileExplorer);
 
+  const launchExe = (exeName) => {
+    const exeApp = exeApplications[exeName];
+    if (exeApp) {
+      setWindows([
+        ...windows,
+        {
+          title: exeName,
+          iconSrc: exeIconSrc,
+          Component: exeApp.Component,
+          id: Date.now(),
+          defaultSize: exeApp.defaultSize
+        }
+      ]);
+    }
+  };
+
   return (
     <>
       <Background isMobile={isMobile}>
@@ -123,6 +139,7 @@ function App() {
             closeWindow={closeWindow}
             filesystem={filesystem}
             findItemById={findItemById}
+            onExeClick={launchExe} // Pass launchExe handler
           />
             {exeWindows.map(win => (
             <win.Component
