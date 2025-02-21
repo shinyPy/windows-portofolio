@@ -1,6 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Rnd } from 'react-rnd';
-import '../../assets/css/terminal.css'; // Import CSS for animations
+import '../../assets/css/terminal.css';
+import initialFilesystem from '../../utils/filesystem/initialFilesystem';  // Import your filesystem data
+import { useLanguage } from '../../utils/LanguageContext'; // Import the language context
+
 const formatClasses = {
   error: 'text-red-500',
   success: 'text-green-400',
@@ -9,200 +12,212 @@ const formatClasses = {
   bold: 'font-bold'
 };
 
-// Add ASCII logo
 const asciiLogo = `
-    .--.      .--.
-   |    \\    /    |
-   |  |\\ \\  / /|  |
-   |  | \\ \\/ / |  |
-   |  |  \\  /  |  |
-   |  |   \\/   |  |
-   |  |        |  |
-   |__|        |__|`;
+▗▄▄▖  ▄▄▄  ▄▄▄▄▄ ▗▞▀▜▌
+▐▌ ▐▌█   █  ▄▄▄▀ ▝▚▄▟▌
+▐▛▀▚▖▀▄▄▄▀ █▄▄▄▄
+▐▌ ▐▌
 
-const TerminalEmulator = ({ onClose, filesystem }) => {
-  const [history, setHistory] = useState(['Welcome to Terminal v1.0']);
+`;
+
+const parseFilesystem = (fs) => {
+  const virtualFS = { '/': [] };
+
+  const traverse = (node, path = '/') => {
+    virtualFS[path] = node.contents || [];
+    (node.contents || []).forEach(child => {
+      if (child.type === 'folder') {
+        const childPath = `${path}${path === '/' ? '' : '/'}${child.name}`;
+        traverse(child, childPath);
+      }
+    });
+  };
+
+  fs.forEach(node => traverse(node));
+  return virtualFS;
+};
+
+const resolvePath = (currentDir, targetPath) => {
+  const isAbsolute = targetPath.startsWith('/');
+  const parts = (isAbsolute ? [] : currentDir.split('/').filter(Boolean));
+
+  targetPath.split('/').forEach(part => {
+    if (part === '..') parts.length && parts.pop();
+    else if (part && part !== '.') parts.push(part);
+  });
+
+  return '/' + parts.join('/');
+};
+
+const formatText = (text, type) => {
+  return <span className={formatClasses[type]}>{text}</span>;
+};
+
+const TerminalEmulator = ({ onClose }) => {
+  const [history, setHistory] = useState([
+    <pre key="logo" className="text-cyan-400">{asciiLogo}</pre>,
+    formatText('Welcome to Portfolio Terminal. Type "help" for commands.', 'success')
+  ]);
   const [currentCommand, setCurrentCommand] = useState('');
   const [commandHistory, setCommandHistory] = useState([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const [currentDir, setCurrentDir] = useState('/desktop');
   const terminalRef = useRef(null);
+  const inputRef = useRef(null);
+  const { texts } = useLanguage(); // Use the language context
 
-  const parseFilesystem = (fs) => {
-    const virtualFS = {
-      '/': [],
-      '/desktop': []
+  const virtualFS = useMemo(() => parseFilesystem(initialFilesystem), []);
+
+  const getTextContent = (name) => {
+    const textMapping = {
+      "skills.txt": texts.skillsText,
+      "welcome.txt": texts.welcomeText,
+      "aboutWebsite.txt": texts.aboutwebsiteText,
+      "info.txt": texts.infoText,
+      "changelog.txt": texts.changelogText,
     };
-
-    // Helper function to get the full path
-    const getFullPath = (node, parentPath = '') => {
-      const nodePath = parentPath ? `${parentPath}/${node.name}` : `/${node.name}`;
-      return nodePath.replace('//', '/');
-    };
-
-    // Recursive function to traverse filesystem
-    const traverse = (node, parentPath = '') => {
-      const currentPath = getFullPath(node, parentPath);
-
-      // Initialize path in virtualFS if it doesn't exist
-      if (!virtualFS[currentPath]) {
-        virtualFS[currentPath] = [];
-      }
-
-      // Add contents to current path
-      if (node.contents) {
-        virtualFS[currentPath] = node.contents.map(item => ({
-          name: item.name,
-          type: item.type,
-          url: item.url || null
-        }));
-
-        // Recursively traverse child folders
-        node.contents.forEach(child => {
-          if (child.type === 'folder') {
-            traverse(child, currentPath);
-          }
-        });
-      }
-    };
-
-    // Start traversal from root
-    fs.forEach(node => traverse(node));
-    return virtualFS;
-  };
-
-  const virtualFS = parseFilesystem(filesystem);
-
-  const formatText = (text, type) => {
-    return <span className={formatClasses[type]}>{text}</span>;
+    return textMapping[name] || "File not found.";
   };
 
   const commands = {
     help: () => (
-      <div>
+      <div className="space-y-2">
         {formatText('Available commands:\n', 'info')}
-        {formatText('File System:\n', 'bold')}
-        cd        - Change directory
-        ls        - List directory contents
-        pwd       - Print working directory
-
-        {formatText('System Info:\n', 'bold')}
-        whoami    - Show current user
-        date      - Show current date/time
-        uname     - Show system information
-        neofetch  - Display system information with logo
-
-        {formatText('Utilities:\n', 'bold')}
-        clear     - Clear terminal screen
-        help      - Show this help message
-        echo      - Print text
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            {formatText('File System:', 'bold')}
+            <div>{formatText('cd [dir]', 'bold')} - Change directory</div>
+            <div>{formatText('ls [-l]', 'bold')} - List directory</div>
+            <div>{formatText('pwd', 'bold')} - Show current directory</div>
+            <div>{formatText('cat [file]', 'bold')} - Show file content</div>
+          </div>
+          <div>
+            {formatText('Utilities:', 'bold')}
+            <div>{formatText('clear', 'bold')} - Clear screen</div>
+            <div>{formatText('echo [text]', 'bold')} - Display text</div>
+            <div>{formatText('open [file]', 'bold')} - Open file/link</div>
+            <div>{formatText('neofetch', 'bold')} - System info</div>
+          </div>
+        </div>
       </div>
     ),
 
     cd: (args) => {
-        let newPath = args[0] || '/desktop';
+      const target = args[0] || '/';
+      const resolvedPath = resolvePath(currentDir, target);
 
-        // Handle relative paths
-        if (!newPath.startsWith('/')) {
-          newPath = `${currentDir}/${newPath}`.replace('//', '/');
-        }
+      if (!virtualFS[resolvedPath]) {
+        return formatText(`cd: ${resolvedPath}: No such directory`, 'error');
+      }
 
-        // Handle parent directory
-        if (newPath.includes('..')) {
-          const parts = currentDir.split('/').filter(Boolean);
-          parts.pop();
-          newPath = parts.length ? `/${parts.join('/')}` : '/';
-        }
+      setCurrentDir(resolvedPath);
+      return formatText(`Changed directory to ${resolvedPath}`, 'success');
+    },
 
-        if (virtualFS[newPath]) {
-          setCurrentDir(newPath);
-          return formatText(`Changed directory to ${newPath}`, 'success');
-        }
-        return formatText(`cd: no such directory: ${newPath}`, 'error');
-      },
+    ls: (args) => {
+      const contents = virtualFS[currentDir] || [];
+      const detailed = args.includes('-l');
 
-      ls: () => {
-        const contents = virtualFS[currentDir];
-        if (!contents) return formatText('ls: cannot access directory', 'error');
-
-        return (
-          <div className="grid grid-cols-4 gap-2">
-            {contents.map(item => (
-              <span
-                key={item.name}
-                className={`${
-                  item.type === 'folder'
-                    ? 'text-blue-400'
-                    : item.type === 'link'
-                      ? 'text-green-400'
-                      : item.name.endsWith('.exe')
-                        ? 'text-yellow-400'
-                        : 'text-gray-200'
-                }`}
-              >
-                {item.name}
+      return detailed ? (
+        <div className="space-y-1">
+          {contents.map(item => (
+            <div key={item.name} className="flex gap-4">
+              <span className="w-24">{item.type === 'folder' ? 'drwxr-xr-x' : '-rw-r--r--'}</span>
+              <span className="w-48">
+                {item.type === 'folder' ?
+                  formatText(item.name, 'blue-400') :
+                  item.type === 'link' ?
+                    formatText(item.name, 'green-400') :
+                    item.name}
               </span>
-            ))}
-          </div>
-        );
-      },
+              {detailed && <span className="text-gray-400">{item.size || '0KB'}</span>}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-4 gap-2">
+          {contents.map(item => (
+            <span key={item.name} className={
+              item.type === 'folder' ? 'text-blue-400' :
+                item.type === 'link' ? 'text-green-400' :
+                  'text-gray-200'
+            }>
+              {item.name}
+            </span>
+          ))}
+        </div>
+      );
+    },
 
-    pwd: () => formatText(currentDir, 'info'),
+    cat: (args) => {
+      if (!args.length) return formatText('cat: missing file operand', 'error');
+      const [fileName] = args;
+      const file = (virtualFS[currentDir] || []).find(f => f.name === fileName);
+
+      if (!file) return formatText(`cat: ${fileName}: No such file`, 'error');
+      if (file.type === 'folder') return formatText(`cat: ${fileName}: Is a directory`, 'error');
+      if (file.type === 'file' && fileName.endsWith('.txt')) {
+        const content = getTextContent(fileName);
+        return <pre className="whitespace-pre-wrap">{content}</pre>;
+      }
+      return formatText(`cat: Cannot display ${fileName}`, 'error');
+    },
+
+    open: (args) => {
+      if (!args.length) return formatText('open: missing file operand', 'error');
+      const [fileName] = args;
+      const file = (virtualFS[currentDir] || []).find(f => f.name === fileName);
+
+      if (!file) return formatText(`open: ${fileName}: No such file`, 'error');
+      if (file.type === 'folder') return formatText(`open: ${fileName}: Is a directory`, 'error');
+      if (file.type === 'link') {
+        window.open(file.url, '_blank');
+        return formatText(`Opened link: ${file.url}`, 'success');
+      }
+      return formatText(`open: Cannot open ${file.type}`, 'error');
+    },
+
+    neofetch: () => (
+      <div className="flex gap-8">
+        <pre className="text-cyan-400">{asciiLogo}</pre>
+        <div className="space-y-1">
+          {formatText('Portfolio Terminal', 'bold')}
+          {formatText('---------------------------', 'info')}
+          <div>{formatText('OS:', 'bold')} Portfolio OS</div>
+          <div>{formatText('Shell:', 'bold')} React Terminal v2.0</div>
+          <div>{formatText('Resolution:', 'bold')} {window.innerWidth}x{window.innerHeight}</div>
+        </div>
+      </div>
+    ),
 
     clear: () => {
-      setHistory(['']);
+      setHistory([]);
       return '';
     },
 
     echo: (args) => args.join(' '),
 
-    whoami: () => 'user@portfolio',
-
-    date: () => new Date().toLocaleString(),
-
-    uname: () => 'Portfolio OS [Version 1.0.0]',
-
-    neofetch: () => (
-      <div>
-        {formatText(asciiLogo, 'info')}
-        <br />
-        {formatText('-----------------', 'bold')}
-        <br />
-        {formatText('OS:', 'info')} Portfolio OS<br />
-        {formatText('KERNEL:', 'info')} React 18.2.0<br />
-        {formatText('SHELL:', 'info')} Portfolio Terminal<br />
-        {formatText('CPU:', 'info')} JavaScript V8<br />
-        {formatText('MEMORY:', 'info')} Browser Memory<br />
-        {formatText('UPTIME:', 'info')} Since page load<br />
-        {formatText('PACKAGES:', 'info')} npm<br />
-        {formatText('RESOLUTION:', 'info')} {window.innerWidth}x{window.innerHeight}<br />
-        {formatText('DE:', 'info')} React Portfolio<br />
-        {formatText('TERMINAL:', 'info')} Portfolio Terminal
-      </div>
-    ),
+    pwd: () => formatText(currentDir, 'info'),
   };
 
   const handleCommand = (e) => {
     if (e.key === 'Enter' && currentCommand.trim()) {
-      const args = currentCommand.split(' ');
-      const cmd = args[0].toLowerCase();
-      const output = commands[cmd]
-        ? commands[cmd](args.slice(1))
-        : formatText(`Command not found: ${cmd}`, 'error');
+      const [cmd, ...args] = currentCommand.trim().split(/\s+/);
+      const commandFn = commands[cmd.toLowerCase()]; // Add toLowerCase()
+      const output = commandFn ? commandFn(args) : formatText(`${cmd}: command not found`, 'error');
 
-      setHistory([
-        ...history,
-        <div key={history.length} className="flex items-center gap-1">
+      setHistory(prev => [
+        ...prev,
+        <div key={prev.length} className="flex gap-1">
           {formatText('user@portfolio', 'success')}:
-          {formatText(currentDir, 'info')}$&nbsp;
-          {currentCommand}
+          {formatText(currentDir, 'info')}$ {currentCommand}
         </div>,
         output
       ]);
 
-      setCommandHistory([...commandHistory, currentCommand]);
-      setHistoryIndex(-1);
+      setCommandHistory(prev => [...prev, currentCommand]);
       setCurrentCommand('');
+      setHistoryIndex(-1);
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
       if (historyIndex < commandHistory.length - 1) {
@@ -247,7 +262,7 @@ const TerminalEmulator = ({ onClose, filesystem }) => {
     >
       <div className="w-full h-full flex flex-col rounded-lg overflow-hidden border border-gray-300 shadow-lg">
         <div className="window-drag-handle bg-gray-900 px-3 py-2 flex items-center justify-between select-none cursor-move">
-        <div className="flex-1 text-center text-sm text-white font-semibold">
+          <div className="flex-1 text-center text-sm text-white font-semibold">
             Terminal
           </div>
           <div className="flex space-x-1 ml-auto">
@@ -259,16 +274,19 @@ const TerminalEmulator = ({ onClose, filesystem }) => {
           </div>
         </div>
 
-        <div className="flex-1 bg-[#1e1e1e] p-2 font-mono text-sm overflow-auto"
+        <div
+          className="flex-1 bg-[#1e1e1e] p-2 font-mono text-sm overflow-auto"
           ref={terminalRef}
           style={{ scrollBehavior: 'smooth' }}
+          onClick={() => inputRef.current?.focus()}
         >
           {history.map((line, i) => (
             <div key={i} className="text-gray-200 mb-1">{line}</div>
           ))}
           <div className="flex items-center">
-            <span className="text-green-400">user@desktop:~$&nbsp;</span>
+            <span className="text-green-400">user@portfolio:~$&nbsp;</span>
             <input
+              ref={inputRef}
               type="text"
               value={currentCommand}
               onChange={(e) => setCurrentCommand(e.target.value)}

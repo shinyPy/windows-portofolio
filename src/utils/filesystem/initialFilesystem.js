@@ -44,10 +44,10 @@ const initialFilesystem = [
       createFolder(7, "Achievements", [
         createFile(8, "certificate.jpg", "file", mern),
       ]),
-      createFolder(9, "About me!", [
+      createFolder(9, "About_me!", [
         createFile(
           10,
-          "My Github",
+          "My_Github",
           "link",
           null,
           "https://github.com/shinyPy/",
