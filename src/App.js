@@ -67,7 +67,7 @@ function App() {
           ...windows,
           {
             title: "Terminal",
-            iconSrc: fileIconSrc,
+            iconSrc: exeIconSrc,
             Component: TerminalEmulator,
             props: { filesystem: initialFilesystem }, // Add filesystem prop
             id: Date.now(),
