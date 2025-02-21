@@ -1,5 +1,5 @@
 // components/Background.js
-import backgroundImage from "../assets/images/mountain.png";
+import backgroundImage from "../assets/images/backyard.png";
 
 const Background = ({ isMobile, children }) => (
   <div

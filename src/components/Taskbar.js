@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import terminalIcon from "../assets/icons/exeIcon.png";
+// import terminalIcon from "../assets/icons/exeIcon.png";
 import spotifyIcon from "../assets/icons/SpotifyIcon.png"; // Add a Spotify icon
 import { LanguageContext } from "../utils/LanguageContext";
 import DateTimeDisplay from "./DateTimeDisplay";
@@ -17,10 +17,10 @@ function Taskbar({ windows, isSpotifyOpen }) {
   return (
     <div className="h-14 bg-white bg-opacity-80 backdrop-blur-md flex items-center px-4 shadow-lg fixed bottom-0 w-full z-50">
       <div className="flex items-center flex-grow justify-center overflow-x-auto font-mono space-x-4">
-        <div className="bg-gray-200 bg-opacity-80 px-7 py-2 rounded-lg flex items-center cursor-pointer shadow-md hover:bg-gray-400 transition-all">
+        {/* <div className="bg-gray-200 bg-opacity-80 px-7 py-2 rounded-lg flex items-center cursor-pointer shadow-md hover:bg-gray-400 transition-all">
           <img src={terminalIcon} alt="Terminal" className="w-6 h-6 mr-2" />
           Terminal
-        </div>
+        </div> */}
         {windows.map((win) => (
           <div
             key={win.id}

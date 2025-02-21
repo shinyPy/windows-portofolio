@@ -33,7 +33,7 @@ Features:
 This project is a demonstration of a modern web-based desktop interface, combining React and Tailwind CSS to create a fluid and interactive user experience.
 
 Regards,
-Rozi.
+Roza.
 `;
 
 export const aboutwebsiteText = `The website is made using create-react-app framework and TailwindCSS.

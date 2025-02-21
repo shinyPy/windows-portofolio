@@ -13,10 +13,18 @@ import { useSpotify } from "./hooks/useSpotify";
 import { useWelcomeFile } from "./hooks/useWelcomeFile";
 import Background from "./components/Background";
 import MobileWarning from "./components/mobile/MobileWarning";
-
+import TerminalEmulator from "./components/windows/TerminalEmulator";
+import exeIconSrc from "./assets/icons/exeIcon.png";
 function App() {
   const { filesystem, windows, setWindows, isMobile, findItemById } = useAppHooks(initialFilesystem);
   const { isSpotifyOpen, closeSpotifyPlayer } = useSpotify(true);
+
+  const exeApplications = {
+    "terminal.exe": {
+      Component: TerminalEmulator,
+      defaultSize: { width: 800, height: 500 }
+    }
+  };
 
   const openWindow = (title, id, viewingFile = null, fullPath, showCloseButton = true) => {
     const existingWindow = windows.find(
@@ -45,13 +53,43 @@ function App() {
       ]);
     }
   };
-
+  // Dear my future self
+  // When I wrote this code, only God and I knew what it was.
+  // Now, only God knows.
+  // From your past self.
   const onFileClick = (id) => {
     const clickedItem = findItemById(filesystem, id);
     const fullPath = getFullPath(id, filesystem);
 
     if (clickedItem) {
-      if (clickedItem.type === "folder") {
+      if (clickedItem.name === "terminal.exe") {
+        setWindows([
+          ...windows,
+          {
+            title: "Terminal",
+            iconSrc: fileIconSrc,
+            Component: TerminalEmulator,
+            props: { filesystem: initialFilesystem }, // Add filesystem prop
+            id: Date.now(),
+            windowId: id,
+          },
+        ]);
+      } else if (clickedItem.name.endsWith('.exe')) {
+        const exeApp = exeApplications[clickedItem.name];
+        if (exeApp) {
+          setWindows([
+            ...windows,
+            {
+              title: clickedItem.name,
+              iconSrc: exeIconSrc,
+              Component: exeApp.Component,
+              id: Date.now(),
+              windowId: id,
+              defaultSize: exeApp.defaultSize
+            }
+          ]);
+        }
+      } else if (clickedItem.type === "folder") {
         openWindow("Thunar", id, null, fullPath);
       } else if (clickedItem.type === "file") {
         openWindow(clickedItem.name, id, clickedItem, fullPath, false);
@@ -67,6 +105,10 @@ function App() {
 
   useWelcomeFile(filesystem, openWindow);
 
+  // Separate windows into exe and non-exe windows
+  const exeWindows = windows.filter(win => win.Component !== FileExplorer);
+  const fileWindows = windows.filter(win => win.Component === FileExplorer);
+
   return (
     <>
       <Background isMobile={isMobile}>
@@ -77,11 +119,18 @@ function App() {
             openWindow={openWindow}
           />
           <WindowContainer
-            windows={windows}
+            windows={fileWindows}
             closeWindow={closeWindow}
             filesystem={filesystem}
             findItemById={findItemById}
           />
+            {exeWindows.map(win => (
+            <win.Component
+                key={win.id}
+                onClose={() => closeWindow(win.id)}
+                {...win.props} // Spread additional props
+            />
+            ))}
           {isSpotifyOpen && <SpotifyPlayer onClose={closeSpotifyPlayer} />}
         </div>
         <Taskbar

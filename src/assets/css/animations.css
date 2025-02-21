@@ -54,3 +54,38 @@
 .window-container.closing {
     animation: closeWindow 0.2s forwards;
 }
+
+.desktop-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 80px);
+    grid-auto-flow: column;
+    grid-template-rows: repeat(auto-fill, 100px);
+    gap: 25px;
+    align-content: start;
+    justify-content: start;
+    height: calc(100vh - 48px);
+    padding: 8px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+
+  .desktop-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 80px;
+    height: 100px;
+  }
+  .exe-window-container {
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .exe-window-container.closing {
+    opacity: 0;
+  }
+
+  .window-drag-handle {
+    cursor: move;
+    user-select: none;
+  }

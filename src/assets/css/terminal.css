@@ -1,0 +1,16 @@
+.terminal-output {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: monospace;
+  }
+
+  .terminal-line {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ascii-art {
+    font-family: monospace;
+    white-space: pre;
+  }

@@ -58,6 +58,8 @@ const initialFilesystem = [
       createFile(13, "welcome.txt", "file"),
       createFile(14, "aboutWebsite.txt", "file"),
       createFile(15, "changelog.txt", "file"),
+      createFile(16, "terminal.exe", "file"),
+
     ]),
   ]),
 ];

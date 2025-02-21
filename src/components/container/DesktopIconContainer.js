@@ -9,7 +9,7 @@ import "../../assets/css/animations.css"; // Import CSS for the animation
 
 const DesktopIconContainer = ({ filesystem, onFileClick, openWindow }) => {
   return (
-    <div className="desktop">
+    <div className="desktop-container">
       <DesktopIcon
         className="desktop-icon desktop-icon-appear transition05"
         name="Thunar"

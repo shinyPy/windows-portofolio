@@ -17,6 +17,8 @@ const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
     return textMapping[name] || "File not found.";
   };
 
+
+
   const renderImage = (src, name) => (
     <img
       src={src}

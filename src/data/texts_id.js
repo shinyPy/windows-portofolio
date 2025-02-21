@@ -32,7 +32,7 @@ Fitur:
 Proyek ini adalah demonstrasi antarmuka desktop berbasis web modern, menggabungkan React dan Tailwind CSS untuk menciptakan pengalaman pengguna yang lancar dan interaktif.
 
 Salam,
-Rozi.
+Roza.
 `;
 
 export const aboutwebsiteText = `Situs web ini dibuat menggunakan framework create-react-app dan TailwindCSS.
