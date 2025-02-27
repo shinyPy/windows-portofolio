@@ -59,7 +59,13 @@ const initialFilesystem = [
       createFile(14, "aboutWebsite.txt", "file"),
       createFile(15, "changelog.txt", "file"),
       createFile(16, "terminal.exe", "file"),
-
+      createFile(
+        17,
+        "this_project",
+        "link",
+        null,
+        "https://github.com/shinyPy/windows-portofolio",
+      ),
     ]),
   ]),
 ];
