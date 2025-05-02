@@ -5,7 +5,7 @@ import DesktopIconContainer from "./components/container/DesktopIconContainer";
 import WindowContainer from "./components/container/WindowContainer";
 import Taskbar from "./components/Taskbar";
 import FileExplorer from "./components/windows/FileExplorer";
-import { getFullPath, useAppHooks } from "./hooks/appHooks";
+import { useAppHooks } from "./hooks/appHooks";
 import initialFilesystem from "./utils/filesystem/initialFilesystem";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import SpotifyPlayer from "./components/SpotifyPlayer";
@@ -13,18 +13,20 @@ import { useSpotify } from "./hooks/useSpotify";
 import { useWelcomeFile } from "./hooks/useWelcomeFile";
 import Background from "./components/Background";
 import MobileWarning from "./components/mobile/MobileWarning";
-import TerminalEmulator from "./components/windows/TerminalEmulator";
+import { TerminalEmulator } from "./components/windows/TerminalEmulator";
 import exeIconSrc from "./assets/icons/exeIcon.png";
+import { handleFileClick } from "./utils/windowHandlers";
+
 function App() {
   const { filesystem, windows, setWindows, isMobile, findItemById } = useAppHooks(initialFilesystem);
   const { isSpotifyOpen, closeSpotifyPlayer } = useSpotify(true);
 
-  const exeApplications = {
+  const exeApplications = React.useMemo(() => ({
     "terminal.exe": {
       Component: TerminalEmulator,
       defaultSize: { width: 800, height: 500 }
     }
-  };
+  }), []);
 
   const openWindow = (title, id, viewingFile = null, fullPath, showCloseButton = true) => {
     const existingWindow = windows.find(
@@ -53,50 +55,16 @@ function App() {
       ]);
     }
   };
-  // Dear my future self
-  // When I wrote this code, only God and I knew what it was.
-  // Now, only God knows.
-  // From your past self.
   const onFileClick = (id) => {
-    const clickedItem = findItemById(filesystem, id);
-    const fullPath = getFullPath(id, filesystem);
-
-    if (clickedItem) {
-      if (clickedItem.name === "terminal.exe") {
-        setWindows([
-          ...windows,
-          {
-            title: "Terminal",
-            iconSrc: exeIconSrc,
-            Component: TerminalEmulator,
-            props: { filesystem: initialFilesystem }, // Add filesystem prop
-            id: Date.now(),
-            windowId: id,
-          },
-        ]);
-      } else if (clickedItem.name.endsWith('.exe')) {
-        const exeApp = exeApplications[clickedItem.name];
-        if (exeApp) {
-          setWindows([
-            ...windows,
-            {
-              title: clickedItem.name,
-              iconSrc: exeIconSrc,
-              Component: exeApp.Component,
-              id: Date.now(),
-              windowId: id,
-              defaultSize: exeApp.defaultSize
-            }
-          ]);
-        }
-      } else if (clickedItem.type === "folder") {
-        openWindow("Thunar", id, null, fullPath);
-      } else if (clickedItem.type === "file") {
-        openWindow(clickedItem.name, id, clickedItem, fullPath, false);
-      } else if (clickedItem.type === "link") {
-        window.open(clickedItem.url, "_blank");
-      }
-    }
+    handleFileClick({
+      id,
+      filesystem,
+      exeApplications,
+      setWindows,
+      findItemById,
+      openWindow,
+      initialFilesystem
+    });
   };
 
   const closeWindow = (id) => {

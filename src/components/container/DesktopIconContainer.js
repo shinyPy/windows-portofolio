@@ -23,7 +23,7 @@ const DesktopIconContainer = ({ filesystem, onFileClick, openWindow }) => {
         className="desktop-icon desktop-icon-appear transition05"
         name="Thunar"
         iconSrc={FileExplorerIcon}
-        onDoubleClick={() => openWindow("Thunar", 1)}
+        onDoubleClick={() => openWindow("Thunar", 1, null, [1], true)}
       />
       {filesystem.map((item) => (
         <DesktopIcon

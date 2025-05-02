@@ -1,19 +1,22 @@
 import React from "react";
 
 function Breadcrumb({
-  currentPath,
+  currentPath = [],
   goToFolder,
   goBack,
   findItemById,
   filesystem,
 }) {
+  // Ensure currentPath is always an array
+  const safeCurrentPath = Array.isArray(currentPath) ? currentPath : [];
+
   return (
     <nav
       className="flex items-center px-4 py-2 text-gray-700"
       aria-label="Breadcrumb"
     >
       <ol className="inline-flex items-center space-x-2">
-        {currentPath.length > 1 && (
+        {safeCurrentPath.length > 1 && (
           <li className="inline-flex items-center">
             <button
               onClick={goBack}
@@ -31,7 +34,7 @@ function Breadcrumb({
             </button>
           </li>
         )}
-        {currentPath.map((id, index) => {
+        {safeCurrentPath.map((id, index) => {
           const folder = findItemById(filesystem, id);
           return (
             <li key={id} className="inline-flex items-center">
@@ -54,7 +57,7 @@ function Breadcrumb({
               <button
                 onClick={() => goToFolder(id)}
                 className={`text-sm font-medium rounded-lg px-2 py-1 ${
-                  index === currentPath.length - 1
+                  index === safeCurrentPath.length - 1
                     ? "inline-flex items-center text-sm font-medium text-gray-800 bg-gray-300 transition-colors px-2 py-1 rounded-lg"
                     : "inline-flex items-center text-sm font-medium text-gray-600 hover:bg-gray-200 transition-colors px-2 py-1 rounded-lg"
                 }`}

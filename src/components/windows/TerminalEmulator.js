@@ -53,7 +53,7 @@ const formatText = (text, type) => {
   return <span className={formatClasses[type]}>{text}</span>;
 };
 
-const TerminalEmulator = ({ onClose }) => {
+export const TerminalEmulator = ({ onClose }) => {
   const [history, setHistory] = useState([
     <pre key="logo" className="text-cyan-400">{asciiLogo}</pre>,
     formatText('Welcome to Portfolio Terminal. Type "help" for commands.', 'success')
@@ -171,7 +171,7 @@ const TerminalEmulator = ({ onClose }) => {
       if (!file) return formatText(`open: ${fileName}: No such file`, 'error');
       if (file.type === 'folder') return formatText(`open: ${fileName}: Is a directory`, 'error');
       if (file.type === 'link') {
-        window.open(file.url, '_blank');
+        window.open(file.url, '_blank', 'noopener,noreferrer');
         return formatText(`Opened link: ${file.url}`, 'success');
       }
       return formatText(`open: Cannot open ${file.type}`, 'error');
@@ -300,5 +300,3 @@ const TerminalEmulator = ({ onClose }) => {
     </Rnd>
   );
 };
-
-export default TerminalEmulator;
