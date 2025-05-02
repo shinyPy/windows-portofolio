@@ -1,36 +1,65 @@
-import React from "react";
-import folderIconSrc from "./assets/icons/file-explorer.png";
-import fileIconSrc from "./assets/icons/file.png";
-import DesktopIconContainer from "./components/container/DesktopIconContainer";
-import WindowContainer from "./components/container/WindowContainer";
-import Taskbar from "./components/Taskbar";
-import FileExplorer from "./components/windows/FileExplorer";
-import { useAppHooks } from "./hooks/appHooks";
-import initialFilesystem from "./utils/filesystem/initialFilesystem";
-import { SpeedInsights } from "@vercel/speed-insights/react";
-import SpotifyPlayer from "./components/SpotifyPlayer";
-import { useSpotify } from "./hooks/useSpotify";
-import { useWelcomeFile } from "./hooks/useWelcomeFile";
-import Background from "./components/Background";
-import MobileWarning from "./components/mobile/MobileWarning";
-import { TerminalEmulator } from "./components/windows/TerminalEmulator";
-import exeIconSrc from "./assets/icons/exeIcon.png";
-import { handleFileClick } from "./utils/windowHandlers";
+import React from 'react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
+import { TerminalEmulator } from './components/windows/TerminalEmulator';
+import { handleFileClick } from './utils/windowHandlers';
+import { useAppHooks } from './hooks/appHooks';
+import { useSpotify } from './hooks/useSpotify';
+import { useWelcomeFile } from './hooks/useWelcomeFile';
+import initialFilesystem from './utils/filesystem/initialFilesystem';
+import Background from './components/Background';
+import DesktopIconContainer from './components/container/DesktopIconContainer';
+import FileExplorer from './components/windows/FileExplorer';
+import MobileWarning from './components/mobile/MobileWarning';
+import SpotifyPlayer from './components/SpotifyPlayer';
+import Taskbar from './components/Taskbar';
+import WindowContainer from './components/container/WindowContainer';
+import exeIconSrc from './assets/icons/exeIcon.png';
+import fileIconSrc from './assets/icons/file.png';
+import folderIconSrc from './assets/icons/file-explorer.png';
 
+/**
+ * Main application component managing desktop environment
+ * @returns {JSX.Element} The application UI
+ */
 function App() {
+  // Application state hooks
   const { filesystem, windows, setWindows, isMobile, findItemById } = useAppHooks(initialFilesystem);
   const { isSpotifyOpen, closeSpotifyPlayer } = useSpotify(true);
 
+  // Executable applications configuration
   const exeApplications = React.useMemo(() => ({
-    "terminal.exe": {
+    'terminal.exe': {
       Component: TerminalEmulator,
       defaultSize: { width: 800, height: 500 }
     }
   }), []);
 
-  const openWindow = (title, id, viewingFile = null, fullPath, showCloseButton = true) => {
-    const existingWindow = windows.find(
-      (win) => win.windowId === id && win.viewingFile === viewingFile
+  /**
+   * Handles window creation and management
+   * @param {string} title - Window title
+   * @param {string} id - Unique window identifier
+   * @param {object|null} viewingFile - File being viewed in window
+   * @param {string} fullPath - Full filesystem path
+   * @param {boolean} [showCloseButton=true] - Show close button
+   */
+  /**
+   * Opens or focuses a window
+   * @param {string} title - Window title
+   * @param {string} id - Window identifier
+   * @param {Object|null} viewingFile - File being viewed
+   * @param {string} fullPath - Full file path
+   * @param {boolean} [showCloseButton=true] - Show close button
+   */
+  const openWindow = (
+    title,
+    id,
+    viewingFile = null,
+    fullPath,
+    showCloseButton = true
+  ) => {
+    // Check for existing window instance
+    const existingWindow = windows.find(win =>
+      win.windowId === id && win.viewingFile === viewingFile
     );
     if (existingWindow) {
       setWindows([
@@ -102,27 +131,32 @@ function App() {
             onFileClick={onFileClick}
             openWindow={openWindow}
           />
+
           <WindowContainer
             windows={fileWindows}
             closeWindow={closeWindow}
             filesystem={filesystem}
             findItemById={findItemById}
-            onExeClick={launchExe} // Pass launchExe handler
+            onExeClick={launchExe}
           />
-            {exeWindows.map(win => (
+
+          {exeWindows.map(win => (
             <win.Component
-                key={win.id}
-                onClose={() => closeWindow(win.id)}
-                {...win.props} // Spread additional props
+              key={win.id}
+              onClose={() => closeWindow(win.id)}
+              {...win.props}
             />
-            ))}
+          ))}
+
           {isSpotifyOpen && <SpotifyPlayer onClose={closeSpotifyPlayer} />}
         </div>
+
         <Taskbar
           windows={windows}
           isSpotifyOpen={isSpotifyOpen}
         />
       </Background>
+
       <SpeedInsights />
       {isMobile && <MobileWarning />}
     </>
