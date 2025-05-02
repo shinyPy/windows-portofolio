@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Rnd } from "react-rnd";
 import Breadcrumb from "../../utils/breadcrumb";
 import FileItem from "../../utils/filesystem/fileitem";
@@ -8,7 +8,6 @@ function FileExplorer({ onExeClick, isExeWindow = false, ...other }) {
   const {
     title,
     filesystem,
-    windowId,
     onClose,
     findItemById,
     viewingFile: externalViewingFile,
@@ -16,17 +15,26 @@ function FileExplorer({ onExeClick, isExeWindow = false, ...other }) {
     showCloseButton = true,
   } = other;
 
-  const [currentPath, setCurrentPath] = useState(
-    fullPath.length ? fullPath : [windowId]
-  );
+  // Validate path exists in filesystem
+  const isValidPath = useCallback((path) => {
+    return Array.isArray(path) && path.every(id =>
+      filesystem.some(item => item.id === id)
+    );
+  }, [filesystem]);
+
+  const [currentPath, setCurrentPath] = useState(() => {
+    // Get root folder ID (first folder in filesystem)
+    const rootId = filesystem.find(item => item.type === 'folder')?.id;
+    return isValidPath(fullPath) ? fullPath : rootId ? [rootId] : [];
+  });
   const [viewingFile, setViewingFile] = useState(externalViewingFile || null);
   const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
-    if (fullPath.length) {
+    if (isValidPath(fullPath)) {
       setCurrentPath(fullPath);
     }
-  }, [fullPath]);
+  }, [fullPath, isValidPath]);
 
   const currentFolder = findItemById(
     filesystem,
@@ -35,6 +43,7 @@ function FileExplorer({ onExeClick, isExeWindow = false, ...other }) {
 
   const updatePath = (id) => {
     const clickedItem = findItemById(filesystem, id);
+    if (!clickedItem) return; // Prevent invalid IDs from being added
     if (clickedItem.type === "folder") {
       setCurrentPath([...currentPath, id]);
       setViewingFile(null); // Reset viewing file
