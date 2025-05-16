@@ -59,6 +59,16 @@ function FileExplorer({
   }, [currentPath, findItemById, filesystem]);
 
   /**
+   * Close the window with animation
+   */
+  const closeWindow = useCallback(() => {
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+    }, 200);
+  }, [onClose]);
+
+  /**
    * Updates path when an item is clicked
    * @param {string|number} id - Item ID
    */
@@ -79,7 +89,7 @@ function FileExplorer({
         setViewingFile(clickedItem);
       }
     }
-  }, [findItemById, filesystem, onExeClick, isExeWindow]);
+  }, [findItemById, filesystem, onExeClick, isExeWindow, closeWindow]);
 
   /**
    * Navigate to a specific folder
@@ -110,16 +120,6 @@ function FileExplorer({
   const closeViewer = useCallback(() => {
     setViewingFile(null);
   }, []);
-
-  /**
-   * Close the window with animation
-   */
-  const closeWindow = useCallback(() => {
-    setIsClosing(true);
-    setTimeout(() => {
-      onClose();
-    }, 200);
-  }, [onClose]);
 
   // Position window in center of screen initially
   const initialPosition = useMemo(() => {

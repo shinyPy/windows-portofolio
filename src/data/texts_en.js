@@ -57,7 +57,7 @@ My hobbies were reading or writing stories, tinkering with software and contribu
 
 I love developing front end with React (I dont like NextJS somehow but plan on learning it)
 
-Currently using Arch Linux (CachyOS) as Daily Driver and I love it!
+Currently using Arch Linux (Manjaro) as Daily Driver and I love it!
 Discord : shiniya_`;
 
 export const changelogText = `Changelog:
@@ -73,4 +73,8 @@ export const changelogText = `Changelog:
   - Add terminal and make the virtual FS to parse initalFilesystem
   - Parse filesystem directly so we could access it and modify it for future
   - probably gonna add mkdir and nano commands
+  17/05/2025
+  - Fixed folder navigation to properly open specific folders when clicked from the desktop
+  - Improved path handling in FileExplorer component
+  - Refactor code to make it more readable and maintainable
   `;
