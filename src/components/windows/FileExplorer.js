@@ -28,29 +28,28 @@ function FileExplorer({
   fullPath = [],
   showCloseButton = true,
 }) {
-  // Validate path exists in filesystem
-  const isValidPath = useCallback((path) => {
-    return Array.isArray(path) && path.every(id =>
-      filesystem.some(item => item.id === id)
-    );
-  }, [filesystem]);
+  // Use the fullPath directly if it's provided and not empty
+  const initialPath = useMemo(() => {
+    // If fullPath is valid (non-empty array), use it directly
+    if (Array.isArray(fullPath) && fullPath.length > 0) {
+      return fullPath;
+    }
 
-  // Get initial path - use provided fullPath if valid, fallback to root
-  const getInitialPath = useMemo(() => {
+    // Otherwise, fall back to root folder
     const rootId = filesystem.find(item => item.type === 'folder')?.id;
-    return isValidPath(fullPath) ? fullPath : rootId ? [rootId] : [];
-  }, [filesystem, fullPath, isValidPath]);
+    return rootId ? [rootId] : [];
+  }, [filesystem, fullPath]);
 
-  const [currentPath, setCurrentPath] = useState(getInitialPath);
+  const [currentPath, setCurrentPath] = useState(initialPath);
   const [viewingFile, setViewingFile] = useState(externalViewingFile || null);
   const [isClosing, setIsClosing] = useState(false);
 
-  // Update path when external fullPath changes
+  // Update current path when external fullPath changes
   useEffect(() => {
-    if (isValidPath(fullPath)) {
+    if (Array.isArray(fullPath) && fullPath.length > 0) {
       setCurrentPath(fullPath);
     }
-  }, [fullPath, isValidPath]);
+  }, [fullPath]);
 
   // Get current folder based on path
   const currentFolder = useMemo(() => {
