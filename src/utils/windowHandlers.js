@@ -11,9 +11,11 @@ export const handleFileClick = ({
   initialFilesystem
 }) => {
   const clickedItem = findItemById(filesystem, id);
-  const fullPath = getFullPath(id, filesystem);
 
   if (clickedItem) {
+    // Build the correct path for the clicked item
+    const fullPath = buildPath(id, initialFilesystem);
+
     if (clickedItem.name === "terminal.exe") {
       setWindows(windows => [
         ...windows,
@@ -51,7 +53,42 @@ export const handleFileClick = ({
   }
 };
 
-const getFullPath = (id, filesystem) => {
+/**
+ * Builds the correct path array for an item by traversing the filesystem
+ * @param {number|string} id - The ID of the item
+ * @param {Array} filesystem - The filesystem array
+ * @returns {Array} Array of IDs representing the path
+ */
+export const buildPath = (targetId, filesystem) => {
+  const path = [];
+
+  const findPath = (currentItems, parentIds = []) => {
+    for (const item of currentItems) {
+      // Current path is parent IDs plus current item
+      const currentPath = [...parentIds, item.id];
+
+      // If this is the target ID, we found the path
+      if (item.id === targetId) {
+        path.push(...currentPath);
+        return true;
+      }
+
+      // If this item has contents (it's a folder), search within it
+      if (item.contents && item.contents.length > 0) {
+        const found = findPath(item.contents, currentPath);
+        if (found) return true;
+      }
+    }
+
+    return false;
+  };
+
+  findPath(filesystem);
+  return path;
+};
+
+// Keep this helper function for backward compatibility
+export const getFullPath = (id, filesystem) => {
   const path = [];
   let current = findItemById(filesystem, id);
 

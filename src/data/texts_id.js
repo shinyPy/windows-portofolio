@@ -54,7 +54,7 @@ Hobi saya adalah membaca dan menulis cerita, modif software, dan berkontribusi k
 
 Saya suka mengembangkan front end dengan React (saya entah mengapa tidak suka NextJS tapi berencana untuk mempelajarinya).
 
-Saat ini menggunakan Arch Linux (CachyOS) sebagai Daily Driver dan saya menyukainya!
+Saat ini menggunakan Arch Linux (Manjaro) sebagai Daily Driver dan saya menyukainya!
 Discord : shiniya_`;
 
 // export const markdownContent = `
@@ -79,4 +79,9 @@ export const changelogText = `Changelog:
   - Memisahkan File Explorer dan handling .exe
   - Menambahkan terminal dan membuat virtual FS untuk parsing initialFilesystem
   - Parsing filesystem secara langsung sehingga kita bisa mengaksesnya dan memodifikasinya untuk masa depan
-  - kemungkinan akan menambahkan perintah mkdir dan nano`;
+  - kemungkinan akan menambahkan perintah mkdir dan nano
+  17/05/2025
+  - Memperbaiki navigasi folder untuk membuka folder spesifik dengan benar saat diklik dari desktop
+  - Meningkatkan penanganan path di komponen FileExplorer
+  - Membersihkan kode untuk meningkatkan keterbacaan dan pemeliharaan
+ `;
