@@ -9,13 +9,14 @@ import initialFilesystem from './utils/filesystem/initialFilesystem';
 import Background from './components/Background';
 import DesktopIconContainer from './components/container/DesktopIconContainer';
 import FileExplorer from './components/windows/FileExplorer';
-import MobileWarning from './components/mobile/MobileWarning';
+import MobileApp from './components/mobile/MobileApp';
 import SpotifyPlayer from './components/SpotifyPlayer';
 import Taskbar from './components/Taskbar';
 import WindowContainer from './components/container/WindowContainer';
 import exeIconSrc from './assets/icons/exeIcon.png';
 import fileIconSrc from './assets/icons/file.png';
 import folderIconSrc from './assets/icons/file-explorer.png';
+import MobileWarning from './components/mobile/MobileWarning';
 
 /**
  * Main application component managing desktop environment
@@ -122,6 +123,24 @@ function App() {
     }
   };
 
+  // Render mobile version for mobile devices
+  if (isMobile) {
+    return (
+      <>
+        {/* <MobileApp
+          filesystem={filesystem}
+          findItemById={findItemById}
+          isSpotifyOpen={isSpotifyOpen}
+          closeSpotifyPlayer={closeSpotifyPlayer}
+          initialFilesystem={initialFilesystem}
+        /> */}
+        <MobileWarning />
+        <SpeedInsights />
+      </>
+    );
+  }
+
+  // Render desktop version for desktop devices
   return (
     <>
       <Background isMobile={isMobile}>
@@ -158,7 +177,6 @@ function App() {
       </Background>
 
       <SpeedInsights />
-      {isMobile && <MobileWarning />}
     </>
   );
 }
