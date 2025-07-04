@@ -47,63 +47,77 @@ const MobileHome = ({ filesystem, findItemById, onNavigate, onOpenTerminal }) =>
   ];
 
   return (
-    <div className="flex flex-col h-full bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 p-4 overflow-y-auto">
-      {/* Header */}
-      <div className="text-center mb-8 mt-4">
-        <h1 className="text-3xl font-bold text-white mb-2">Windows Portfolio</h1>
-        <div className="text-white/80 text-sm">
-          {currentTime.toLocaleString()}
-        </div>
-      </div>
-
-      {/* Welcome Message */}
-      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-6 border border-white/20">
-        <h2 className="text-xl font-semibold text-white mb-2">Welcome!</h2>
-        <p className="text-white/80 text-sm leading-relaxed">
-          {welcomeText || 'Welcome to my interactive portfolio! Explore my projects, skills, and more through this mobile-friendly interface.'}
-        </p>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="mb-6">
-        <h3 className="text-lg font-semibold text-white mb-4">Quick Actions</h3>
-        <div className="grid grid-cols-2 gap-3">
-          {quickActions.map((action, index) => (
-            <button
-              key={index}
-              onClick={action.action}
-              className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all active:scale-95"
-            >
-              <div className="text-2xl mb-2">{action.icon}</div>
-              <div className="text-white font-medium text-sm">{action.title}</div>
-              <div className="text-white/60 text-xs mt-1">{action.description}</div>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Recent Activity */}
-      <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-        <h3 className="text-lg font-semibold text-white mb-3">Recent Activity</h3>
-        <div className="space-y-2">
-          <div className="flex items-center text-white/80 text-sm">
-            <span className="w-2 h-2 bg-green-400 rounded-full mr-3"></span>
-            Portfolio updated with new mobile interface
+    <div className="flex flex-col h-full bg-gray-50 dark:bg-gray-800 overflow-y-auto">
+      {/* App Bar */}
+      <div className="bg-white dark:bg-gray-900 shadow-md p-4 mb-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Portfolio</h1>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              {currentTime.toLocaleString()}
+            </p>
           </div>
-          <div className="flex items-center text-white/80 text-sm">
-            <span className="w-2 h-2 bg-blue-400 rounded-full mr-3"></span>
-            Added responsive design improvements
-          </div>
-          <div className="flex items-center text-white/80 text-sm">
-            <span className="w-2 h-2 bg-purple-400 rounded-full mr-3"></span>
-            Enhanced user experience for mobile devices
+          <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+            <span className="text-white font-bold">SP</span>
           </div>
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="text-center mt-8 text-white/60 text-xs">
-        <p>Swipe up to explore more • Tap navigation below</p>
+      <div className="px-4 pb-4">
+        {/* Welcome Card */}
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 mb-6 shadow-lg border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center mb-4">
+            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+              <span className="text-white text-lg">👋</span>
+            </div>
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Welcome!</h2>
+          </div>
+          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+            {welcomeText || 'Welcome to my interactive portfolio! Explore my projects, skills, and more through this Android-style interface.'}
+          </p>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="mb-6">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h3>
+          <div className="grid grid-cols-2 gap-3">
+            {quickActions.map((action, index) => (
+              <button
+                key={index}
+                onClick={action.action}
+                className="bg-white dark:bg-gray-900 rounded-xl p-4 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-200 active:scale-95"
+              >
+                <div className="text-2xl mb-2">{action.icon}</div>
+                <div className="text-gray-900 dark:text-white font-medium text-sm">{action.title}</div>
+                <div className="text-gray-500 dark:text-gray-400 text-xs mt-1">{action.description}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Recent Activity Card */}
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
+          <div className="flex items-center mb-4">
+            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
+              <span className="text-white text-lg">📱</span>
+            </div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Recent Updates</h3>
+          </div>
+          <div className="space-y-3">
+            <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm">
+              <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+              Portfolio updated with Android Material Design
+            </div>
+            <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm">
+              <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+              Added responsive design improvements
+            </div>
+            <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm">
+              <span className="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
+              Enhanced mobile user experience
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

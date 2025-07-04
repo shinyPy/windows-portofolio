@@ -9,19 +9,19 @@ const MobileNavigation = ({ activeTab, onTabChange, onOpenTerminal }) => {
   ];
 
   return (
-    <nav className="bg-black/80 backdrop-blur-sm border-t border-white/20">
+    <nav className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg">
       <div className="flex justify-around items-center py-2">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
-            className={`flex flex-col items-center py-2 px-4 rounded-lg transition-all ${
+            className={`flex flex-col items-center py-3 px-4 rounded-xl transition-all duration-200 ${
               activeTab === tab.id
-                ? 'bg-white/20 text-white'
-                : 'text-gray-400 hover:text-white hover:bg-white/10'
+                ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
+                : 'text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800'
             }`}
           >
-            <span className="text-lg mb-1">{tab.icon}</span>
+            <span className="text-xl mb-1">{tab.icon}</span>
             <span className="text-xs font-medium">{tab.label}</span>
           </button>
         ))}
@@ -29,9 +29,9 @@ const MobileNavigation = ({ activeTab, onTabChange, onOpenTerminal }) => {
         {/* Terminal Button */}
         <button
           onClick={onOpenTerminal}
-          className="flex flex-col items-center py-2 px-4 rounded-lg transition-all text-gray-400 hover:text-white hover:bg-white/10"
+          className="flex flex-col items-center py-3 px-4 rounded-xl transition-all duration-200 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800"
         >
-          <span className="text-lg mb-1">💻</span>
+          <span className="text-xl mb-1">💻</span>
           <span className="text-xs font-medium">Terminal</span>
         </button>
       </div>

@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useLanguage } from '../../utils/LanguageContext';
 
-const MobileProjects = ({ filesystem, findItemById, initialFilesystem }) => {
+const MobileProjects = ({ filesystem, findItemById, initialFilesystem, onBack }) => {
+  const { language, setLanguage } = useLanguage();
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'id' : 'en');
+  };
 
   useEffect(() => {
     // Find the Projects folder and extract projects
@@ -68,69 +74,104 @@ const MobileProjects = ({ filesystem, findItemById, initialFilesystem }) => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900 p-4 overflow-y-auto">
-      {/* Header */}
-      <div className="text-center mb-6 mt-4">
-        <h1 className="text-2xl font-bold text-white mb-2">My Projects</h1>
-        <p className="text-white/80 text-sm">Explore my latest work and developments</p>
-      </div>
-
-      {/* Projects Grid */}
-      <div className="space-y-4">
-        {projects.map((project) => (
-          <div
-            key={project.id}
-            className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 hover:bg-white/20 transition-all active:scale-95"
-            onClick={() => handleProjectClick(project)}
-          >
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex-1">
-                <h3 className="text-white font-semibold text-lg mb-1">
-                  {project.name.replace(/\.(mp4|exe)$/, '')}
-                </h3>
-                <span className="text-xs bg-blue-500/20 text-blue-300 px-2 py-1 rounded">
-                  {project.category}
-                </span>
+    <div className="flex flex-col h-full bg-white dark:bg-gray-900">
+      {/* Mobile App Header */}
+      <div className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700 px-4 py-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
+            <button
+              onClick={onBack}
+              className="w-10 h-10 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors mr-3"
+            >
+              ←
+            </button>
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-blue-500 rounded-xl flex items-center justify-center mr-3">
+                <span className="text-white text-lg">💼</span>
               </div>
-              <div className="text-2xl ml-3">
-                {project.type === 'link' ? '🔗' : '🎬'}
-              </div>
-            </div>
-
-            <p className="text-white/80 text-sm mb-3 leading-relaxed">
-              {project.description}
-            </p>
-
-            <div className="flex flex-wrap gap-2 mb-3">
-              {project.tech.map((tech, index) => (
-                <span
-                  key={index}
-                  className="text-xs bg-white/10 text-white/80 px-2 py-1 rounded"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-
-            <div className="flex items-center justify-between">
-              <span className="text-white/60 text-xs">
-                {project.type === 'link' ? 'Click to visit' : 'Click to watch'}
-              </span>
-              <span className="text-white/60 text-xs">
-                {project.type === 'link' ? '↗' : '▶'}
-              </span>
+              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Projects</h1>
             </div>
           </div>
-        ))}
+
+          {/* Language Toggle Button */}
+          <button
+            onClick={toggleLanguage}
+            className="w-10 h-10 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          >
+            <span className="text-sm font-semibold">{language === 'en' ? 'ID' : 'EN'}</span>
+          </button>
+        </div>
       </div>
 
-      {/* Empty State */}
-      {projects.length === 0 && (
-        <div className="text-center text-white/60 mt-8">
-          <div className="text-4xl mb-4">📁</div>
-          <p>No projects found</p>
+      <div className="px-4 pb-4">
+        {/* Projects List */}
+        <div className="space-y-4">
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-200 active:scale-98"
+              onClick={() => handleProjectClick(project)}
+            >
+              <div className="flex items-start justify-between mb-4">
+                <div className="flex-1">
+                  <div className="flex items-center mb-2">
+                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mr-3">
+                      <span className="text-white text-lg">
+                        {project.type === 'link' ? '🔗' : '🎬'}
+                      </span>
+                    </div>
+                    <div>
+                      <h3 className="text-gray-900 dark:text-white font-semibold text-lg">
+                        {project.name.replace(/\.(mp4|exe)$/, '')}
+                      </h3>
+                      <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full">
+                        {project.category}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
+                {project.description}
+              </p>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.tech.map((tech, index) => (
+                  <span
+                    key={index}
+                    className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex items-center justify-between">
+                <span className="text-gray-500 dark:text-gray-400 text-xs">
+                  {project.type === 'link' ? 'Tap to visit website' : 'Tap to watch video'}
+                </span>
+                <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                  <span className="text-white text-xs">
+                    {project.type === 'link' ? '↗' : '▶'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-      )}
+
+        {/* Empty State */}
+        {projects.length === 0 && (
+          <div className="text-center text-gray-500 dark:text-gray-400 mt-16">
+            <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+              <span className="text-2xl">📁</span>
+            </div>
+            <p className="text-lg font-medium">No projects found</p>
+            <p className="text-sm mt-2">Check back later for updates</p>
+          </div>
+        )}
+      </div>
 
       {/* Video Modal */}
       {selectedProject && selectedProject.type === 'video' && (

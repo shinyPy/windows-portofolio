@@ -156,72 +156,73 @@ const MobileTerminal = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-      <div className="bg-black rounded-lg max-w-md w-full max-h-[80vh] border border-green-500/50 overflow-hidden">
-        {/* Terminal Header */}
-        <div className="bg-gray-900 px-4 py-3 flex items-center justify-between border-b border-green-500/50">
-          <div className="flex items-center">
-            <span className="text-green-400 text-sm font-mono">Terminal</span>
-          </div>
+    <div className="fixed inset-0 bg-black z-50 flex flex-col">
+      {/* Terminal Header - iOS Style */}
+      <div className="bg-gray-900 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+        <div className="flex items-center">
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white text-xl"
+            className="w-10 h-10 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800 transition-colors mr-3"
           >
-            ×
+            ←
           </button>
-        </div>
-
-        {/* Terminal Body */}
-        <div className="h-96 flex flex-col">
-          {/* Output Area */}
-          <div
-            ref={outputRef}
-            className="flex-1 p-4 overflow-y-auto font-mono text-sm text-green-400 bg-black"
-          >
-            {output.map((line, index) => (
-              <div key={index} className="whitespace-pre-wrap break-words">
-                {line}
-              </div>
-            ))}
+          <div className="w-8 h-8 bg-gray-700 rounded-xl flex items-center justify-center mr-3">
+            <span className="text-green-400 text-lg">💻</span>
           </div>
+          <span className="text-white text-lg font-semibold">Terminal</span>
+        </div>
+      </div>
 
-          {/* Input Area */}
-          <form onSubmit={handleSubmit} className="p-4 border-t border-green-500/30">
-            <div className="flex items-center">
-              <span className="text-green-400 font-mono text-sm mr-2">{'>'}</span>
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                className="flex-1 bg-transparent text-green-400 font-mono text-sm outline-none"
-                placeholder="Type a command..."
-                autoComplete="off"
-              />
+      {/* Terminal Body */}
+      <div className="flex-1 flex flex-col bg-black">
+        {/* Output Area */}
+        <div
+          ref={outputRef}
+          className="flex-1 p-4 overflow-y-auto font-mono text-sm text-green-400"
+        >
+          {output.map((line, index) => (
+            <div key={index} className="whitespace-pre-wrap break-words mb-1">
+              {line}
             </div>
-          </form>
+          ))}
         </div>
 
-        {/* Quick Commands */}
-        <div className="bg-gray-900 px-4 py-3 border-t border-green-500/50">
-          <div className="flex flex-wrap gap-2">
-            {['help', 'clear', 'about', 'skills'].map((cmd) => (
-              <button
-                key={cmd}
-                onClick={() => {
-                  setInput(cmd);
-                  const newOutput = [...output, `> ${cmd}`, ...handleCommand(cmd)];
-                  setOutput(newOutput);
-                  setHistory([...history, cmd]);
-                  setInput('');
-                }}
-                className="px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs font-mono hover:bg-green-500/30 transition-colors"
-              >
-                {cmd}
-              </button>
-            ))}
+        {/* Input Area */}
+        <form onSubmit={handleSubmit} className="p-4 border-t border-gray-800">
+          <div className="flex items-center">
+            <span className="text-green-400 font-mono text-sm mr-2">{'>'}</span>
+            <input
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+              className="flex-1 bg-transparent text-green-400 font-mono text-sm outline-none placeholder-gray-600"
+              placeholder="Type a command..."
+              autoComplete="off"
+            />
           </div>
+        </form>
+      </div>
+
+      {/* Quick Commands */}
+      <div className="bg-gray-900 px-4 py-3 border-t border-gray-700">
+        <div className="flex flex-wrap gap-2">
+          {['help', 'clear', 'about', 'skills'].map((cmd) => (
+            <button
+              key={cmd}
+              onClick={() => {
+                setInput(cmd);
+                const newOutput = [...output, `> ${cmd}`, ...handleCommand(cmd)];
+                setOutput(newOutput);
+                setHistory([...history, cmd]);
+                setInput('');
+              }}
+              className="px-3 py-2 bg-green-500/20 text-green-400 rounded-lg text-xs font-medium hover:bg-green-500/30 transition-colors"
+            >
+              {cmd}
+            </button>
+          ))}
         </div>
       </div>
     </div>

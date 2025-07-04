@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import MobileNavigation from './MobileNavigation';
-import MobileHome from './MobileHome';
+import MobileHomeScreen from './MobileHomeScreen';
 import MobileProjects from './MobileProjects';
 import MobileSkills from './MobileSkills';
 import MobileAbout from './MobileAbout';
+import MobileFileManager from './MobileFileManager';
 import MobileTerminal from './MobileTerminal';
 import MobileSpotifyPlayer from './MobileSpotifyPlayer';
+import MobileControlCenter from './MobileControlCenter';
 
 const MobileApp = ({
   filesystem,
@@ -14,18 +15,34 @@ const MobileApp = ({
   closeSpotifyPlayer,
   initialFilesystem
 }) => {
-  const [activeTab, setActiveTab] = useState('home');
+  const [currentScreen, setCurrentScreen] = useState('home');
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
 
-  const renderActiveTab = () => {
-    switch (activeTab) {
+  const handleAppOpen = (appName) => {
+    setCurrentScreen(appName);
+  };
+
+  const handleBackToHome = () => {
+    setCurrentScreen('home');
+  };
+
+  const renderCurrentScreen = () => {
+    switch (currentScreen) {
       case 'home':
         return (
-          <MobileHome
+          <MobileHomeScreen
             filesystem={filesystem}
             findItemById={findItemById}
-            onNavigate={setActiveTab}
+            onAppOpen={handleAppOpen}
             onOpenTerminal={() => setIsTerminalOpen(true)}
+          />
+        );
+      case 'filemanager':
+        return (
+          <MobileFileManager
+            filesystem={filesystem}
+            findItemById={findItemById}
+            onBack={handleBackToHome}
           />
         );
       case 'projects':
@@ -34,6 +51,7 @@ const MobileApp = ({
             filesystem={filesystem}
             findItemById={findItemById}
             initialFilesystem={initialFilesystem}
+            onBack={handleBackToHome}
           />
         );
       case 'skills':
@@ -41,6 +59,7 @@ const MobileApp = ({
           <MobileSkills
             filesystem={filesystem}
             findItemById={findItemById}
+            onBack={handleBackToHome}
           />
         );
       case 'about':
@@ -48,14 +67,15 @@ const MobileApp = ({
           <MobileAbout
             filesystem={filesystem}
             findItemById={findItemById}
+            onBack={handleBackToHome}
           />
         );
       default:
         return (
-          <MobileHome
+          <MobileHomeScreen
             filesystem={filesystem}
             findItemById={findItemById}
-            onNavigate={setActiveTab}
+            onAppOpen={handleAppOpen}
             onOpenTerminal={() => setIsTerminalOpen(true)}
           />
         );
@@ -63,10 +83,35 @@ const MobileApp = ({
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-pink-900">
+    <div className="flex flex-col h-screen bg-black">
+      {/* iOS Status Bar */}
+      <div className="bg-black text-white px-6 py-2 flex justify-between items-center text-sm font-semibold">
+        <div className="flex items-center space-x-2">
+          <span className="text-sm font-semibold">9:41</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          {/* Signal dots */}
+          <div className="flex space-x-1">
+            <div className="w-1 h-1 bg-white rounded-full"></div>
+            <div className="w-1 h-1 bg-white rounded-full"></div>
+            <div className="w-1 h-1 bg-white rounded-full"></div>
+            <div className="w-1 h-1 bg-white rounded-full"></div>
+          </div>
+          {/* WiFi icon */}
+          <div className="text-xs">📶</div>
+          {/* Battery */}
+          <div className="flex items-center space-x-1">
+            <div className="w-6 h-3 border border-white rounded-sm flex items-center justify-end pr-0.5">
+              <div className="w-4 h-2 bg-green-500 rounded-xs"></div>
+            </div>
+            <div className="w-0.5 h-1.5 bg-white rounded-full"></div>
+          </div>
+        </div>
+      </div>
+
       {/* Main Content */}
       <div className="flex-1 overflow-hidden">
-        {renderActiveTab()}
+        {renderCurrentScreen()}
       </div>
 
       {/* Terminal Modal */}
@@ -78,13 +123,6 @@ const MobileApp = ({
       {isSpotifyOpen && (
         <MobileSpotifyPlayer onClose={closeSpotifyPlayer} />
       )}
-
-      {/* Bottom Navigation */}
-      <MobileNavigation
-        activeTab={activeTab}
-        onTabChange={setActiveTab}
-        onOpenTerminal={() => setIsTerminalOpen(true)}
-      />
     </div>
   );
 };
