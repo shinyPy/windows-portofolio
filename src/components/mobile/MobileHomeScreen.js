@@ -52,7 +52,7 @@ const MobileHomeScreen = ({ filesystem, findItemById, onAppOpen, onOpenTerminal 
   return (
     <div className="h-full bg-gradient-to-b from-gray-900 to-black relative overflow-hidden">
       {/* iOS Dynamic Island Effect */}
-      <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-full"></div>
+      {/* <div className="absolute top-2 left-1/2 transform -translate-x-1/2 w-32 h-6 bg-black rounded-full"></div> */}
 
       <div className="relative z-10 h-full flex flex-col px-6 pt-16">
         {/* Time and Date Widget - iOS Style */}
@@ -96,7 +96,7 @@ const MobileHomeScreen = ({ filesystem, findItemById, onAppOpen, onOpenTerminal 
         </div>
 
         {/* iOS Dock */}
-        <div className="mb-8">
+        {/* <div className="mb-8">
           <div className="bg-white/20 backdrop-blur-xl rounded-3xl p-3 mx-2">
             <div className="flex justify-around items-center">
               {quickActions.slice(0, 4).map((action, index) => (
@@ -114,7 +114,7 @@ const MobileHomeScreen = ({ filesystem, findItemById, onAppOpen, onOpenTerminal 
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* iOS Home Indicator */}
         <div className="flex justify-center pb-2">

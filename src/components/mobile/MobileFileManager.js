@@ -350,12 +350,12 @@ const MobileFileManager = ({ filesystem, findItemById, onBack }) => {
           </div>
 
           {/* Language Toggle Button */}
-          <button
+          {/* <button
             onClick={toggleLanguage}
             className="w-10 h-10 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
             <span className="text-sm font-semibold">{language === 'en' ? 'ID' : 'EN'}</span>
-          </button>
+          </button> */}
         </div>
       </div>
 
