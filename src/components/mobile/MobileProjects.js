@@ -12,7 +12,7 @@ const MobileProjects = ({ filesystem, findItemById, initialFilesystem, onBack })
 
   useEffect(() => {
     // Find the Projects folder and extract projects
-    const projectsFolder = findItemById(3); // Projects folder ID
+    const projectsFolder = findItemById(filesystem, 3); // Projects folder ID
     if (projectsFolder && projectsFolder.contents) {
       const projectList = projectsFolder.contents.map(item => {
         if (item.type === 'link') {
@@ -41,7 +41,7 @@ const MobileProjects = ({ filesystem, findItemById, initialFilesystem, onBack })
 
       setProjects(projectList);
     }
-  }, [findItemById]);
+  }, [findItemById, filesystem]);
 
   const getProjectDescription = (name) => {
     switch (name) {
@@ -74,57 +74,58 @@ const MobileProjects = ({ filesystem, findItemById, initialFilesystem, onBack })
   };
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-gray-900">
-      {/* Mobile App Header */}
-      <div className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700 px-4 py-3">
+    <div className="flex flex-col h-full bg-gray-50 dark:bg-black ios-fade-in">
+      {/* iOS Navigation Bar */}
+      <div className="bg-white/95 dark:bg-black/95 ios-blur border-b border-gray-200/50 dark:border-gray-800/50 px-4 py-3 safe-area-inset-top">
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <button
               onClick={onBack}
-              className="w-10 h-10 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors mr-3"
+              className="w-10 h-10 rounded-full flex items-center justify-center ios-blue hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 active:scale-95 mr-3"
             >
-              ←
+              <span className="text-lg">‹</span>
             </button>
             <div className="flex items-center">
-              <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-blue-500 rounded-xl flex items-center justify-center mr-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mr-3 ios-shadow-sm">
                 <span className="text-white text-lg">💼</span>
               </div>
-              <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Projects</h1>
+              <h1 className="ios-title text-black dark:text-white">Portfolio</h1>
             </div>
           </div>
 
           {/* Language Toggle Button */}
           <button
             onClick={toggleLanguage}
-            className="w-10 h-10 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            className="px-3 py-1.5 rounded-lg ios-bg-gray dark:bg-gray-800 transition-all duration-200 active:scale-95"
           >
-            <span className="text-sm font-semibold">{language === 'en' ? 'ID' : 'EN'}</span>
+            <span className="text-sm font-semibold ios-blue">{language === 'en' ? 'ID' : 'EN'}</span>
           </button>
         </div>
       </div>
 
-      <div className="px-4 pb-4">
+      <div className="flex-1 px-4 py-6 overflow-y-auto">
         {/* Projects List */}
         <div className="space-y-4">
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <div
               key={project.id}
-              className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-200 active:scale-98"
+              className="ios-card dark:ios-card-dark p-6 hover:ios-shadow-lg transition-all duration-200 active:scale-98 ios-fade-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
               onClick={() => handleProjectClick(project)}
             >
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
-                  <div className="flex items-center mb-2">
-                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center mr-3">
-                      <span className="text-white text-lg">
+                  <div className="flex items-center mb-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mr-4 ios-shadow-sm">
+                      <span className="text-white text-xl">
                         {project.type === 'link' ? '🔗' : '🎬'}
                       </span>
                     </div>
-                    <div>
-                      <h3 className="text-gray-900 dark:text-white font-semibold text-lg">
+                    <div className="flex-1">
+                      <h3 className="ios-title text-black dark:text-white mb-1">
                         {project.name.replace(/\.(mp4|exe)$/, '')}
                       </h3>
-                      <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-3 py-1 rounded-full">
+                      <span className="text-xs bg-blue-100 dark:bg-blue-900/30 ios-blue px-3 py-1 rounded-full font-medium">
                         {project.category}
                       </span>
                     </div>
@@ -132,7 +133,7 @@ const MobileProjects = ({ filesystem, findItemById, initialFilesystem, onBack })
                 </div>
               </div>
 
-              <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 leading-relaxed">
+              <p className="ios-body text-gray-600 dark:text-gray-300 mb-4">
                 {project.description}
               </p>
 
@@ -140,19 +141,19 @@ const MobileProjects = ({ filesystem, findItemById, initialFilesystem, onBack })
                 {project.tech.map((tech, index) => (
                   <span
                     key={index}
-                    className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full"
+                    className="text-xs ios-bg-gray dark:bg-gray-800 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-lg font-medium"
                   >
                     {tech}
                   </span>
                 ))}
               </div>
 
-              <div className="flex items-center justify-between">
-                <span className="text-gray-500 dark:text-gray-400 text-xs">
+              <div className="flex items-center justify-between pt-2 border-t border-gray-100 dark:border-gray-700">
+                <span className="ios-caption dark:text-gray-400">
                   {project.type === 'link' ? 'Tap to visit website' : 'Tap to watch video'}
                 </span>
-                <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-xs">
+                <div className="w-7 h-7 ios-bg-blue rounded-full flex items-center justify-center ios-shadow-sm">
+                  <span className="text-white text-sm font-medium">
                     {project.type === 'link' ? '↗' : '▶'}
                   </span>
                 </div>
@@ -163,12 +164,12 @@ const MobileProjects = ({ filesystem, findItemById, initialFilesystem, onBack })
 
         {/* Empty State */}
         {projects.length === 0 && (
-          <div className="text-center text-gray-500 dark:text-gray-400 mt-16">
-            <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl">📁</span>
+          <div className="text-center mt-20">
+            <div className="w-20 h-20 bg-gray-100 dark:bg-gray-800 rounded-3xl flex items-center justify-center mx-auto mb-6 ios-shadow-sm">
+              <span className="text-3xl">📁</span>
             </div>
-            <p className="text-lg font-medium">No projects found</p>
-            <p className="text-sm mt-2">Check back later for updates</p>
+            <h3 className="ios-title text-black dark:text-white mb-2">No Projects Found</h3>
+            <p className="ios-caption dark:text-gray-400">Check back later for updates</p>
           </div>
         )}
       </div>

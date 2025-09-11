@@ -32,33 +32,33 @@ const MobileSkills = ({ filesystem, findItemById, onBack }) => {
   const skillsSections = parseSkillsText(skillsContent);
 
   return (
-    <div className="flex flex-col h-full bg-gray-50 dark:bg-gray-800 overflow-y-auto">
-      {/* Mobile App Header */}
-      <div className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700 px-4 py-3">
+    <div className="flex flex-col h-full bg-gray-50 dark:bg-black ios-fade-in">
+      {/* iOS Navigation Bar */}
+      <div className="bg-white/95 dark:bg-black/95 ios-blur border-b border-gray-200/50 dark:border-gray-800/50 px-4 py-3 safe-area-inset-top">
         <div className="flex items-center">
           <button
             onClick={onBack}
-            className="w-10 h-10 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors mr-3"
+            className="w-10 h-10 rounded-full flex items-center justify-center ios-blue hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 active:scale-95 mr-3"
           >
-            ←
+            <span className="text-lg">‹</span>
           </button>
           <div className="flex items-center">
-            <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center mr-3">
+            <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mr-3 ios-shadow-sm">
               <span className="text-white text-lg">🛠️</span>
             </div>
-            <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Skills</h1>
+            <h1 className="ios-title text-black dark:text-white">Skills</h1>
           </div>
         </div>
       </div>
 
-      <div className="px-4 pb-4 pt-4">
+      <div className="flex-1 px-4 py-6 overflow-y-auto">
         {/* Skills Sections */}
-        <div className="space-y-6">
+        <div className="space-y-4">
           {skillsSections.map((section, sectionIndex) => (
-            <div key={sectionIndex} className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-              <div className="flex items-center mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-3">
-                  <span className="text-white text-lg">
+            <div key={sectionIndex} className="ios-card dark:ios-card-dark p-6 ios-fade-in" style={{ animationDelay: `${sectionIndex * 0.1}s` }}>
+              <div className="flex items-center mb-5">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mr-4 ios-shadow-sm">
+                  <span className="text-white text-xl">
                     {section.title.includes('Tools') ? '🛠️' :
                      section.title.includes('Frameworks') ? '⚙️' :
                      section.title.includes('Languages') ? '📝' :
@@ -66,16 +66,19 @@ const MobileSkills = ({ filesystem, findItemById, onBack }) => {
                      section.title.includes('Architectures') ? '🏗️' : '💡'}
                   </span>
                 </div>
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{section.title}</h2>
+                <h2 className="ios-title text-black dark:text-white">{section.title}</h2>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3">
                 {section.items.map((item, itemIndex) => (
-                  <div key={itemIndex} className="border-l-4 border-blue-500 pl-4 py-2">
-                    <h3 className="text-gray-900 dark:text-white font-medium text-lg mb-1">{item.name}</h3>
-                    {item.description && (
-                      <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{item.description}</p>
-                    )}
+                  <div key={itemIndex} className="flex items-start">
+                    <div className="w-1 h-6 ios-bg-blue rounded-full mr-4 flex-shrink-0 mt-1"></div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-black dark:text-white mb-1">{item.name}</h3>
+                      {item.description && (
+                        <p className="ios-body text-gray-600 dark:text-gray-300 text-sm">{item.description}</p>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -84,26 +87,26 @@ const MobileSkills = ({ filesystem, findItemById, onBack }) => {
         </div>
 
         {/* Skills Overview */}
-        <div className="mt-6 bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-          <div className="flex items-center mb-4">
-            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
+        <div className="mt-6 ios-card dark:ios-card-dark p-6">
+          <div className="flex items-center mb-5">
+            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mr-4 ios-shadow-sm">
               <span className="text-white text-lg">📊</span>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Skills Overview</h3>
+            <h3 className="ios-title text-black dark:text-white">Overview</h3>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 text-center">
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
-              <div className="text-2xl font-bold text-blue-500 mb-1">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="ios-bg-gray dark:bg-gray-800 rounded-xl p-4 text-center">
+              <div className="text-3xl font-bold ios-blue mb-2">
                 {skillsSections.length}
               </div>
-              <div className="text-gray-600 dark:text-gray-400 text-sm">Categories</div>
+              <div className="ios-caption dark:text-gray-400">Categories</div>
             </div>
-            <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
-              <div className="text-2xl font-bold text-green-500 mb-1">
+            <div className="ios-bg-gray dark:bg-gray-800 rounded-xl p-4 text-center">
+              <div className="text-3xl font-bold text-green-500 mb-2">
                 {skillsSections.reduce((total, section) => total + section.items.length, 0)}
               </div>
-              <div className="text-gray-600 dark:text-gray-400 text-sm">Total Skills</div>
+              <div className="ios-caption dark:text-gray-400">Total Skills</div>
             </div>
           </div>
         </div>

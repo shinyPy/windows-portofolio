@@ -9,8 +9,8 @@ const MobileAbout = ({ filesystem, findItemById, onBack }) => {
 
   useEffect(() => {
     // Load about information from filesystem
-    const aboutFolder = findItemById(9); // About_me folder
-    const achievementsFolder = findItemById(7); // Achievements folder
+    const aboutFolder = findItemById(filesystem, 9); // About_me folder
+    const achievementsFolder = findItemById(filesystem, 7); // Achievements folder
 
     if (aboutFolder && aboutFolder.contents) {
       const githubLink = aboutFolder.contents.find(item => item.name === 'My_Github');
@@ -36,7 +36,7 @@ const MobileAbout = ({ filesystem, findItemById, onBack }) => {
         achievements
       }));
     }
-  }, [findItemById]);
+  }, [findItemById, filesystem]);
 
   const personalInfo = [
     { label: 'Name', value: 'ShinyPy', icon: '👤' },
@@ -61,37 +61,34 @@ const MobileAbout = ({ filesystem, findItemById, onBack }) => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-gray-50 dark:bg-gray-800 overflow-y-auto">
-      {/* Mobile App Header */}
-      <div className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-700 px-4 py-3">
+    <div className="flex flex-col h-full bg-gray-50 dark:bg-black ios-fade-in">
+      {/* iOS Navigation Bar */}
+      <div className="bg-white/95 dark:bg-black/95 ios-blur border-b border-gray-200/50 dark:border-gray-800/50 px-4 py-3 safe-area-inset-top">
         <div className="flex items-center">
           <button
             onClick={onBack}
-            className="w-10 h-10 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors mr-3"
+            className="w-10 h-10 rounded-full flex items-center justify-center ios-blue hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 active:scale-95 mr-3"
           >
-            ←
+            <span className="text-lg">‹</span>
           </button>
           <div className="flex items-center">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-3">
+            <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center mr-3 ios-shadow-sm">
               <span className="text-white text-lg">👤</span>
             </div>
-            <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Portfolio</h1>
+            <h1 className="ios-title text-black dark:text-white">About</h1>
           </div>
         </div>
       </div>
 
-      <div className="px-4 pb-4">
+      <div className="flex-1 px-4 py-6 overflow-y-auto">
         {/* Profile Card */}
-        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 mb-6 shadow-lg border border-gray-200 dark:border-gray-700">
-          <div className="text-center mb-6">
-            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-3xl font-bold text-white mx-auto mb-4 shadow-lg">
-              SP
-            </div>
-            <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-1">ShinyPy</h2>
-            <p className="text-blue-500 dark:text-blue-400 text-sm font-medium">Full Stack Developer</p>
+        <div className="ios-card dark:ios-card-dark p-8 mb-6 text-center ios-fade-in">
+          <div className="w-28 h-28 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-4xl font-bold text-white mx-auto mb-6 ios-shadow-lg">
+            SP
           </div>
-
-          <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed text-center">
+          <h2 className="ios-title text-black dark:text-white mb-2">ShinyPy</h2>
+          <p className="ios-blue font-medium mb-4">Full Stack Developer</p>
+          <p className="ios-body text-gray-600 dark:text-gray-300">
             {aboutInfo.info || 'Passionate developer with a love for creating innovative solutions and learning new technologies. Always eager to take on new challenges and contribute to meaningful projects.'}
           </p>
         </div>
@@ -99,30 +96,30 @@ const MobileAbout = ({ filesystem, findItemById, onBack }) => {
         {/* Personal Info Cards */}
         <div className="grid grid-cols-2 gap-3 mb-6">
           {personalInfo.map((info, index) => (
-            <div key={index} className="bg-white dark:bg-gray-900 rounded-xl p-4 shadow-lg border border-gray-200 dark:border-gray-700">
+            <div key={index} className="ios-card dark:ios-card-dark p-4 ios-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
               <div className="flex items-center mb-3">
-                <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-lg">{info.icon}</span>
+                <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/20 rounded-xl flex items-center justify-center mr-3">
+                  <span className="text-xl ios-blue">{info.icon}</span>
                 </div>
-                <span className="text-gray-500 dark:text-gray-400 text-xs font-medium">{info.label}</span>
+                <span className="ios-caption dark:text-gray-400 font-medium">{info.label}</span>
               </div>
-              <span className="text-gray-900 dark:text-white font-medium text-sm">{info.value}</span>
+              <span className="font-semibold text-black dark:text-white">{info.value}</span>
             </div>
           ))}
         </div>
 
         {/* Interests Card */}
-        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 mb-6 shadow-lg border border-gray-200 dark:border-gray-700">
-          <div className="flex items-center mb-4">
-            <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center mr-3">
+        <div className="ios-card dark:ios-card-dark p-6 mb-6">
+          <div className="flex items-center mb-5">
+            <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl flex items-center justify-center mr-4 ios-shadow-sm">
               <span className="text-white text-lg">❤️</span>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Interests</h3>
+            <h3 className="ios-title text-black dark:text-white">Interests</h3>
           </div>
           <div className="flex flex-wrap gap-2">
             {interests.map((interest, index) => (
-              <div key={index} className="bg-gray-100 dark:bg-gray-800 rounded-full px-4 py-2 border border-gray-200 dark:border-gray-700">
-                <span className="text-gray-700 dark:text-gray-300 text-sm">
+              <div key={index} className="ios-bg-gray dark:bg-gray-800 rounded-full px-4 py-2">
+                <span className="text-gray-700 dark:text-gray-300 text-sm font-medium">
                   {interest.icon} {interest.name}
                 </span>
               </div>
@@ -132,25 +129,25 @@ const MobileAbout = ({ filesystem, findItemById, onBack }) => {
 
         {/* Achievements Card */}
         {aboutInfo.achievements.length > 0 && (
-          <div className="bg-white dark:bg-gray-900 rounded-xl p-6 mb-6 shadow-lg border border-gray-200 dark:border-gray-700">
-            <div className="flex items-center mb-4">
-              <div className="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center mr-3">
+          <div className="ios-card dark:ios-card-dark p-6 mb-6">
+            <div className="flex items-center mb-5">
+              <div className="w-10 h-10 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-2xl flex items-center justify-center mr-4 ios-shadow-sm">
                 <span className="text-white text-lg">🏆</span>
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Achievements</h3>
+              <h3 className="ios-title text-black dark:text-white">Achievements</h3>
             </div>
             <div className="space-y-3">
               {aboutInfo.achievements.map((achievement, index) => (
-                <div key={achievement.id} className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                <div key={achievement.id} className="ios-bg-gray dark:bg-gray-800 rounded-xl p-4">
                   <div className="flex items-center">
-                    <div className="w-10 h-10 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg flex items-center justify-center mr-3">
-                      <span className="text-xl">🏆</span>
+                    <div className="w-12 h-12 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl flex items-center justify-center mr-4">
+                      <span className="text-2xl">🏆</span>
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-gray-900 dark:text-white font-medium text-sm">
+                      <h4 className="font-semibold text-black dark:text-white mb-1">
                         {achievement.name.replace(/\.(jpg|png|pdf)$/, '')}
                       </h4>
-                      <p className="text-gray-500 dark:text-gray-400 text-xs">Certificate of completion</p>
+                      <p className="ios-caption dark:text-gray-400">Certificate of completion</p>
                     </div>
                   </div>
                 </div>
@@ -160,29 +157,29 @@ const MobileAbout = ({ filesystem, findItemById, onBack }) => {
         )}
 
         {/* Contact Card */}
-        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 mb-6 shadow-lg border border-gray-200 dark:border-gray-700">
-          <div className="flex items-center mb-4">
-            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mr-3">
+        <div className="ios-card dark:ios-card-dark p-6 mb-6">
+          <div className="flex items-center mb-5">
+            <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mr-4 ios-shadow-sm">
               <span className="text-white text-lg">📞</span>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Get In Touch</h3>
+            <h3 className="ios-title text-black dark:text-white">Get In Touch</h3>
           </div>
 
           <div className="space-y-3">
             <button
               onClick={handleGithubClick}
-              className="w-full bg-gray-900 hover:bg-gray-800 text-white py-4 px-4 rounded-xl transition-all flex items-center justify-center active:scale-95 shadow-lg"
+              className="w-full bg-gray-900 dark:bg-gray-800 hover:bg-gray-800 dark:hover:bg-gray-700 text-white py-4 px-4 rounded-xl transition-all flex items-center justify-center active:scale-95 ios-shadow font-medium"
             >
-              <span className="text-xl mr-3">📱</span>
-              <span className="font-medium">View My GitHub</span>
+              <span className="text-xl mr-3">🔗</span>
+              <span>View My GitHub</span>
             </button>
 
             <div className="grid grid-cols-2 gap-3">
-              <button className="bg-blue-500 hover:bg-blue-600 text-white py-3 px-4 rounded-xl transition-all flex items-center justify-center text-sm active:scale-95 shadow-lg">
+              <button className="ios-bg-blue text-white py-3 px-4 rounded-xl transition-all flex items-center justify-center text-sm active:scale-95 ios-shadow font-medium">
                 <span className="mr-2">💼</span>
                 <span>LinkedIn</span>
               </button>
-              <button className="bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-xl transition-all flex items-center justify-center text-sm active:scale-95 shadow-lg">
+              <button className="bg-green-500 hover:bg-green-600 text-white py-3 px-4 rounded-xl transition-all flex items-center justify-center text-sm active:scale-95 ios-shadow font-medium">
                 <span className="mr-2">✉️</span>
                 <span>Email</span>
               </button>
@@ -191,25 +188,25 @@ const MobileAbout = ({ filesystem, findItemById, onBack }) => {
         </div>
 
         {/* Fun Facts Card */}
-        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-          <div className="flex items-center mb-4">
-            <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center mr-3">
+        <div className="ios-card dark:ios-card-dark p-6">
+          <div className="flex items-center mb-5">
+            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mr-4 ios-shadow-sm">
               <span className="text-white text-lg">✨</span>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Fun Facts</h3>
+            <h3 className="ios-title text-black dark:text-white">Fun Facts</h3>
           </div>
-          <div className="space-y-3">
-            <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm">
-              <span className="w-2 h-2 bg-yellow-500 rounded-full mr-3"></span>
-              Loves creating interactive web experiences
+          <div className="space-y-4">
+            <div className="flex items-center">
+              <div className="w-3 h-3 bg-yellow-500 rounded-full mr-4 flex-shrink-0"></div>
+              <span className="ios-body text-gray-600 dark:text-gray-300">Loves creating interactive web experiences</span>
             </div>
-            <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm">
-              <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
-              Always learning new technologies
+            <div className="flex items-center">
+              <div className="w-3 h-3 ios-bg-blue rounded-full mr-4 flex-shrink-0"></div>
+              <span className="ios-body text-gray-600 dark:text-gray-300">Always learning new technologies</span>
             </div>
-            <div className="flex items-center text-gray-600 dark:text-gray-300 text-sm">
-              <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
-              Enjoys solving complex problems
+            <div className="flex items-center">
+              <div className="w-3 h-3 bg-green-500 rounded-full mr-4 flex-shrink-0"></div>
+              <span className="ios-body text-gray-600 dark:text-gray-300">Enjoys solving complex problems</span>
             </div>
           </div>
         </div>

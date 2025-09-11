@@ -112,29 +112,31 @@ const MobileApp = ({
     <div className="flex flex-col h-screen bg-black">
       {/* iOS Status Bar */}
       <div
-        className="bg-black text-white px-6 py-2 flex justify-between items-center text-sm font-semibold cursor-pointer select-none"
+        className="ios-status-bar bg-black text-white cursor-pointer select-none safe-area-inset-top"
         onClick={() => setIsControlCenterOpen(true)}
         style={{ touchAction: 'manipulation' }}
       >
-        <div className="flex items-center space-x-2">
-          <span className="text-sm font-semibold">9:41</span>
+        <div className="flex items-center">
+          <span className="text-sm font-semibold tracking-tight">9:41</span>
         </div>
-        <div className="flex items-center space-x-2">
-          {/* Signal dots */}
-          <div className="flex space-x-1">
+        <div className="flex items-center space-x-1">
+          {/* Cellular Signal */}
+          <div className="flex space-x-0.5">
             <div className="w-1 h-1 bg-white rounded-full"></div>
-            <div className="w-1 h-1 bg-white rounded-full"></div>
-            <div className="w-1 h-1 bg-white rounded-full"></div>
-            <div className="w-1 h-1 bg-white rounded-full"></div>
+            <div className="w-1 h-1.5 bg-white rounded-full"></div>
+            <div className="w-1 h-2 bg-white rounded-full"></div>
+            <div className="w-1 h-2.5 bg-white rounded-full"></div>
           </div>
+          {/* 5G */}
+          <span className="text-xs font-semibold">5G</span>
           {/* WiFi icon */}
-          <div className="text-xs">📶</div>
+          <div className="text-sm">📶</div>
           {/* Battery */}
           <div className="flex items-center space-x-1">
+            <span className="text-xs font-semibold">100%</span>
             <div className="w-6 h-3 border border-white rounded-sm flex items-center justify-end pr-0.5">
-              <div className="w-4 h-2 bg-green-500 rounded-xs"></div>
+              <div className="w-5 h-2 bg-green-500 rounded-xs"></div>
             </div>
-            <div className="w-0.5 h-1.5 bg-white rounded-full"></div>
           </div>
         </div>
       </div>
