@@ -5,13 +5,13 @@
 @layer base {
   body {
     @apply m-0 font-sans antialiased;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Segoe UI', Roboto,
       Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
   code {
     @apply font-mono;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: 'SF Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
       monospace;
   }
 }
@@ -34,5 +34,154 @@
 
   .text-shadow-md {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  /* iOS-specific utilities */
+  .ios-blur {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .ios-blur-light {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .ios-shadow {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .ios-shadow-sm {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .ios-shadow-lg {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .ios-card {
+    @apply bg-white rounded-xl ios-shadow border border-gray-100;
+  }
+
+  .ios-card-dark {
+    @apply bg-gray-800 rounded-xl ios-shadow border border-gray-700;
+  }
+
+  .ios-button {
+    @apply bg-blue-500 text-white font-medium rounded-lg px-4 py-2 transition-all duration-200 active:scale-95;
+  }
+
+  .ios-button:hover {
+    @apply bg-blue-600;
+  }
+
+  .ios-button-secondary {
+    @apply bg-gray-100 text-gray-900 font-medium rounded-lg px-4 py-2 transition-all duration-200 active:scale-95;
+  }
+
+  .ios-button-secondary:hover {
+    @apply bg-gray-200;
+  }
+
+  /* iOS Tab Bar */
+  .ios-tab-bar {
+    @apply bg-white/80 ios-blur border-t border-gray-200/50;
+  }
+
+  .ios-tab-bar-dark {
+    @apply bg-black/80 ios-blur border-t border-gray-700/50;
+  }
+
+  .ios-tab-item {
+    @apply flex flex-col items-center justify-center py-2 px-3 transition-all duration-200 rounded-lg;
+  }
+
+  .ios-tab-item-active {
+    @apply text-blue-500;
+  }
+
+  .ios-tab-item-inactive {
+    @apply text-gray-400;
+  }
+
+  /* iOS Home Indicator */
+  .ios-home-indicator {
+    @apply w-32 h-1 bg-gray-900 rounded-full mx-auto my-2;
+  }
+
+  .ios-home-indicator-dark {
+    @apply w-32 h-1 bg-white/60 rounded-full mx-auto my-2;
+  }
+
+  /* iOS App Icon */
+  .ios-app-icon {
+    @apply w-16 h-16 rounded-2xl ios-shadow-sm flex items-center justify-center text-2xl font-medium transition-transform duration-150 active:scale-90;
+  }
+
+  /* iOS Status Bar */
+  .ios-status-bar {
+    @apply flex justify-between items-center px-6 py-2 text-sm font-medium;
+  }
+
+  /* iOS Typography */
+  .ios-title {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    @apply text-2xl font-bold tracking-tight;
+  }
+
+  .ios-body {
+    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    @apply text-base leading-relaxed;
+  }
+
+  .ios-caption {
+    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    @apply text-sm text-gray-600;
+  }
+
+  /* iOS Colors */
+  .ios-blue {
+    @apply text-blue-500;
+  }
+
+  .ios-bg-blue {
+    @apply bg-blue-500;
+  }
+
+  .ios-gray {
+    @apply text-gray-600;
+  }
+
+  .ios-bg-gray {
+    @apply bg-gray-100;
+  }
+
+  /* iOS Animations */
+  .ios-bounce {
+    animation: ios-bounce 0.3s ease-out;
+  }
+
+  @keyframes ios-bounce {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.95); }
+    100% { transform: scale(1); }
+  }
+
+  .ios-fade-in {
+    animation: ios-fade-in 0.4s ease-out;
+  }
+
+  @keyframes ios-fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .ios-slide-up {
+    animation: ios-slide-up 0.3s ease-out;
+  }
+
+  @keyframes ios-slide-up {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
   }
 }
