@@ -29,16 +29,3 @@ export function useAppHooks(initialFilesystem) {
     findItemById,
   };
 }
-
-export const getFullPath = (id, filesystem, path = []) => {
-  for (const item of filesystem) {
-    if (item.id === id) {
-      return [...path, id];
-    }
-    if (item.contents) {
-      const result = getFullPath(id, item.contents, [...path, item.id]);
-      if (result) return result;
-    }
-  }
-  return null;
-};

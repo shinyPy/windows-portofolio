@@ -1,5 +1,6 @@
 import { TerminalEmulator } from '../components/windows/TerminalEmulator';
 import exeIconSrc from '../assets/icons/exeIcon.png';
+import { findItemById } from './filesystem/filesystemUtils';
 
 export const handleFileClick = ({
   id,
@@ -85,28 +86,4 @@ export const buildPath = (targetId, filesystem) => {
 
   findPath(filesystem);
   return path;
-};
-
-// Keep this helper function for backward compatibility
-export const getFullPath = (id, filesystem) => {
-  const path = [];
-  let current = findItemById(filesystem, id);
-
-  while (current) {
-    path.unshift(current.name);
-    current = findItemById(filesystem, current.parentId);
-  }
-
-  return '/' + path.join('/');
-};
-
-const findItemById = (items, id) => {
-  for (const item of items) {
-    if (item.id === id) return item;
-    if (item.contents) {
-      const found = findItemById(item.contents, id);
-      if (found) return found;
-    }
-  }
-  return null;
 };

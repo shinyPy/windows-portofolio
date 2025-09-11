@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { TerminalEmulator } from './components/windows/TerminalEmulator';
 import { handleFileClick } from './utils/windowHandlers';
@@ -27,21 +27,13 @@ function App() {
   const { isSpotifyOpen, closeSpotifyPlayer } = useSpotify(true);
 
   // Executable applications configuration
-  const exeApplications = React.useMemo(() => ({
+  const exeApplications = {
     'terminal.exe': {
       Component: TerminalEmulator,
       defaultSize: { width: 800, height: 500 }
     }
-  }), []);
+  };
 
-  /**
-   * Handles window creation and management
-   * @param {string} title - Window title
-   * @param {string} id - Unique window identifier
-   * @param {object|null} viewingFile - File being viewed in window
-   * @param {string} fullPath - Full filesystem path
-   * @param {boolean} [showCloseButton=true] - Show close button
-   */
   /**
    * Opens or focuses a window
    * @param {string} title - Window title
@@ -50,7 +42,7 @@ function App() {
    * @param {string} fullPath - Full file path
    * @param {boolean} [showCloseButton=true] - Show close button
    */
-  const openWindow = (
+  const openWindow = useCallback((
     title,
     id,
     viewingFile = null,
@@ -62,15 +54,15 @@ function App() {
       win.windowId === id && win.viewingFile === viewingFile
     );
     if (existingWindow) {
-      setWindows([
-        ...windows.filter(
+      setWindows(prevWindows => [
+        ...prevWindows.filter(
           (win) => win.windowId !== id || win.viewingFile !== viewingFile
         ),
         existingWindow,
       ]);
     } else {
-      setWindows([
-        ...windows,
+      setWindows(prevWindows => [
+        ...prevWindows,
         {
           title,
           iconSrc: viewingFile ? fileIconSrc : folderIconSrc,
@@ -83,8 +75,8 @@ function App() {
         },
       ]);
     }
-  };
-  const onFileClick = (id) => {
+  }, [windows, setWindows]);
+  const onFileClick = useCallback((id) => {
     handleFileClick({
       id,
       filesystem,
@@ -94,11 +86,11 @@ function App() {
       openWindow,
       initialFilesystem
     });
-  };
+  }, [filesystem, exeApplications, setWindows, findItemById, openWindow, initialFilesystem]);
 
-  const closeWindow = (id) => {
-    setWindows(windows.filter((win) => win.id !== id));
-  };
+  const closeWindow = useCallback((id) => {
+    setWindows(prevWindows => prevWindows.filter((win) => win.id !== id));
+  }, [setWindows]);
 
   useWelcomeFile(filesystem, openWindow);
 
@@ -106,11 +98,11 @@ function App() {
   const exeWindows = windows.filter(win => win.Component !== FileExplorer);
   const fileWindows = windows.filter(win => win.Component === FileExplorer);
 
-  const launchExe = (exeName) => {
+  const launchExe = useCallback((exeName) => {
     const exeApp = exeApplications[exeName];
     if (exeApp) {
-      setWindows([
-        ...windows,
+      setWindows(prevWindows => [
+        ...prevWindows,
         {
           title: exeName,
           iconSrc: exeIconSrc,
@@ -120,7 +112,7 @@ function App() {
         }
       ]);
     }
-  };
+  }, [exeApplications, setWindows, windows]);
 
   return (
     <>
