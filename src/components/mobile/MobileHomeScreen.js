@@ -20,47 +20,12 @@ const MobileHomeScreen = ({ filesystem, findItemById, onAppOpen, onOpenTerminal 
       gradient: 'from-blue-500 to-blue-600'
     },
     {
-      id: 'projects',
-      name: 'Portfolio',
-      icon: '💼',
-      action: () => onAppOpen('projects'),
-      gradient: 'from-purple-500 to-purple-600'
-    },
-    {
-      id: 'skills',
-      name: 'Skills',
-      icon: '🛠️',
-      action: () => onAppOpen('skills'),
-      gradient: 'from-green-500 to-green-600'
-    },
-    {
-      id: 'about',
-      name: 'About',
-      icon: '👤',
-      action: () => onAppOpen('about'),
-      gradient: 'from-orange-500 to-orange-600'
-    },
-    {
-      id: 'terminal',
-      name: 'Terminal',
-      icon: '💻',
-      action: onOpenTerminal,
-      gradient: 'from-gray-700 to-gray-800'
-    },
-    {
       id: 'github',
       name: 'GitHub',
       icon: '🔗',
       action: () => window.open('https://github.com/shinyPy/', '_blank'),
       gradient: 'from-gray-800 to-gray-900'
     }
-  ];
-
-  const dockApps = [
-    { name: 'Camera', icon: '📷', gradient: 'from-gray-600 to-gray-700', disabled: true },
-    { name: 'Messages', icon: '💬', gradient: 'from-green-500 to-green-600', disabled: true },
-    { name: 'Safari', icon: '🌐', gradient: 'from-blue-400 to-blue-500', disabled: true },
-    { name: 'Music', icon: '🎵', gradient: 'from-red-500 to-pink-500', disabled: true }
   ];
 
   return (
@@ -109,29 +74,6 @@ const MobileHomeScreen = ({ filesystem, findItemById, onAppOpen, onOpenTerminal 
                 </span>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* iOS Dock */}
-        <div className="mb-6">
-          <div className="bg-white/15 ios-blur rounded-3xl p-4 mx-4 border border-white/20">
-            <div className="flex justify-around items-center">
-              {dockApps.map((app, index) => (
-                <button
-                  key={index}
-                  className={`w-14 h-14 rounded-2xl flex items-center justify-center text-xl transition-all duration-150 ios-shadow-sm ${
-                    app.disabled
-                      ? 'opacity-50'
-                      : 'active:scale-90'
-                  }`}
-                  disabled={app.disabled}
-                >
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${app.gradient} flex items-center justify-center border border-white/20`}>
-                    {app.icon}
-                  </div>
-                </button>
-              ))}
-            </div>
           </div>
         </div>
 

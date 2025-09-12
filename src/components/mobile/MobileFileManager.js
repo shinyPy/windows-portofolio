@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../utils/LanguageContext';
+import MobileInAppNavigation from './MobileInAppNavigation';
 
 const MobileFileManager = ({ filesystem, findItemById, onBack }) => {
   const { language, setLanguage, texts } = useLanguage();
@@ -39,10 +40,6 @@ const MobileFileManager = ({ filesystem, findItemById, onBack }) => {
       }));
     }
   }, [findItemById, texts]);
-
-  const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'id' : 'en');
-  };
 
   const parseSkillsText = (text) => {
     const sections = text.split('\n\n').filter(section => section.trim());
@@ -331,25 +328,10 @@ const MobileFileManager = ({ filesystem, findItemById, onBack }) => {
 
   return (
     <div className="flex flex-col h-full bg-gray-50 dark:bg-black ios-fade-in">
-      {/* iOS Navigation Bar */}
-      <div className="bg-white/95 dark:bg-black/95 ios-blur border-b border-gray-200/50 dark:border-gray-800/50 px-4 py-3 safe-area-inset-top">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <button
-              onClick={currentView === 'main' ? onBack : () => setCurrentView('main')}
-              className="w-10 h-10 rounded-full flex items-center justify-center ios-blue hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 active:scale-95 mr-3"
-            >
-              <span className="text-lg">‹</span>
-            </button>
-            <div className="flex items-center">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-3 ios-shadow-sm">
-                <span className="text-white text-lg">📁</span>
-              </div>
-              <h1 className="ios-title text-black dark:text-white">{getCurrentTitle()}</h1>
-            </div>
-          </div>
-        </div>
-      </div>
+      <MobileInAppNavigation
+        title={getCurrentTitle()}
+        onBack={currentView === 'main' ? onBack : () => setCurrentView('main')}
+      />
 
       <div className="flex-1 overflow-y-auto">
         {renderCurrentView()}

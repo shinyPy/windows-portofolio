@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import MobileHomeScreen from './MobileHomeScreen';
 import MobileProjects from './MobileProjects';
 import MobileSkills from './MobileSkills';
@@ -7,6 +8,7 @@ import MobileFileManager from './MobileFileManager';
 import MobileTerminal from './MobileTerminal';
 import MobileSpotifyPlayer from './MobileSpotifyPlayer';
 import MobileControlCenter from './MobileControlCenter';
+import MobileNavigation from './MobileNavigation';
 
 const MobileApp = ({
   filesystem,
@@ -15,9 +17,10 @@ const MobileApp = ({
   closeSpotifyPlayer,
   initialFilesystem
 }) => {
-  const [currentScreen, setCurrentScreen] = useState('home');
+  const [activeTab, setActiveTab] = useState('home');
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isControlCenterOpen, setIsControlCenterOpen] = useState(false);
+  const [openedApp, setOpenedApp] = useState(null);
 
   // For swipe down gesture (optional, basic implementation)
   React.useEffect(() => {
@@ -45,15 +48,15 @@ const MobileApp = ({
   }, []);
 
   const handleAppOpen = (appName) => {
-    setCurrentScreen(appName);
+    setOpenedApp(appName);
   };
 
-  const handleBackToHome = () => {
-    setCurrentScreen('home');
+  const handleAppClose = () => {
+    setOpenedApp(null);
   };
 
-  const renderCurrentScreen = () => {
-    switch (currentScreen) {
+  const renderActiveTab = () => {
+    switch (activeTab) {
       case 'home':
         return (
           <MobileHomeScreen
@@ -63,21 +66,13 @@ const MobileApp = ({
             onOpenTerminal={() => setIsTerminalOpen(true)}
           />
         );
-      case 'filemanager':
-        return (
-          <MobileFileManager
-            filesystem={filesystem}
-            findItemById={findItemById}
-            onBack={handleBackToHome}
-          />
-        );
       case 'projects':
         return (
           <MobileProjects
             filesystem={filesystem}
             findItemById={findItemById}
             initialFilesystem={initialFilesystem}
-            onBack={handleBackToHome}
+            onBack={handleAppClose}
           />
         );
       case 'skills':
@@ -85,7 +80,7 @@ const MobileApp = ({
           <MobileSkills
             filesystem={filesystem}
             findItemById={findItemById}
-            onBack={handleBackToHome}
+            onBack={handleAppClose}
           />
         );
       case 'about':
@@ -93,7 +88,7 @@ const MobileApp = ({
           <MobileAbout
             filesystem={filesystem}
             findItemById={findItemById}
-            onBack={handleBackToHome}
+            onBack={handleAppClose}
           />
         );
       default:
@@ -105,6 +100,24 @@ const MobileApp = ({
             onOpenTerminal={() => setIsTerminalOpen(true)}
           />
         );
+    }
+  };
+
+  const renderOpenedApp = () => {
+    if (!openedApp) return null;
+
+    switch (openedApp) {
+      case 'filemanager':
+        return (
+          <MobileFileManager
+            filesystem={filesystem}
+            findItemById={findItemById}
+            onBack={handleAppClose}
+          />
+        );
+      // Add other apps here if they can be opened from the home screen
+      default:
+        return null;
     }
   };
 
@@ -161,9 +174,42 @@ const MobileApp = ({
       />
 
       {/* Main Content */}
-      <div className="flex-1 overflow-hidden">
-        {renderCurrentScreen()}
+      <div className="flex-1 overflow-hidden relative">
+        <AnimatePresence mode="out-in">
+          {openedApp ? (
+            <motion.div
+              key={openedApp}
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              className="absolute inset-0 bg-black"
+            >
+              {renderOpenedApp()}
+            </motion.div>
+          ) : (
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="h-full"
+            >
+              {renderActiveTab()}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
+
+      {/* Navigation */}
+      {!openedApp && (
+        <MobileNavigation
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onOpenTerminal={() => setIsTerminalOpen(true)}
+        />
+      )}
 
       {/* Terminal Modal */}
       {isTerminalOpen && (
