@@ -46,7 +46,6 @@ Future ideas for this website
 - Mobile Support (when using mobile to access this site, it will emulate android/ios feeling.)
 - Add Terminal (the one in the taskbar is still place holder.)
 
-
 You can contact me on Discord : shiniya_
 
 `;
@@ -82,7 +81,7 @@ export const changelogText = `Changelog:
   - Updated text mappings in FileUtils to support localized project descriptions
   `;
 
-export const infoTefarenText = `TEFAREN is a project developed with modern web technologies aimed for borrowing and returning items. 
+export const infoTefarenText = `TEFAREN is a project developed with modern web technologies aimed for borrowing and returning items.
 Project Details:
 - Built with React and other modern frameworks
 - Deployed on Vercel platform
@@ -113,13 +112,39 @@ App Features:
 Video demonstration available in the project folder.
 `;
 
-export const infoPtText = `Profile of Tunas Kembang Djati company, specializing in industrial engineering and technology solutions. The company provides comprehensive services in engineering and industrial development.
+export const infoPtText = `CV TUNAS KEMBANG DJATI is a trusted construction contractor based in Banjarbaru, specializing in building construction and civil engineering projects.
 
-Company Information:
-- Specializes in industrial engineering
-- Technology solutions provider
-- Professional engineering services
-- Industrial development consulting
+Company Overview:
+- Founded: July 21, 2022
+- Locations: Banjarbaru, Sidoarjo, Malang
+- Team: 20+ professional members with 3+ years of experience
+
+Services:
+- Moulding Fabrication (precision and high-quality)
+- Infrastructure & Buildings construction
+- Industrial Engineering solutions
+
+Achievements:
+- 100+ successfully completed projects
+- Certified with 6 international ISO standards (9001, 14001, 45001, 22000, 27001, 37001)
+- Commitment to environmental sustainability and safety (SMK3 PP 50/2012)
+
+This is a commissioned project for the company's profile website.
 
 Website: https://teknikrekayasaindustri.co.id/
+`;
+
+export const infoPortoText = `This is my old portfolio website, an earlier version showcasing my work as a web developer and 3D artist.
+
+Portfolio Features:
+- Personal introduction with contact information
+- Comprehensive tech stack display
+- Education background
+- GitHub projects showcase
+- Featured projects including TEFAREN and E-Commerce Kardus
+- Blog posts on Medium
+
+This portfolio represents my early web development work and skills demonstration.
+
+Link: https://fthlrzi.vercel.app/
 `;

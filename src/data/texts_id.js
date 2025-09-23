@@ -120,13 +120,39 @@ Fitur Aplikasi:
 Video demonstrasi tersedia di folder proyek.
 `;
 
-export const infoPtText = `Profil perusahaan Tunas Kembang Djati, spesialis dalam rekayasa industri dan solusi teknologi. Perusahaan menyediakan layanan komprehensif dalam rekayasa dan pengembangan industri.
+export const infoPtText = `CV TUNAS KEMBANG DJATI adalah kontraktor konstruksi terpercaya yang berbasis di Banjarbaru, spesialis dalam proyek konstruksi bangunan dan rekayasa sipil.
 
-Informasi Perusahaan:
-- Spesialis rekayasa industri
-- Penyedia solusi teknologi
-- Layanan rekayasa profesional
-- Konsultasi pengembangan industri
+Ikhtisar Perusahaan:
+- Didirikan: 21 Juli 2022
+- Lokasi: Banjarbaru, Sidoarjo, Malang
+- Tim: 20+ anggota profesional dengan pengalaman 3+ tahun
+
+Layanan:
+- Fabrikasi Cetakan (presisi dan berkualitas tinggi)
+- Konstruksi Infrastruktur & Bangunan
+- Solusi Rekayasa Industri
+
+Pencapaian:
+- 100+ proyek yang berhasil diselesaikan
+- Bersertifikat dengan 6 standar ISO internasional (9001, 14001, 45001, 22000, 27001, 37001)
+- Komitmen terhadap keberlanjutan lingkungan dan keselamatan (SMK3 PP 50/2012)
+
+Ini adalah proyek yang dipesan untuk situs web profil perusahaan.
 
 Website: https://teknikrekayasaindustri.co.id/
+`;
+
+export const infoPortoText = `Ini adalah situs portofolio lama saya, versi sebelumnya yang menampilkan karya saya sebagai pengembang web dan seniman 3D.
+
+Fitur Portofolio:
+- Pengenalan pribadi dengan informasi kontak
+- Tampilan tumpukan teknologi yang komprehensif
+- Latar belakang pendidikan
+- Pertunjukan proyek GitHub
+- Proyek unggulan termasuk TEFAREN dan E-Commerce Kardus
+- Postingan blog di Medium
+
+Portofolio ini mewakili karya pengembangan web awal saya dan demonstrasi keterampilan.
+
+Tautan: https://fthlrzi.vercel.app/
 `;

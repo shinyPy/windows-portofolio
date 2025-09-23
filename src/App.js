@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { TerminalEmulator } from './components/windows/TerminalEmulator';
 import { handleFileClick } from './utils/windowHandlers';
@@ -13,6 +13,8 @@ import MobileApp from './components/mobile/MobileApp';
 import SpotifyPlayer from './components/SpotifyPlayer';
 import Taskbar from './components/Taskbar';
 import WindowContainer from './components/container/WindowContainer';
+import Preloader from './components/Preloader';
+import { preloadResources } from './utils/preloadResources';
 import exeIconSrc from './assets/icons/exeIcon.png';
 import fileIconSrc from './assets/icons/file.png';
 import folderIconSrc from './assets/icons/file-explorer.png';
@@ -23,9 +25,22 @@ import MobileWarning from './components/mobile/MobileWarning';
  * @returns {JSX.Element} The application UI
  */
 function App() {
+  // Loading state
+  const [isLoading, setIsLoading] = useState(true);
+
   // Application state hooks
   const { filesystem, windows, setWindows, isMobile, findItemById } = useAppHooks(initialFilesystem);
   const { isSpotifyOpen, closeSpotifyPlayer } = useSpotify(true);
+
+  // Preload resources on mount
+  useEffect(() => {
+    preloadResources().then(() => {
+      setIsLoading(false);
+    }).catch((error) => {
+      console.error('Failed to preload resources:', error);
+      setIsLoading(false); // Show app even if some resources fail
+    });
+  }, []);
 
   // Executable applications configuration
   const exeApplications = {
@@ -114,6 +129,11 @@ function App() {
       ]);
     }
   }, [exeApplications, setWindows, windows]);
+
+  // Show preloader while loading
+  if (isLoading) {
+    return <Preloader />;
+  }
 
   // Render mobile version for mobile devices
   if (isMobile) {
