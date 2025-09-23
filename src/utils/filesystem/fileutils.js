@@ -18,6 +18,7 @@ const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
       "info-news.txt": infoNewsText,
       "info-pt.txt": infoPtText,
       "info-porto.txt": infoPortoText,
+      "info-st.txt": texts.sitekalasText,
     };
     return textMapping[name] || "File not found.";
   };

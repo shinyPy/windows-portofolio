@@ -1,6 +1,7 @@
 import dev from "../../assets/videos/dev.mp4";
 import devs from "../../assets/videos/devs.mp4";
 import devFlutter from "../../assets/videos/dev-flutter.mp4";
+import devST from "../../assets/videos/sitekalas.mp4";
 import mern from "../../assets/images/udemy.jpg";
 import wntl1 from "../../assets/images/wn-tl-1.png";
 import wntl2 from "../../assets/images/wn-tl-2.png";
@@ -66,6 +67,10 @@ const initialFilesystem = [
               createFile(45, "info-pt.txt", "file"),
               createFile(31, "tunas-kembang-djati", "link", null, "https://teknikrekayasaindustri.co.id/"),
               ]),
+          createFolder(89, "Project ST (Station Transportable)", [
+          createFile(90, "ST-Overview.mp4", "file", devST),
+          createFile(91, "info-st.txt", "file"),
+          ]),
         ]),
         createFolder(7, "Achievements", [
           createFile(8, "certificate.jpg", "file", mern),

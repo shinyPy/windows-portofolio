@@ -148,3 +148,8 @@ This portfolio represents my early web development work and skills demonstration
 
 Link: https://fthlrzi.vercel.app/
 `;
+
+export const sitekalasText = `Commisioned project.
+- Calculate and summarize all files in one document.
+- Made with Javascript and Laravel
+`;

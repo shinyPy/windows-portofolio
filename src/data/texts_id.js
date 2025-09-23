@@ -156,3 +156,7 @@ Portofolio ini mewakili karya pengembangan web awal saya dan demonstrasi keteram
 
 Tautan: https://fthlrzi.vercel.app/
 `;
+export const sitekalasText = `Proyek Komisi.
+- Kalkulasi dan penyimpulan data satelit.
+- Dibuat dengan Javascript dan Laravel
+`;
