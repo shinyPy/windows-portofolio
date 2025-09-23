@@ -77,4 +77,49 @@ export const changelogText = `Changelog:
   - Fixed folder navigation to properly open specific folders when clicked from the desktop
   - Improved path handling in FileExplorer component
   - Refactor code to make it more readable and maintainable
+  23/09/2025
+  - Added informational content for project .txt files (info-tefaren.txt, info-wn.txt, info-news.txt, info-pt.txt)
+  - Updated text mappings in FileUtils to support localized project descriptions
   `;
+
+export const infoTefarenText = `TEFAREN is a project developed with modern web technologies aimed for borrowing and returning items. 
+Project Details:
+- Built with React and other modern frameworks
+- Deployed on Vercel platform
+
+Link: https://fe-tefaren-v2.vercel.app/
+`;
+
+export const infoWnText = `Webnovel AI Translation project focuses on using artificial intelligence to translate webnovels efficiently. It includes tools for automated translation and quality improvement. Honestly, this project is more for personal use as I am a webnovel reader and writer.
+
+Project Features:
+- AI-powered translation engine
+- Support for multiple languages
+- Quality assessment tools
+- Batch processing capabilities
+
+This project demonstrates the integration of AI in content translation workflows.
+`;
+
+export const infoNewsText = `Skatel News Mobile is a Flutter-based mobile application for news aggregation. It provides users with the latest news updates in a user-friendly interface.
+
+App Features:
+- Real-time news updates
+- Category-based news filtering
+- Offline reading capability
+- Push notifications
+- Built with Flutter for cross-platform compatibility
+
+Video demonstration available in the project folder.
+`;
+
+export const infoPtText = `Profile of Tunas Kembang Djati company, specializing in industrial engineering and technology solutions. The company provides comprehensive services in engineering and industrial development.
+
+Company Information:
+- Specializes in industrial engineering
+- Technology solutions provider
+- Professional engineering services
+- Industrial development consulting
+
+Website: https://teknikrekayasaindustri.co.id/
+`;

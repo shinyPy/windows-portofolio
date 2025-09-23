@@ -3,7 +3,7 @@ import { useLanguage } from "../LanguageContext";
 
 const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
   const { texts } = useLanguage();
-  const { skillsText, welcomeText, aboutwebsiteText, infoText, changelogText } =
+  const { skillsText, welcomeText, aboutwebsiteText, infoText, changelogText, infoTefarenText, infoWnText, infoNewsText, infoPtText } =
     texts;
 
   const getTextContent = (name) => {
@@ -13,6 +13,10 @@ const FileUtils = ({ viewingFile, closeViewer, showCloseButton }) => {
       "aboutWebsite.txt": aboutwebsiteText,
       "info.txt": infoText,
       "changelog.txt": changelogText,
+      "info-tefaren.txt": infoTefarenText,
+      "info-wn.txt": infoWnText,
+      "info-news.txt": infoNewsText,
+      "info-pt.txt": infoPtText,
     };
     return textMapping[name] || "File not found.";
   };

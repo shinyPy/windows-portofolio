@@ -84,4 +84,49 @@ export const changelogText = `Changelog:
   - Memperbaiki navigasi folder untuk membuka folder spesifik dengan benar saat diklik dari desktop
   - Meningkatkan penanganan path di komponen FileExplorer
   - Membersihkan kode untuk meningkatkan keterbacaan dan pemeliharaan
+  23/09/2025
+  - Menambahkan konten informasi untuk file .txt proyek (info-tefaren.txt, info-wn.txt, info-news.txt, info-pt.txt)
+  - Memperbarui pemetaan teks di FileUtils untuk mendukung deskripsi proyek yang dilokalkan
  `;
+
+export const infoTefarenText = `TEFAREN adalah proyek yang dikembangkan dengan teknologi web modern yang bertujuan untuk peminjaman dan pengembalian barang.
+Detail Proyek:
+- Dibangun dengan React dan framework modern lainnya
+- Di-deploy di platform Vercel
+
+Tautan: https://fe-tefaren-v2.vercel.app/
+`;
+
+export const infoWnText = `Proyek Terjemahan AI Webnovel fokus pada penggunaan kecerdasan buatan untuk menerjemahkan webnovel secara efisien. Termasuk alat untuk terjemahan otomatis dan peningkatan kualitas. Jujur saja, proyek ini lebih untuk penggunaan pribadi karena saya adalah pembaca dan penulis webnovel.
+
+Fitur Proyek:
+- Mesin terjemahan bertenaga AI
+- Dukungan untuk berbagai bahasa
+- Alat penilaian kualitas
+- Kemampuan pemrosesan batch
+
+Proyek ini mendemonstrasikan integrasi AI dalam alur kerja terjemahan konten.
+`;
+
+export const infoNewsText = `Skatel News Mobile adalah aplikasi mobile berbasis Flutter untuk agregasi berita. Memberikan pengguna dengan pembaruan berita terbaru dalam antarmuka yang ramah pengguna.
+
+Fitur Aplikasi:
+- Pembaruan berita real-time
+- Pemfilteran berita berdasarkan kategori
+- Kemampuan membaca offline
+- Notifikasi push
+- Dibangun dengan Flutter untuk kompatibilitas lintas platform
+
+Video demonstrasi tersedia di folder proyek.
+`;
+
+export const infoPtText = `Profil perusahaan Tunas Kembang Djati, spesialis dalam rekayasa industri dan solusi teknologi. Perusahaan menyediakan layanan komprehensif dalam rekayasa dan pengembangan industri.
+
+Informasi Perusahaan:
+- Spesialis rekayasa industri
+- Penyedia solusi teknologi
+- Layanan rekayasa profesional
+- Konsultasi pengembangan industri
+
+Website: https://teknikrekayasaindustri.co.id/
+`;
