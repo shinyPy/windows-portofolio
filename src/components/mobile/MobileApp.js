@@ -37,10 +37,6 @@ const MobileApp = ({
     setActiveScreen('home');
   };
 
-  const handleNavigate = (screenId) => {
-    setActiveScreen(screenId);
-  };
-
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'id' : 'en');
   };
