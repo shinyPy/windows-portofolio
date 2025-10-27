@@ -60,15 +60,15 @@
     transition: all 0.5s;
 }
 
-/* Animation for opening the window */
-@keyframes openWindow {
+/* Enhanced Window Animations */
+@keyframes windowExpandFromTaskbar {
     0% {
         opacity: 0;
-        transform: scale(0.9);
+        transform: scale(0.3);
     }
-    50% {
+    70% {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1.05);
     }
     100% {
         opacity: 1;
@@ -76,19 +76,89 @@
     }
 }
 
-/* Animation for closing the window */
-@keyframes closeWindow {
+@keyframes windowCloseWithRotate {
     0% {
         opacity: 1;
-        transform: scale(1);
+        transform: scale(1) rotate(0deg);
     }
     50% {
-        opacity: 0;
-        transform: scale(0.9);
+        opacity: 0.7;
+        transform: scale(1.1) rotate(3deg);
     }
     100% {
         opacity: 0;
-        transform: scale(0.9);
+        transform: scale(0) rotate(5deg);
+    }
+}
+
+@keyframes windowMinimizeBounce {
+    0% {
+        transform: scale(1);
+    }
+    10% {
+        transform: scale(1.05);
+    }
+    20% {
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+}
+
+@keyframes windowMaximize {
+    0% {
+        transform: scale(1);
+    }
+    70% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes windowRestore {
+    0% {
+        transform: scale(1);
+    }
+    70% {
+        transform: scale(0.97);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Legacy support - redirect to new animations */
+@keyframes openWindow {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    70% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes closeWindow {
+    0% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.1) rotate(3deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0) rotate(5deg);
     }
 }
 
