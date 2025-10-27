@@ -124,8 +124,8 @@ function FileExplorer({
   // Position window in center of screen initially
   const initialPosition = useMemo(() => {
     return {
-      x: Math.round(window.innerWidth / 2 - 355),
-      y: Math.round(window.innerHeight / 2 - 1000),
+      x: Math.round(window.innerWidth / 2 - 500),
+      y: Math.round(window.innerHeight / 2 - 800),
     };
   }, []);
 
