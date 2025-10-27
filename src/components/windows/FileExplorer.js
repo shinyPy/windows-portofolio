@@ -43,7 +43,6 @@ function FileExplorer({
   const [currentPath, setCurrentPath] = useState(initialPath);
   const [viewingFile, setViewingFile] = useState(externalViewingFile || null);
   const [isClosing, setIsClosing] = useState(false);
-  const [isMaximized, setIsMaximized] = useState(false);
 
   // Update current path when external fullPath changes
   useEffect(() => {
