@@ -18,7 +18,6 @@ import { preloadResources } from './utils/preloadResources';
 import exeIconSrc from './assets/icons/exeIcon.png';
 import fileIconSrc from './assets/icons/file.png';
 import folderIconSrc from './assets/icons/file-explorer.png';
-import MobileWarning from './components/mobile/MobileWarning';
 
 /**
  * Main application component managing desktop environment
