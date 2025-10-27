@@ -156,21 +156,20 @@ const MobileTerminal = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black z-50 flex flex-col">
-      {/* Terminal Header - iOS Style */}
-      <div className="bg-gray-900 px-4 py-3 flex items-center justify-between border-b border-gray-700">
-        <div className="flex items-center">
-          <button
-            onClick={onClose}
-            className="w-10 h-10 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800 transition-colors mr-3"
-          >
-            ←
-          </button>
-          <div className="w-8 h-8 bg-gray-700 rounded-xl flex items-center justify-center mr-3">
-            <span className="text-green-400 text-lg">💻</span>
-          </div>
-          <span className="text-white text-lg font-semibold">Terminal</span>
+    <div className="fixed inset-0 bg-black z-50 flex flex-col animate-slide-up-screen">
+      {/* Terminal Header - Windows Style */}
+      <div className="bg-gray-900 px-4 h-14 flex items-center justify-between border-b border-gray-700">
+        <div className="flex items-center flex-1">
+          <span className="text-green-400 text-xl mr-3">💻</span>
+          <span className="text-white text-lg font-semibold font-mono">Terminal</span>
         </div>
+        <button
+          onClick={onClose}
+          className="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800 rounded transition-colors"
+          aria-label="Close terminal"
+        >
+          ✕
+        </button>
       </div>
 
       {/* Terminal Body */}

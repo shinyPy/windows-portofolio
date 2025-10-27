@@ -20,18 +20,20 @@ const DesktopIconContainer = ({ filesystem, onFileClick, openWindow }) => {
   return (
     <div className="desktop-container">
       <DesktopIcon
-        className="desktop-icon desktop-icon-appear transition05"
+        className="desktop-icon-appear transition05"
         name="Thunar"
         iconSrc={FileExplorerIcon}
         onDoubleClick={() => openWindow("Thunar", 1, null, [1], true)}
+        delay={0}
       />
-      {filesystem.map((item) => (
+      {filesystem.map((item, index) => (
         <DesktopIcon
           key={item.id}
-          className="desktop-icon desktop-icon-appear transition05"
+          className="desktop-icon-appear transition05"
           name={item.name}
           iconSrc={getIconSrc(item)}
           onDoubleClick={() => onFileClick(item.id)}
+          delay={(index + 1) * 50}
         />
       ))}
     </div>
