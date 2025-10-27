@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import MobileHomeScreen from './MobileHomeScreen';
+import React, { useState, useContext } from 'react';
+import MobileHeader from './MobileHeader';
+import MobileTileHome from './MobileTileHome';
 import MobileProjects from './MobileProjects';
 import MobileSkills from './MobileSkills';
 import MobileAbout from './MobileAbout';
 import MobileFileManager from './MobileFileManager';
 import MobileTerminal from './MobileTerminal';
 import MobileSpotifyPlayer from './MobileSpotifyPlayer';
-import MobileControlCenter from './MobileControlCenter';
+import MobileBottomNav from './MobileBottomNav';
+import { LanguageContext } from '../../utils/LanguageContext';
 
 const MobileApp = ({
   filesystem,
