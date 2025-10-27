@@ -66,8 +66,23 @@ function FileExplorer({
     setIsClosing(true);
     setTimeout(() => {
       onClose();
-    }, 200);
+    }, 300);
   }, [onClose]);
+
+  /**
+   * Minimize window (placeholder for future implementation)
+   */
+  const handleMinimize = useCallback(() => {
+    // Future: minimize to taskbar
+    console.log('Minimize clicked');
+  }, []);
+
+  /**
+   * Toggle maximize/restore window
+   */
+  const handleMaximizeToggle = useCallback(() => {
+    setIsMaximized(prev => !prev);
+  }, []);
 
   /**
    * Updates path when an item is clicked
