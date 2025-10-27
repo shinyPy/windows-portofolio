@@ -21,7 +21,7 @@ function Taskbar({ windows, isSpotifyOpen }) {
   }, [language, setLanguage]);
 
   return (
-    <div className="h-14 bg-gray-800 bg-opacity-90 backdrop-blur-md flex items-center px-4 shadow-lg fixed bottom-0 w-full z-50" role="navigation" aria-label="Application taskbar">
+    <div className="h-14 bg-white bg-opacity-80 backdrop-blur-md flex items-center px-4 shadow-lg fixed bottom-0 w-full z-50" role="navigation" aria-label="Application taskbar">
       <div className="flex items-center flex-grow justify-center overflow-x-auto font-mono space-x-4">
         {windows.map((win) => (
           <TaskbarItem
@@ -42,7 +42,7 @@ function Taskbar({ windows, isSpotifyOpen }) {
       <div className="flex items-center space-x-4">
         <button
           onClick={toggleLanguage}
-          className="text-white px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 shadow-md transition-all duration-200 hover:scale-105"
+          className="text-gray-800 px-4 py-2 rounded-lg bg-gray-200 bg-opacity-80 hover:bg-gray-400 shadow-md transition-all duration-200"
           aria-label={`Switch to ${language === "en" ? "Indonesian" : "English"} language`}
         >
           {language === "en" ? "EN" : "ID"}
