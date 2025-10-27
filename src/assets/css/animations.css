@@ -1,9 +1,54 @@
-@keyframes desktop-icon-appear {
+/* Enhanced Icon Bounce Appear Animation */
+@keyframes iconBounceAppear {
     0% {
-        transform: rotateX(90deg);
+        opacity: 0;
+        transform: scale(0) rotate(180deg);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.2) rotate(0deg);
+    }
+    80% {
+        transform: scale(0.9) rotate(0deg);
     }
     100% {
-        transform: rotateX(0deg);
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* Icon Double Click Bounce */
+@keyframes iconDoubleClickBounce {
+    0% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.2);
+    }
+    50% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Legacy support - redirect to new animation */
+@keyframes desktop-icon-appear {
+    0% {
+        opacity: 0;
+        transform: scale(0) rotate(180deg);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.2) rotate(0deg);
+    }
+    80% {
+        transform: scale(0.9) rotate(0deg);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
     }
 }
 
