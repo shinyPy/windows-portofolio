@@ -139,14 +139,13 @@ function App() {
   if (isMobile) {
     return (
       <>
-        {/* <MobileApp
+        <MobileApp
           filesystem={filesystem}
           findItemById={findItemById}
           isSpotifyOpen={isSpotifyOpen}
           closeSpotifyPlayer={closeSpotifyPlayer}
           initialFilesystem={initialFilesystem}
-        /> */}
-        <MobileWarning />
+        />
         <SpeedInsights />
       </>
     );
