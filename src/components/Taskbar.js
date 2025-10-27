@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, memo } from "react";
+import React, { useContext, useCallback, memo, useState } from "react";
 import PropTypes from "prop-types";
 import spotifyIcon from "../assets/icons/SpotifyIcon.png";
 import { LanguageContext } from "../utils/LanguageContext";
