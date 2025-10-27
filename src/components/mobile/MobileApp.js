@@ -17,41 +17,33 @@ const MobileApp = ({
   closeSpotifyPlayer,
   initialFilesystem
 }) => {
-  const [currentScreen, setCurrentScreen] = useState('home');
+  const [activeScreen, setActiveScreen] = useState('home');
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
-  const [isControlCenterOpen, setIsControlCenterOpen] = useState(false);
+  const [isSpotifyPlayerOpen, setIsSpotifyPlayerOpen] = useState(false);
+  const { language, setLanguage } = useContext(LanguageContext);
 
-  // For swipe down gesture (optional, basic implementation)
-  React.useEffect(() => {
-    let startY = null;
-    const handleTouchStart = (e) => {
-      if (e.touches && e.touches.length === 1) {
-        startY = e.touches[0].clientY;
-      }
-    };
-    const handleTouchEnd = (e) => {
-      if (startY !== null && e.changedTouches && e.changedTouches.length === 1) {
-        const endY = e.changedTouches[0].clientY;
-        if (startY < 60 && endY - startY > 40) {
-          setIsControlCenterOpen(true);
-        }
-      }
-      startY = null;
-    };
-    window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchend', handleTouchEnd, { passive: true });
-    return () => {
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchend', handleTouchEnd);
-    };
-  }, []);
-
-  const handleAppOpen = (appName) => {
-    setCurrentScreen(appName);
+  const handleTileClick = (screenId) => {
+    if (screenId === 'terminal') {
+      setIsTerminalOpen(true);
+    } else if (screenId === 'spotify') {
+      setIsSpotifyPlayerOpen(true);
+    } else if (screenId === 'files') {
+      setActiveScreen('filemanager');
+    } else {
+      setActiveScreen(screenId);
+    }
   };
 
   const handleBackToHome = () => {
-    setCurrentScreen('home');
+    setActiveScreen('home');
+  };
+
+  const handleNavigate = (screenId) => {
+    setActiveScreen(screenId);
+  };
+
+  const toggleLanguage = () => {
+    setLanguage(language === 'en' ? 'id' : 'en');
   };
 
   const renderCurrentScreen = () => {
