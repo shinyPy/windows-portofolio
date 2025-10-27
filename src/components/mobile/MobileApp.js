@@ -96,70 +96,34 @@ const MobileApp = ({
   };
 
   return (
-    <div className="flex flex-col h-screen bg-black">
-      {/* iOS Status Bar */}
-      <div
-        className="ios-status-bar bg-black text-white cursor-pointer select-none safe-area-inset-top"
-        onClick={() => setIsControlCenterOpen(true)}
-        style={{ touchAction: 'manipulation' }}
-      >
-        <div className="flex items-center">
-          <span className="text-sm font-semibold tracking-tight">9:41</span>
-        </div>
-        <div className="flex items-center space-x-1">
-          {/* Cellular Signal */}
-          <div className="flex space-x-0.5">
-            <div className="w-1 h-1 bg-white rounded-full"></div>
-            <div className="w-1 h-1.5 bg-white rounded-full"></div>
-            <div className="w-1 h-2 bg-white rounded-full"></div>
-            <div className="w-1 h-2.5 bg-white rounded-full"></div>
-          </div>
-          {/* 5G */}
-          <span className="text-xs font-semibold">5G</span>
-          {/* WiFi icon */}
-          <div className="text-sm">📶</div>
-          {/* Battery */}
-          <div className="flex items-center space-x-1">
-            <span className="text-xs font-semibold">100%</span>
-            <div className="w-6 h-3 border border-white rounded-sm flex items-center justify-end pr-0.5">
-              <div className="w-5 h-2 bg-green-500 rounded-xs"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Control Center */}
-      <MobileControlCenter
-        isOpen={isControlCenterOpen}
-        onClose={() => setIsControlCenterOpen(false)}
-        onOpenSpotify={() => {
-          setIsControlCenterOpen(false);
-          if (!isSpotifyOpen && typeof closeSpotifyPlayer === 'function') {
-            closeSpotifyPlayer(false); // ensure it's closed before opening
-          }
-          // Open the Spotify player (simulate as if user tapped the music app)
-          if (typeof window !== 'undefined') {
-            setTimeout(() => {
-              if (typeof window.openSpotifyPlayer === 'function') {
-                window.openSpotifyPlayer();
-              }
-            }, 100);
-          }
-        }}
+    <div className="flex flex-col h-screen bg-gray-900 overflow-hidden">
+      {/* Windows Metro Header */}
+      <MobileHeader
+        activeScreen={activeScreen}
+        onBack={handleBackToHome}
+        language={language}
+        onLanguageToggle={toggleLanguage}
       />
 
       {/* Main Content */}
-      <div className="flex-1 overflow-hidden">
-        {renderCurrentScreen()}
+      <div className="flex-1 overflow-hidden relative">
+        {renderContent()}
       </div>
 
-      {/* Terminal Modal */}
+      {/* Bottom Navigation */}
+      <MobileBottomNav
+        activeScreen={activeScreen}
+        onNavigate={handleNavigate}
+      />
+
+      {/* Terminal Full-Screen Overlay */}
       {isTerminalOpen && (
         <MobileTerminal onClose={() => setIsTerminalOpen(false)} />
       )}
 
-      {/* Spotify Player */}
-      {isSpotifyOpen && (
-        <MobileSpotifyPlayer onClose={closeSpotifyPlayer} />
+      {/* Spotify Player Full-Screen Overlay */}
+      {isSpotifyPlayerOpen && (
+        <MobileSpotifyPlayer onClose={() => setIsSpotifyPlayerOpen(false)} />
       )}
     </div>
   );
