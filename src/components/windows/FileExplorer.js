@@ -162,19 +162,52 @@ function FileExplorer({
           isClosing ? "closing" : ""
         }`}
       >
-        <div className="fileExplorer-header bg-gray-200 text-gray-900 p-2 flex justify-between items-center rounded-t-lg cursor-move">
-          <div className="flex-1 text-center text-sm font-semibold">
+        <div className="fileExplorer-header bg-gray-200 text-gray-900 flex justify-between items-center rounded-t-lg cursor-move">
+          <div className="flex-1 text-center text-sm font-semibold p-2">
             {title}
           </div>
-          <div className="flex space-x-1 ml-auto">
-            <span className="block w-3 h-3 bg-yellow-500 rounded-full"></span>
-            <span
+          <div className="flex h-full ml-auto">
+            {/* Minimize Button */}
+            <button
+              onClick={handleMinimize}
+              className="
+                w-11 h-full flex items-center justify-center
+                hover:bg-gray-300 transition-colors
+                text-gray-700 text-xl font-light
+              "
+              aria-label="Minimize window"
+              title="Minimize"
+            >
+              −
+            </button>
+
+            {/* Maximize/Restore Button */}
+            <button
+              onClick={handleMaximizeToggle}
+              className="
+                w-11 h-full flex items-center justify-center
+                hover:bg-gray-300 transition-colors
+                text-gray-700
+              "
+              aria-label={isMaximized ? "Restore window" : "Maximize window"}
+              title={isMaximized ? "Restore" : "Maximize"}
+            >
+              {isMaximized ? '❐' : '☐'}
+            </button>
+
+            {/* Close Button */}
+            <button
               onClick={closeWindow}
-              className="block w-3 h-3 bg-red-500 rounded-full cursor-pointer"
+              className="
+                w-11 h-full flex items-center justify-center
+                hover:bg-red-600 hover:text-white
+                transition-colors text-gray-700
+              "
               aria-label="Close window"
-              role="button"
-              tabIndex={0}
-            ></span>
+              title="Close"
+            >
+              ✕
+            </button>
           </div>
         </div>
         <div className="p-3 h-full bg-gray-100 overflow-auto">
