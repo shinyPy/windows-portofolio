@@ -46,60 +46,53 @@ const MobileApp = ({
     setLanguage(language === 'en' ? 'id' : 'en');
   };
 
-  const renderCurrentScreen = () => {
-    switch (currentScreen) {
-      case 'home':
-        return (
-          <MobileHomeScreen
-            filesystem={filesystem}
-            findItemById={findItemById}
-            onAppOpen={handleAppOpen}
-            onOpenTerminal={() => setIsTerminalOpen(true)}
-          />
-        );
-      case 'filemanager':
-        return (
-          <MobileFileManager
-            filesystem={filesystem}
-            findItemById={findItemById}
-            onBack={handleBackToHome}
-          />
-        );
-      case 'projects':
-        return (
-          <MobileProjects
-            filesystem={filesystem}
-            findItemById={findItemById}
-            initialFilesystem={initialFilesystem}
-            onBack={handleBackToHome}
-          />
-        );
-      case 'skills':
-        return (
-          <MobileSkills
-            filesystem={filesystem}
-            findItemById={findItemById}
-            onBack={handleBackToHome}
-          />
-        );
-      case 'about':
-        return (
-          <MobileAbout
-            filesystem={filesystem}
-            findItemById={findItemById}
-            onBack={handleBackToHome}
-          />
-        );
-      default:
-        return (
-          <MobileHomeScreen
-            filesystem={filesystem}
-            findItemById={findItemById}
-            onAppOpen={handleAppOpen}
-            onOpenTerminal={() => setIsTerminalOpen(true)}
-          />
-        );
+  const renderContent = () => {
+    if (activeScreen === 'home') {
+      return (
+        <MobileTileHome
+          onTileClick={handleTileClick}
+          language={language}
+          filesystemCount={filesystem.length}
+        />
+      );
     }
+
+    // Full-screen overlays with slide-up animation
+    return (
+      <div className="fixed inset-0 bg-gray-900 z-40 animate-slide-up-screen overflow-y-auto">
+        <div className="pt-14 pb-20">
+          {activeScreen === 'about' && (
+            <MobileAbout
+              filesystem={filesystem}
+              findItemById={findItemById}
+              onBack={handleBackToHome}
+            />
+          )}
+          {activeScreen === 'projects' && (
+            <MobileProjects
+              filesystem={filesystem}
+              findItemById={findItemById}
+              initialFilesystem={initialFilesystem}
+              onBack={handleBackToHome}
+            />
+          )}
+          {activeScreen === 'skills' && (
+            <MobileSkills
+              filesystem={filesystem}
+              findItemById={findItemById}
+              onBack={handleBackToHome}
+            />
+          )}
+          {activeScreen === 'filemanager' && (
+            <MobileFileManager
+              filesystem={filesystem}
+              findItemById={findItemById}
+              onBack={handleBackToHome}
+            />
+          )}
+        </div>
+      </div>
+    );
   };
 
   return (
