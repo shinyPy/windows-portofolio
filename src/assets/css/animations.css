@@ -204,3 +204,165 @@
     cursor: move;
     user-select: none;
   }
+
+/* Taskbar Animations */
+@keyframes taskbarItemPress {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(2px) scale(0.97);
+    }
+    100% {
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes activeIndicatorSlide {
+    from {
+        left: var(--from-position);
+    }
+    to {
+        left: var(--to-position);
+    }
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Mobile Tile Animations */
+@keyframes tileContentCycle {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    45% {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    55% {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes tilePress {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes tileEnter {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    60% {
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Screen Transition Animations */
+@keyframes slideUpScreen {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDownScreen {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+/* Loading & Special Effects */
+@keyframes skeletonPulse {
+    0%, 100% {
+        opacity: 0.4;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes spinBounce {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.1);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+/* Desktop Icon Styles */
+.desktop-icon {
+  position: relative;
+  animation: iconBounceAppear 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55) backwards;
+  cursor: pointer;
+  transition: all 200ms ease-out;
+}
+
+.desktop-icon.selected::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  background: rgba(0, 120, 212, 0.3);
+  border: 1px solid rgba(0, 120, 212, 0.6);
+  border-radius: 4px;
+  z-index: -1;
+}
+
+.desktop-icon:hover .icon-image-container {
+  transform: translateY(-8px) scale(1.05);
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.3));
+}
+
+.desktop-icon .icon-image-container {
+  transition: transform 200ms ease-out, filter 200ms ease-out;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .desktop-icon,
+  .window-container,
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
