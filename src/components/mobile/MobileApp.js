@@ -7,7 +7,6 @@ import MobileAbout from './MobileAbout';
 import MobileFileManager from './MobileFileManager';
 import MobileTerminal from './MobileTerminal';
 import MobileSpotifyPlayer from './MobileSpotifyPlayer';
-import MobileBottomNav from './MobileBottomNav';
 import { LanguageContext } from '../../utils/LanguageContext';
 
 const MobileApp = ({
