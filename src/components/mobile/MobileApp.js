@@ -55,7 +55,7 @@ const MobileApp = ({
     // Full-screen overlays with slide-up animation
     return (
       <div className="fixed inset-0 bg-gray-900 z-40 animate-slide-up-screen overflow-y-auto">
-        <div className="pt-14 pb-20">
+        <div className="pt-14">
           {activeScreen === 'about' && (
             <MobileAbout
               filesystem={filesystem}
