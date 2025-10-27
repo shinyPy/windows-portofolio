@@ -105,12 +105,6 @@ const MobileApp = ({
         {renderContent()}
       </div>
 
-      {/* Bottom Navigation */}
-      <MobileBottomNav
-        activeScreen={activeScreen}
-        onNavigate={handleNavigate}
-      />
-
       {/* Terminal Full-Screen Overlay */}
       {isTerminalOpen && (
         <MobileTerminal onClose={() => setIsTerminalOpen(false)} />
