@@ -56,36 +56,21 @@ function Taskbar({ windows, isSpotifyOpen }) {
 /**
  * Individual item in the taskbar
  */
-const TaskbarItem = memo(({ title, iconSrc }) => {
-  const [isPressed, setIsPressed] = useState(false);
-
-  const handleClick = useCallback(() => {
-    setIsPressed(true);
-    setTimeout(() => setIsPressed(false), 250);
-  }, []);
-
-  return (
-    <div
-      className={`
-        bg-gray-700 bg-opacity-80 px-7 py-2 rounded-lg
-        flex items-center cursor-pointer shadow-md
-        hover:scale-110 hover:brightness-110 transition-all duration-200
-        ${isPressed ? 'animate-taskbar-press' : ''}
-      `}
-      role="button"
-      tabIndex="0"
-      onClick={handleClick}
-      aria-label={`Switch to ${title}`}
-    >
-      <img
-        src={iconSrc}
-        alt={`${title} icon`}
-        className="w-6 h-6 mr-2"
-      />
-      <span className="text-white">{title}</span>
-    </div>
-  );
-});
+const TaskbarItem = memo(({ title, iconSrc }) => (
+  <div
+    className="bg-gray-200 bg-opacity-80 px-7 py-2 rounded-lg flex items-center cursor-pointer shadow-md hover:bg-gray-400 transition-all"
+    role="button"
+    tabIndex="0"
+    aria-label={`Switch to ${title}`}
+  >
+    <img
+      src={iconSrc}
+      alt={`${title} icon`}
+      className="w-6 h-6 mr-2"
+    />
+    {title}
+  </div>
+));
 
 TaskbarItem.propTypes = {
   title: PropTypes.string.isRequired,
