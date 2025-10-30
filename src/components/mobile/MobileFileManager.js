@@ -1,359 +1,170 @@
-import React, { useState, useEffect } from 'react';
-import { useLanguage } from '../../utils/LanguageContext';
+import React, { useState } from 'react';
 
-const MobileFileManager = ({ filesystem, findItemById, onBack }) => {
-  const { language, setLanguage, texts } = useLanguage();
-  const [currentView, setCurrentView] = useState('main');
-  const [aboutInfo, setAboutInfo] = useState({
-    info: '',
-    github: '',
-    achievements: []
-  });
+const MobileFileManager = ({ filesystem, findItemById, onBack, language = 'en' }) => {
+  const [currentPath, setCurrentPath] = useState([]);
+  const [currentFolder, setCurrentFolder] = useState(null);
 
-  useEffect(() => {
-    // Load about information from filesystem
-    const aboutFolder = findItemById(filesystem, 9); // About_me folder
-    const achievementsFolder = findItemById(filesystem, 7); // Achievements folder
-
-    if (aboutFolder && aboutFolder.contents) {
-      const githubLink = aboutFolder.contents.find(item => item.name === 'My_Github');
-
-      setAboutInfo(prev => ({
-        ...prev,
-        github: githubLink ? githubLink.url : '',
-        info: texts.infoText
-      }));
+  const text = {
+    en: {
+      files: 'Files',
+      folders: 'Folders',
+      items: 'items',
+      empty: 'Empty Folder',
+      noFiles: 'No files to display',
+      back: 'Back'
+    },
+    id: {
+      files: 'Berkas',
+      folders: 'Folder',
+      items: 'item',
+      empty: 'Folder Kosong',
+      noFiles: 'Tidak ada berkas untuk ditampilkan',
+      back: 'Kembali'
     }
-
-    if (achievementsFolder && achievementsFolder.contents) {
-      const achievements = achievementsFolder.contents.map(item => ({
-        id: item.id,
-        name: item.name,
-        type: item.type,
-        src: item.src
-      }));
-
-      setAboutInfo(prev => ({
-        ...prev,
-        achievements
-      }));
-    }
-  }, [findItemById, texts]);
-
-  const toggleLanguage = () => {
-    setLanguage(language === 'en' ? 'id' : 'en');
   };
 
-  const parseSkillsText = (text) => {
-    const sections = text.split('\n\n').filter(section => section.trim());
-    return sections.map(section => {
-      const lines = section.split('\n').filter(line => line.trim());
-      const title = lines[0].replace(':', '');
-      const items = lines.slice(1).map(line => {
-        const match = line.match(/^- (.+)/);
-        if (match) {
-          const parts = match[1].split('\n');
-          const name = parts[0];
-          const description = parts.slice(1).join(' ').trim();
-          return { name, description };
+  const t = text[language] || text.en;
+
+  const getRootFolder = () => {
+    if (!filesystem || filesystem.length === 0) return null;
+    return filesystem[0]?.contents?.[0];
+  };
+
+  const getCurrentContents = () => {
+    if (currentPath.length === 0) {
+      const root = getRootFolder();
+      return root?.contents || [];
+    }
+    
+    let current = getRootFolder();
+    for (const pathId of currentPath) {
+      const found = current?.contents?.find(item => item.id === pathId);
+      if (found) current = found;
+    }
+    return current?.contents || [];
+  };
+
+  const handleFolderClick = (item) => {
+    if (item.type === 'folder') {
+      setCurrentPath([...currentPath, item.id]);
+      setCurrentFolder(item);
+    } else if (item.type === 'link') {
+      window.open(item.url, '_blank');
+    }
+  };
+
+  const handleBackClick = () => {
+    if (currentPath.length > 0) {
+      const newPath = currentPath.slice(0, -1);
+      setCurrentPath(newPath);
+      
+      if (newPath.length > 0) {
+        let current = getRootFolder();
+        for (const pathId of newPath) {
+          const found = current?.contents?.find(item => item.id === pathId);
+          if (found) current = found;
         }
-        return null;
-      }).filter(Boolean);
-
-      return { title, items };
-    });
-  };
-
-  const skillsSections = parseSkillsText(texts.skillsText);
-
-  const personalInfo = [
-    { label: 'Name', value: 'ShinyPy', icon: '👤' },
-    { label: 'Role', value: 'Full Stack Developer', icon: '💻' },
-    { label: 'Location', value: 'Remote', icon: '🌍' },
-    { label: 'Experience', value: '2+ Years', icon: '🚀' }
-  ];
-
-  const interests = [
-    { name: 'Web Development', icon: '🌐' },
-    { name: 'UI/UX Design', icon: '🎨' },
-    { name: 'Problem Solving', icon: '🧩' },
-    { name: 'Technology', icon: '⚡' },
-    { name: 'Learning', icon: '📚' },
-    { name: 'Open Source', icon: '🔓' }
-  ];
-
-  const fileStructure = [
-    {
-      id: 'about',
-      name: 'About Me',
-      type: 'folder',
-      icon: '👤',
-      description: 'Personal information and background'
-    },
-    {
-      id: 'skills',
-      name: 'Skills',
-      type: 'folder',
-      icon: '🛠️',
-      description: 'Technical skills and tools'
-    },
-    {
-      id: 'achievements',
-      name: 'Achievements',
-      type: 'folder',
-      icon: '🏆',
-      description: 'Certificates and accomplishments'
-    },
-    {
-      id: 'contact',
-      name: 'Contact',
-      type: 'folder',
-      icon: '📞',
-      description: 'Ways to get in touch'
-    }
-  ];
-
-  const handleFileClick = (fileId) => {
-    setCurrentView(fileId);
-  };
-
-  const handleGithubClick = () => {
-    if (aboutInfo.github) {
-      window.open(aboutInfo.github, '_blank');
+        setCurrentFolder(current);
+      } else {
+        setCurrentFolder(null);
+      }
+    } else {
+      onBack();
     }
   };
 
-  const renderMainView = () => (
-    <div className="px-4 pb-4 pt-4">
-      {/* File Structure */}
-      <div className="space-y-3">
-        {fileStructure.map((item) => (
-          <button
-            key={item.id}
-            onClick={() => handleFileClick(item.id)}
-            className="w-full bg-white dark:bg-gray-900 rounded-2xl p-4 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-200 active:scale-98"
-          >
-            <div className="flex items-center">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-4">
-                <span className="text-white text-xl">{item.icon}</span>
-              </div>
-              <div className="flex-1 text-left">
-                <h3 className="text-gray-900 dark:text-white font-semibold text-lg">{item.name}</h3>
-                <p className="text-gray-500 dark:text-gray-400 text-sm">{item.description}</p>
-              </div>
-              <div className="text-gray-400 text-xl">›</div>
-            </div>
-          </button>
-        ))}
-      </div>
-    </div>
-  );
+  const getItemIcon = (item) => {
+    if (item.type === 'folder') return '📁';
+    if (item.type === 'link') return '🔗';
+    if (item.type === 'file') {
+      if (item.name.includes('.txt')) return '📄';
+      if (item.name.includes('.mp4')) return '🎬';
+      if (item.name.includes('.exe')) return '⚙️';
+      if (item.name.includes('.jpg') || item.name.includes('.png')) return '🖼️';
+    }
+    return '📄';
+  };
 
-  const renderAboutView = () => (
-    <div className="px-4 pb-4 pt-4">
-      {/* Profile Card */}
-      <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 mb-6 shadow-lg border border-gray-200 dark:border-gray-700">
-        <div className="text-center mb-6">
-          <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-3xl font-bold text-white mx-auto mb-4 shadow-lg">
-            SP
-          </div>
-          <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-1">ShinyPy</h2>
-          <p className="text-blue-500 dark:text-blue-400 text-sm font-medium">Full Stack Developer</p>
-        </div>
+  const contents = getCurrentContents();
 
-        <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed text-center">
-          {aboutInfo.info || 'Passionate developer with a love for creating innovative solutions and learning new technologies.'}
-        </p>
+  return (
+    <div className="min-h-screen p-5 pb-8">
+      {/* Breadcrumb */}
+      <div className="mb-4">
+        <button
+          onClick={handleBackClick}
+          className="flex items-center text-blue-500 hover:text-blue-600 font-semibold transition-colors active:scale-95"
+        >
+          <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+          </svg>
+          {currentPath.length > 0 ? t.back : t.files}
+        </button>
+        
+        {currentFolder && (
+          <h2 className="text-gray-900 dark:text-white text-2xl font-bold mt-2">
+            {currentFolder.name}
+          </h2>
+        )}
       </div>
 
-      {/* Personal Info Cards */}
-      <div className="grid grid-cols-2 gap-3 mb-6">
-        {personalInfo.map((info, index) => (
-          <div key={index} className="bg-white dark:bg-gray-900 rounded-xl p-4 shadow-lg border border-gray-200 dark:border-gray-700">
-            <div className="flex items-center mb-3">
-              <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mr-3">
-                <span className="text-lg">{info.icon}</span>
-              </div>
-              <span className="text-gray-500 dark:text-gray-400 text-xs font-medium">{info.label}</span>
-            </div>
-            <span className="text-gray-900 dark:text-white font-medium text-sm">{info.value}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Interests Card */}
-      <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-        <div className="flex items-center mb-4">
-          <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center mr-3">
-            <span className="text-white text-lg">❤️</span>
-          </div>
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Interests</h3>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {interests.map((interest, index) => (
-            <div key={index} className="bg-gray-100 dark:bg-gray-800 rounded-full px-4 py-2 border border-gray-200 dark:border-gray-700">
-              <span className="text-gray-700 dark:text-gray-300 text-sm">
-                {interest.icon} {interest.name}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderSkillsView = () => (
-    <div className="px-4 pb-4 pt-4">
-      {/* Skills Sections */}
-      <div className="space-y-6">
-        {skillsSections.map((section, sectionIndex) => (
-          <div key={sectionIndex} className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700">
-            <div className="flex items-center mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mr-3">
-                <span className="text-white text-lg">
-                  {section.title.includes('Tools') ? '🛠️' :
-                   section.title.includes('Frameworks') ? '⚙️' :
-                   section.title.includes('Languages') ? '📝' :
-                   section.title.includes('Databases') ? '🗄️' :
-                   section.title.includes('Architectures') ? '🏗️' : '💡'}
-                </span>
-              </div>
-              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">{section.title}</h2>
-            </div>
-
-            <div className="space-y-4">
-              {section.items.map((item, itemIndex) => (
-                <div key={itemIndex} className="border-l-4 border-blue-500 pl-4 py-2">
-                  <h3 className="text-gray-900 dark:text-white font-medium text-lg mb-1">{item.name}</h3>
-                  {item.description && (
-                    <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{item.description}</p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-
-  const renderAchievementsView = () => (
-    <div className="px-4 pb-4 pt-4">
-      {aboutInfo.achievements.length > 0 ? (
+      {/* File/Folder Grid */}
+      {contents.length > 0 ? (
         <div className="space-y-3">
-          {aboutInfo.achievements.map((achievement, index) => (
-            <div key={achievement.id} className="bg-white dark:bg-gray-900 rounded-2xl p-4 shadow-lg border border-gray-200 dark:border-gray-700">
+          {contents.map((item, index) => (
+            <button
+              key={item.id}
+              onClick={() => handleFolderClick(item)}
+              className="w-full ios-card dark:ios-card-dark p-5 hover:scale-[1.02] transition-all cursor-pointer ios-fade-in text-left active:scale-95"
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
               <div className="flex items-center">
-                <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/30 rounded-xl flex items-center justify-center mr-4">
-                  <span className="text-2xl">🏆</span>
+                {/* Icon */}
+                <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mr-4 flex-shrink-0 ios-shadow-sm">
+                  <span className="text-2xl">{getItemIcon(item)}</span>
                 </div>
-                <div className="flex-1">
-                  <h4 className="text-gray-900 dark:text-white font-medium text-lg">
-                    {achievement.name.replace(/\.(jpg|png|pdf)$/, '')}
-                  </h4>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm">Certificate of completion</p>
+
+                {/* Info */}
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-gray-900 dark:text-white font-bold text-base mb-1 truncate">
+                    {item.name}
+                  </h3>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-xs bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 text-gray-700 dark:text-gray-300 px-2.5 py-1 rounded-lg font-semibold border border-blue-100 dark:border-blue-800">
+                      {item.type === 'folder' ? t.folders : item.type}
+                    </span>
+                    {item.type === 'folder' && item.contents && (
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        {item.contents.length} {t.items}
+                      </span>
+                    )}
+                  </div>
                 </div>
+
+                {/* Arrow */}
+                {item.type === 'folder' && (
+                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center ios-shadow-sm ml-3">
+                    <span className="text-white text-sm font-bold">›</span>
+                  </div>
+                )}
+                {item.type === 'link' && (
+                  <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center ios-shadow-sm ml-3">
+                    <span className="text-white text-sm font-bold">↗</span>
+                  </div>
+                )}
               </div>
-            </div>
+            </button>
           ))}
         </div>
       ) : (
-        <div className="text-center text-gray-500 dark:text-gray-400 mt-16">
-          <div className="w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
-            <span className="text-2xl">🏆</span>
+        <div className="flex flex-col items-center justify-center min-h-[60vh] text-center ios-fade-in">
+          <div className="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 rounded-3xl flex items-center justify-center mx-auto mb-6 ios-shadow-lg">
+            <span className="text-5xl">📂</span>
           </div>
-          <p className="text-lg font-medium">No achievements found</p>
-          <p className="text-sm mt-2">Check back later for updates</p>
+          <h3 className="text-gray-900 dark:text-white text-xl font-bold mb-2">{t.empty}</h3>
+          <p className="text-gray-500 dark:text-gray-400">{t.noFiles}</p>
         </div>
       )}
-    </div>
-  );
-
-  const renderContactView = () => (
-    <div className="px-4 pb-4 pt-4">
-      <div className="space-y-4">
-        <button
-          onClick={handleGithubClick}
-          className="w-full bg-gray-900 hover:bg-gray-800 text-white py-4 px-6 rounded-2xl transition-all flex items-center justify-center active:scale-95 shadow-lg"
-        >
-          <span className="text-2xl mr-4">📱</span>
-          <span className="font-medium text-lg">View My GitHub</span>
-        </button>
-
-        <div className="grid grid-cols-2 gap-4">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white py-4 px-4 rounded-2xl transition-all flex flex-col items-center justify-center active:scale-95 shadow-lg">
-            <span className="text-2xl mb-2">💼</span>
-            <span className="text-sm font-medium">LinkedIn</span>
-          </button>
-          <button className="bg-green-500 hover:bg-green-600 text-white py-4 px-4 rounded-2xl transition-all flex flex-col items-center justify-center active:scale-95 shadow-lg">
-            <span className="text-2xl mb-2">✉️</span>
-            <span className="text-sm font-medium">Email</span>
-          </button>
-        </div>
-
-        <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-gray-700 mt-6">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Discord</h3>
-          <p className="text-gray-600 dark:text-gray-300 text-sm">shiniya_</p>
-        </div>
-      </div>
-    </div>
-  );
-
-  const renderCurrentView = () => {
-    switch (currentView) {
-      case 'about':
-        return renderAboutView();
-      case 'skills':
-        return renderSkillsView();
-      case 'achievements':
-        return renderAchievementsView();
-      case 'contact':
-        return renderContactView();
-      default:
-        return renderMainView();
-    }
-  };
-
-  const getCurrentTitle = () => {
-    switch (currentView) {
-      case 'about':
-        return 'About Me';
-      case 'skills':
-        return 'Skills';
-      case 'achievements':
-        return 'Achievements';
-      case 'contact':
-        return 'Contact';
-      default:
-        return 'File Manager';
-    }
-  };
-
-  return (
-    <div className="flex flex-col h-full bg-gray-50 dark:bg-black ios-fade-in">
-      {/* iOS Navigation Bar */}
-      <div className="bg-white/95 dark:bg-black/95 ios-blur border-b border-gray-200/50 dark:border-gray-800/50 px-4 py-3 safe-area-inset-top">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <button
-              onClick={currentView === 'main' ? onBack : () => setCurrentView('main')}
-              className="w-10 h-10 rounded-full flex items-center justify-center ios-blue hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 active:scale-95 mr-3"
-            >
-              <span className="text-lg">‹</span>
-            </button>
-            <div className="flex items-center">
-              <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-3 ios-shadow-sm">
-                <span className="text-white text-lg">📁</span>
-              </div>
-              <h1 className="ios-title text-black dark:text-white">{getCurrentTitle()}</h1>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex-1 overflow-y-auto">
-        {renderCurrentView()}
-      </div>
     </div>
   );
 };

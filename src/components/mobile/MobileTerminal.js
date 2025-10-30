@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const MobileTerminal = ({ onClose }) => {
+const MobileTerminal = ({ onClose, language = 'en' }) => {
   const [input, setInput] = useState('');
   const [output, setOutput] = useState([
-    'Windows Portfolio Terminal v1.0',
+    'Portfolio Terminal v1.0',
     'Type "help" for available commands.',
     ''
   ]);
@@ -24,9 +24,62 @@ const MobileTerminal = ({ onClose }) => {
     }
   }, [output]);
 
+  const text = {
+    en: {
+      title: 'Terminal',
+      placeholder: 'Type a command...',
+      availableCommands: 'Available commands:',
+      about: 'Portfolio - Mobile Version',
+      aboutDesc: 'An interactive portfolio showcasing web development skills',
+      built: 'Built with React.js and modern web technologies',
+      optimized: 'Optimized for mobile devices with touch-friendly interface',
+      skills: 'Technical Skills:',
+      frontend: 'Frontend: React, JavaScript, HTML5, CSS3, Tailwind CSS',
+      backend: 'Backend: Node.js, Express.js, API Development',
+      tools: 'Tools: Git, VS Code, npm/yarn, Vercel',
+      other: 'Other: Problem Solving, UI/UX Design, Responsive Design',
+      projects: 'Featured Projects:',
+      contact: 'Contact Information:',
+      github: 'GitHub: https://github.com/shinyPy/',
+      portfolio: 'Portfolio: https://github.com/shinyPy/windows-portofolio',
+      reachOut: 'Feel free to reach out for collaborations!',
+      currentUser: 'ShinyPy',
+      developer: 'Full Stack Developer',
+      passionate: 'Passionate about creating innovative web solutions',
+      notRecognized: 'is not recognized as a command.',
+      typeHelp: 'Type "help" for available commands.'
+    },
+    id: {
+      title: 'Terminal',
+      placeholder: 'Ketik perintah...',
+      availableCommands: 'Perintah yang tersedia:',
+      about: 'Portofolio - Versi Mobile',
+      aboutDesc: 'Portofolio interaktif yang menampilkan keterampilan pengembangan web',
+      built: 'Dibangun dengan React.js dan teknologi web modern',
+      optimized: 'Dioptimalkan untuk perangkat mobile dengan antarmuka ramah sentuhan',
+      skills: 'Keterampilan Teknis:',
+      frontend: 'Frontend: React, JavaScript, HTML5, CSS3, Tailwind CSS',
+      backend: 'Backend: Node.js, Express.js, Pengembangan API',
+      tools: 'Tools: Git, VS Code, npm/yarn, Vercel',
+      other: 'Lainnya: Pemecahan Masalah, Desain UI/UX, Desain Responsif',
+      projects: 'Proyek Unggulan:',
+      contact: 'Informasi Kontak:',
+      github: 'GitHub: https://github.com/shinyPy/',
+      portfolio: 'Portofolio: https://github.com/shinyPy/windows-portofolio',
+      reachOut: 'Jangan ragu untuk menghubungi untuk kolaborasi!',
+      currentUser: 'ShinyPy',
+      developer: 'Pengembang Full Stack',
+      passionate: 'Bersemangat tentang menciptakan solusi web inovatif',
+      notRecognized: 'tidak dikenali sebagai perintah.',
+      typeHelp: 'Ketik "help" untuk perintah yang tersedia.'
+    }
+  };
+
+  const t = text[language] || text.en;
+
   const commands = {
     help: () => [
-      'Available commands:',
+      t.availableCommands,
       '  help     - Show this help message',
       '  clear    - Clear the terminal',
       '  about    - About this portfolio',
@@ -45,41 +98,41 @@ const MobileTerminal = ({ onClose }) => {
       return [];
     },
     about: () => [
-      'Windows Portfolio - Mobile Version',
-      'An interactive portfolio showcasing web development skills',
-      'Built with React.js and modern web technologies',
-      'Optimized for mobile devices with touch-friendly interface',
+      t.about,
+      t.aboutDesc,
+      t.built,
+      t.optimized,
       ''
     ],
     skills: () => [
-      'Technical Skills:',
-      '  Frontend: React, JavaScript, HTML5, CSS3, Tailwind CSS',
-      '  Backend: Node.js, Express.js, API Development',
-      '  Tools: Git, VS Code, npm/yarn, Vercel',
-      '  Other: Problem Solving, UI/UX Design, Responsive Design',
+      t.skills,
+      '  ' + t.frontend,
+      '  ' + t.backend,
+      '  ' + t.tools,
+      '  ' + t.other,
       ''
     ],
     projects: () => [
-      'Featured Projects:',
+      t.projects,
       '  • TEFAREN - Web application with modern tech stack',
       '  • Windows Portfolio - This interactive portfolio',
       '  • Development Videos - Process documentation',
       '',
-      'Visit the Projects tab to explore more!',
+      language === 'en' ? 'Visit the Projects tab to explore more!' : 'Kunjungi tab Proyek untuk menjelajah lebih!',
       ''
     ],
     contact: () => [
-      'Contact Information:',
-      '  GitHub: https://github.com/shinyPy/',
-      '  Portfolio: https://github.com/shinyPy/windows-portofolio',
+      t.contact,
+      '  ' + t.github,
+      '  ' + t.portfolio,
       '',
-      'Feel free to reach out for collaborations!',
+      t.reachOut,
       ''
     ],
     whoami: () => [
-      'ShinyPy',
-      'Full Stack Developer',
-      'Passionate about creating innovative web solutions',
+      t.currentUser,
+      t.developer,
+      t.passionate,
       ''
     ],
     ls: () => [
@@ -123,7 +176,7 @@ const MobileTerminal = ({ onClose }) => {
       return [''];
     }
 
-    return [`'${command}' is not recognized as a command.`, 'Type "help" for available commands.', ''];
+    return [`'${command}' ${t.notRecognized}`, t.typeHelp, ''];
   };
 
   const handleSubmit = (e) => {
@@ -157,15 +210,17 @@ const MobileTerminal = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black z-50 flex flex-col animate-slide-up-screen">
-      {/* Terminal Header - Windows Style */}
-      <div className="bg-gray-900 px-4 h-14 flex items-center justify-between border-b border-gray-700">
+      {/* Terminal Header */}
+      <div className="bg-gray-900/95 ios-blur px-4 h-16 flex items-center justify-between border-b border-gray-700/50">
         <div className="flex items-center flex-1">
-          <span className="text-green-400 text-xl mr-3">💻</span>
-          <span className="text-white text-lg font-semibold font-mono">Terminal</span>
+          <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-emerald-600 rounded-xl flex items-center justify-center mr-3 ios-shadow-sm">
+            <span className="text-white text-xl">💻</span>
+          </div>
+          <span className="text-white text-lg font-bold">{t.title}</span>
         </div>
         <button
           onClick={onClose}
-          className="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800 rounded transition-colors"
+          className="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-800 rounded-xl transition-colors active:scale-95"
           aria-label="Close terminal"
         >
           ✕
@@ -180,16 +235,16 @@ const MobileTerminal = ({ onClose }) => {
           className="flex-1 p-4 overflow-y-auto font-mono text-sm text-green-400"
         >
           {output.map((line, index) => (
-            <div key={index} className="whitespace-pre-wrap break-words mb-1">
+            <div key={index} className="whitespace-pre-wrap break-words mb-1 leading-relaxed">
               {line}
             </div>
           ))}
         </div>
 
         {/* Input Area */}
-        <form onSubmit={handleSubmit} className="p-4 border-t border-gray-800">
+        <form onSubmit={handleSubmit} className="p-4 border-t border-gray-800/50 bg-gray-900/50">
           <div className="flex items-center">
-            <span className="text-green-400 font-mono text-sm mr-2">{'>'}</span>
+            <span className="text-green-400 font-mono text-sm mr-2 font-bold">{'>'}</span>
             <input
               ref={inputRef}
               type="text"
@@ -197,15 +252,17 @@ const MobileTerminal = ({ onClose }) => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               className="flex-1 bg-transparent text-green-400 font-mono text-sm outline-none placeholder-gray-600"
-              placeholder="Type a command..."
+              placeholder={t.placeholder}
               autoComplete="off"
+              autoCapitalize="off"
+              autoCorrect="off"
             />
           </div>
         </form>
       </div>
 
       {/* Quick Commands */}
-      <div className="bg-gray-900 px-4 py-3 border-t border-gray-700">
+      <div className="bg-gray-900/95 ios-blur px-4 py-3 border-t border-gray-700/50">
         <div className="flex flex-wrap gap-2">
           {['help', 'clear', 'about', 'skills'].map((cmd) => (
             <button
@@ -217,7 +274,7 @@ const MobileTerminal = ({ onClose }) => {
                 setHistory([...history, cmd]);
                 setInput('');
               }}
-              className="px-3 py-2 bg-green-500/20 text-green-400 rounded-lg text-xs font-medium hover:bg-green-500/30 transition-colors"
+              className="px-4 py-2.5 bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-400 rounded-xl text-xs font-semibold hover:from-green-500/30 hover:to-emerald-500/30 transition-all active:scale-95 border border-green-500/30"
             >
               {cmd}
             </button>

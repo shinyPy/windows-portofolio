@@ -19,9 +19,15 @@ const MobileApp = ({
   const [activeScreen, setActiveScreen] = useState('home');
   const [isTerminalOpen, setIsTerminalOpen] = useState(false);
   const [isSpotifyPlayerOpen, setIsSpotifyPlayerOpen] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const { language, setLanguage } = useContext(LanguageContext);
 
   const handleTileClick = (screenId) => {
+    if (isTransitioning) return;
+    
+    setIsTransitioning(true);
+    setTimeout(() => setIsTransitioning(false), 400);
+
     if (screenId === 'terminal') {
       setIsTerminalOpen(true);
     } else if (screenId === 'spotify') {
@@ -34,7 +40,13 @@ const MobileApp = ({
   };
 
   const handleBackToHome = () => {
-    setActiveScreen('home');
+    if (isTransitioning) return;
+    
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setActiveScreen('home');
+      setIsTransitioning(false);
+    }, 300);
   };
 
   const toggleLanguage = () => {
@@ -52,15 +64,15 @@ const MobileApp = ({
       );
     }
 
-    // Full-screen overlays with slide-up animation
     return (
-      <div className="fixed inset-0 bg-gray-900 z-40 animate-slide-up-screen overflow-y-auto">
-        <div className="pt-14">
+      <div className="fixed inset-0 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black z-40 animate-slide-up-screen overflow-hidden">
+        <div className="h-full overflow-y-auto pt-16">
           {activeScreen === 'about' && (
             <MobileAbout
               filesystem={filesystem}
               findItemById={findItemById}
               onBack={handleBackToHome}
+              language={language}
             />
           )}
           {activeScreen === 'projects' && (
@@ -69,6 +81,7 @@ const MobileApp = ({
               findItemById={findItemById}
               initialFilesystem={initialFilesystem}
               onBack={handleBackToHome}
+              language={language}
             />
           )}
           {activeScreen === 'skills' && (
@@ -76,6 +89,7 @@ const MobileApp = ({
               filesystem={filesystem}
               findItemById={findItemById}
               onBack={handleBackToHome}
+              language={language}
             />
           )}
           {activeScreen === 'filemanager' && (
@@ -83,6 +97,7 @@ const MobileApp = ({
               filesystem={filesystem}
               findItemById={findItemById}
               onBack={handleBackToHome}
+              language={language}
             />
           )}
         </div>
@@ -91,8 +106,8 @@ const MobileApp = ({
   };
 
   return (
-    <div className="flex flex-col h-screen bg-gray-900 overflow-hidden">
-      {/* Windows Metro Header */}
+    <div className="flex flex-col h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-black overflow-hidden">
+      {/* Modern Header */}
       <MobileHeader
         activeScreen={activeScreen}
         onBack={handleBackToHome}
@@ -107,12 +122,12 @@ const MobileApp = ({
 
       {/* Terminal Full-Screen Overlay */}
       {isTerminalOpen && (
-        <MobileTerminal onClose={() => setIsTerminalOpen(false)} />
+        <MobileTerminal onClose={() => setIsTerminalOpen(false)} language={language} />
       )}
 
       {/* Spotify Player Full-Screen Overlay */}
       {isSpotifyPlayerOpen && (
-        <MobileSpotifyPlayer onClose={() => setIsSpotifyPlayerOpen(false)} />
+        <MobileSpotifyPlayer onClose={() => setIsSpotifyPlayerOpen(false)} language={language} />
       )}
     </div>
   );
